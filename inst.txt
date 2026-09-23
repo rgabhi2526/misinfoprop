@@ -1,0 +1,13 @@
+Sanity checks: all 6 .py compile clean, 4 notebooks parse as valid JSON, and every loader keys off schemas I verified against the real files (all_twitter_ids.csv + features.npz[description|status] + dict.csv party; reddit 300-d embeddings + hyperlink TSV cols; VF retweeted_id,user_id + users.csv.user_community; gab JSONL actuser/post.user/post.body). Not a git repo, and you chose deliver-only, so no run/PR.
+
+Built in training/:
+- gclib.py — GCN encoder + BGRL/DGI/MVGRL + train loop + GDC diffusion + eval (modularity, NMI). Shared, so only the objective differs per run.
+- common.py — id remap, symmetrize-for-embedding, feature standardize, CLI.
+- train_{timme,reddit,voterfraud,gab}.py + matching .ipynb — per-dataset loader + wiring.
+- requirements.txt, README.md.
+
+Key spec points honored: same feature matrix into all 3 models; symmetrize only a copy (raw directed edges untouched); MVGRL uses sparse GDC PPR not dense N²; VoterFraud full-batch on A100 with --limit/NeighborLoader fallbacks noted. Gab = actor→author repost/reply graph + MiniLM text features per your pick.
+
+Skipped: local execution (your call — needs GPU + PyG); cluster-K for label-less reddit/gab defaults to 10, set --clusters when you have a target. Add when you hit the A100.
+
+result: training/ — shared BGRL/DGI/MVGRL lib plus a runnable script + notebook per dataset (timme, reddit, voterfraud, gab), syntax-verified against real data schemas, deliver-only.

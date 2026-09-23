@@ -1,0 +1,12 @@
+data_final/
+data/
+models/
+output_ego_facebook/
+*.pdf
+.claude/
+.code-review-graph/
+.venv/
+.DS_Store
+.serena/
+__pycache__/
+*.pyc
