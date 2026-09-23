@@ -231,7 +231,7 @@ def add_diffusion(data, alpha=0.15, eps=1e-4):
         self_loop_weight=1,
         normalization_in="sym",
         normalization_out="col",
-        diffusion_kwargs=dict(method="ppr", alpha=alpha),
+        diffusion_kwargs=dict(method="ppr", alpha=alpha, eps=eps),
         sparsification_kwargs=dict(method="threshold", eps=eps),
         exact=False,  # sparse/approximate — required at 1.9M-node scale
     )
