@@ -42,6 +42,10 @@ class Cfg:
     clusters: int = 2         # kmeans k for downstream eval; override per dataset
     seed: int = 0
     log_every: int = 50
+    # periodic eval / early stopping / collapse guard
+    eval_every: int = 25      # evaluate embedding quality every N epochs
+    patience: int = 5         # stop after this many eval windows with no improvement (0 = off)
+    collapse_std: float = 1e-3  # warn if embedding std drops below this (BGRL can collapse)
 
 
 # --------------------------------------------------------------------------- #
@@ -78,6 +82,56 @@ def _augment(x, edge_index, cfg):
 
 
 # --------------------------------------------------------------------------- #
+# shared training harness: periodic eval + best-embedding + early stop + collapse
+# --------------------------------------------------------------------------- #
+def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
+    """Run the epoch loop for any of the three models.
+
+    step_fn()  -> scalar loss (one forward/backward's worth; grads already needed)
+    embed_fn() -> current node embedding tensor (eval mode, no grad)
+    post_step  -> optional callback after opt.step() (BGRL uses it for the EMA)
+
+    Every cfg.eval_every epochs we cluster the current embedding and score it
+    (NMI if labels exist, else modularity), keep the best-scoring embedding, and
+    stop early after cfg.patience windows without improvement. Also flags a
+    collapsed embedding (near-zero std) — the classic BGRL failure mode.
+
+    Returns (best_embedding_cpu, best_metrics).
+    """
+    opt = torch.optim.AdamW(params, lr=cfg.lr, weight_decay=cfg.wd)
+    best = {"score": float("-inf"), "emb": None, "epoch": 0, "metrics": {}}
+    wait = 0
+    for ep in range(1, cfg.epochs + 1):
+        opt.zero_grad()
+        loss = step_fn()
+        loss.backward()
+        opt.step()
+        if post_step is not None:
+            post_step()
+        _log(tag, ep, loss, cfg)
+
+        if ep % cfg.eval_every == 0 or ep == cfg.epochs:
+            emb = embed_fn().detach().cpu()
+            std = float(emb.std())
+            metrics = evaluate(emb, data.edge_index, cfg.clusters, labels, cfg.seed)
+            metrics["emb_std"] = round(std, 4)
+            score = metrics.get("nmi", metrics["modularity"])  # prefer labels when present
+            flag = "  ⚠ possible collapse" if std < cfg.collapse_std else ""
+            print(f"[{tag}] eval ep {ep:4d}: {metrics} score={score:.4f}{flag}")
+            if score > best["score"]:
+                best.update(score=score, emb=emb, epoch=ep, metrics=metrics)
+                wait = 0
+            else:
+                wait += 1
+                if cfg.patience and wait >= cfg.patience:
+                    print(f"[{tag}] early stop at ep {ep} "
+                          f"(best ep {best['epoch']}, score {best['score']:.4f})")
+                    break
+    best["metrics"]["best_epoch"] = best["epoch"]
+    return best["emb"], best["metrics"]
+
+
+# --------------------------------------------------------------------------- #
 # BGRL — bootstrapped, no negatives (anchor baseline)
 # --------------------------------------------------------------------------- #
 class BGRL(nn.Module):
@@ -101,16 +155,12 @@ class BGRL(nn.Module):
         return self.online(x, edge_index)
 
 
-def train_bgrl(data, cfg: Cfg):
+def train_bgrl(data, cfg: Cfg, labels=None):
     m = BGRL(data.num_features, cfg).to(cfg.device)
-    opt = torch.optim.AdamW(
-        list(m.online.parameters()) + list(m.predictor.parameters()),
-        lr=cfg.lr, weight_decay=cfg.wd,
-    )
     x, ei = data.x.to(cfg.device), data.edge_index.to(cfg.device)
     m.train()
-    for ep in range(1, cfg.epochs + 1):
-        opt.zero_grad()
+
+    def step():
         x1, e1 = _augment(x, ei, cfg)
         x2, e2 = _augment(x, ei, cfg)
         q1 = m.predictor(m.online(x1, e1))
@@ -119,15 +169,19 @@ def train_bgrl(data, cfg: Cfg):
             t1 = m.target(x1, e1)
             t2 = m.target(x2, e2)
         # symmetric cosine loss (2 - 2cos)
-        loss = 2 - (F.cosine_similarity(q1, t2.detach(), -1).mean()
+        return 2 - (F.cosine_similarity(q1, t2.detach(), -1).mean()
                     + F.cosine_similarity(q2, t1.detach(), -1).mean())
-        loss.backward()
-        opt.step()
-        m.update_target()
-        _log("BGRL", ep, loss, cfg)
-    m.eval()
-    with torch.no_grad():
-        return m.embed(x, ei).cpu()
+
+    def embed():
+        m.eval()
+        with torch.no_grad():
+            z = m.embed(x, ei)
+        m.train()
+        return z
+
+    params = list(m.online.parameters()) + list(m.predictor.parameters())
+    return _fit("BGRL", params, step, embed, data, cfg, labels,
+                post_step=m.update_target)
 
 
 # --------------------------------------------------------------------------- #
@@ -137,7 +191,7 @@ def _corrupt(x, edge_index):
     return x[torch.randperm(x.size(0), device=x.device)], edge_index
 
 
-def train_dgi(data, cfg: Cfg):
+def train_dgi(data, cfg: Cfg, labels=None):
     enc = GCNEncoder(data.num_features, cfg.hidden, cfg.dim, cfg.layers)
     m = DeepGraphInfomax(
         hidden_channels=cfg.dim,
@@ -145,20 +199,21 @@ def train_dgi(data, cfg: Cfg):
         summary=lambda z, *a, **k: torch.sigmoid(z.mean(0)),
         corruption=_corrupt,
     ).to(cfg.device)
-    opt = torch.optim.AdamW(m.parameters(), lr=cfg.lr, weight_decay=cfg.wd)
     x, ei = data.x.to(cfg.device), data.edge_index.to(cfg.device)
     m.train()
-    for ep in range(1, cfg.epochs + 1):
-        opt.zero_grad()
+
+    def step():
         pos, neg, summ = m(x, ei)
-        loss = m.loss(pos, neg, summ)
-        loss.backward()
-        opt.step()
-        _log("DGI", ep, loss, cfg)
-    m.eval()
-    with torch.no_grad():
-        z, _, _ = m(x, ei)
-        return z.cpu()
+        return m.loss(pos, neg, summ)
+
+    def embed():
+        m.eval()
+        with torch.no_grad():
+            z, _, _ = m(x, ei)
+        m.train()
+        return z
+
+    return _fit("DGI", m.parameters(), step, embed, data, cfg, labels)
 
 
 # --------------------------------------------------------------------------- #
@@ -196,46 +251,66 @@ class MVGRL(nn.Module):
         return self.enc_a(x, ei_a) + self.enc_d(x, ei_d, ew_d)
 
 
-def train_mvgrl(data, cfg: Cfg):
+def train_mvgrl(data, cfg: Cfg, labels=None):
     assert hasattr(data, "diff_edge_index"), \
         "MVGRL needs a diffusion view — call add_diffusion(data) first"
     m = MVGRL(data.num_features, cfg).to(cfg.device)
-    opt = torch.optim.AdamW(m.parameters(), lr=cfg.lr, weight_decay=cfg.wd)
     x = data.x.to(cfg.device)
     ei_a = data.edge_index.to(cfg.device)
     ei_d = data.diff_edge_index.to(cfg.device)
     ew_d = data.diff_edge_weight.to(cfg.device)
     bce = nn.BCEWithLogitsLoss()
     m.train()
-    for ep in range(1, cfg.epochs + 1):
-        opt.zero_grad()
+
+    def step():
         pos, neg = m(x, ei_a, ei_d, ew_d)
         logits = torch.cat([pos, neg])
         lbl = torch.cat([torch.ones_like(pos), torch.zeros_like(neg)])
-        loss = bce(logits, lbl)
-        loss.backward()
-        opt.step()
-        _log("MVGRL", ep, loss, cfg)
-    m.eval()
-    with torch.no_grad():
-        return m.embed(x, ei_a, ei_d, ew_d).cpu()
+        return bce(logits, lbl)
+
+    def embed():
+        m.eval()
+        with torch.no_grad():
+            z = m.embed(x, ei_a, ei_d, ew_d)
+        m.train()
+        return z
+
+    return _fit("MVGRL", m.parameters(), step, embed, data, cfg, labels)
 
 
-def add_diffusion(data, alpha=0.15, eps=1e-4):
+def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
     """Attach a sparse PPR diffusion view (MODELS.md: use GDC, never dense N^2).
+
+    The approximate (scalable) PPR path needs `numba`. If numba is missing we
+    fall back to the exact dense PPR for small graphs; for large graphs the dense
+    matrix is infeasible, so we raise a clear "pip install numba" instead.
 
     Cache the returned edges to disk per dataset — this is CPU-bound preprocessing.
     """
     from torch_geometric.transforms import GDC
-    gdc = GDC(
-        self_loop_weight=1,
-        normalization_in="sym",
-        normalization_out="col",
-        diffusion_kwargs=dict(method="ppr", alpha=alpha, eps=eps),
-        sparsification_kwargs=dict(method="threshold", eps=eps),
-        exact=False,  # sparse/approximate — required at 1.9M-node scale
-    )
-    d = gdc(data.clone())
+
+    def gdc(exact):
+        return GDC(
+            self_loop_weight=1,
+            normalization_in="sym",
+            normalization_out="col",
+            diffusion_kwargs=dict(method="ppr", alpha=alpha, eps=eps),
+            sparsification_kwargs=dict(method="threshold", eps=eps),
+            exact=exact,
+        )
+
+    try:
+        d = gdc(False)(data.clone())          # sparse/approx — required at scale
+    except ImportError:
+        n = data.num_nodes
+        if n > exact_max_nodes:
+            raise ImportError(
+                "GDC approximate PPR needs numba — run `pip install numba`. "
+                f"({n} nodes is too large for the exact dense fallback.)"
+            )
+        print(f"[mvgrl] numba not installed → exact dense PPR fallback ({n} nodes)")
+        d = gdc(True)(data.clone())
+
     data.diff_edge_index = d.edge_index
     data.diff_edge_weight = d.edge_weight if d.edge_weight is not None \
         else torch.ones(d.edge_index.size(1))
@@ -247,10 +322,16 @@ def add_diffusion(data, alpha=0.15, eps=1e-4):
 # --------------------------------------------------------------------------- #
 def evaluate(emb, edge_index, n_clusters, labels=None, seed=0):
     import numpy as np
-    from sklearn.cluster import KMeans
 
     emb = emb.numpy()
-    km = KMeans(n_clusters=n_clusters, n_init=10, random_state=seed)
+    # MiniBatchKMeans past ~50k nodes so periodic eval stays cheap at scale
+    if emb.shape[0] > 50000:
+        from sklearn.cluster import MiniBatchKMeans
+        km = MiniBatchKMeans(n_clusters=n_clusters, n_init=3,
+                             batch_size=4096, random_state=seed)
+    else:
+        from sklearn.cluster import KMeans
+        km = KMeans(n_clusters=n_clusters, n_init=10, random_state=seed)
     pred = km.fit_predict(emb)
 
     out = {"modularity": _modularity(edge_index, pred)}
@@ -298,8 +379,7 @@ def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
             print("[mvgrl] computing diffusion view (one-time, CPU)…")
             add_diffusion(data)
         t0 = time.time()
-        emb = TRAINERS[name](data, cfg)
-        metrics = evaluate(emb, data.edge_index, cfg.clusters, labels, cfg.seed)
+        emb, metrics = TRAINERS[name](data, cfg, labels)  # best emb + its metrics
         metrics["seconds"] = round(time.time() - t0, 1)
         print(f"[{name}] {metrics}")
         results[name] = (emb, metrics)

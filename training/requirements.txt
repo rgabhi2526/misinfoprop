@@ -7,3 +7,4 @@ scikit-learn>=1.3           # KMeans + NMI for eval
 pandas>=2.0
 numpy>=1.24
 sentence-transformers>=2.2  # gab only (text-embedding node features)
+numba>=0.58                 # MVGRL only: GDC approximate PPR (get_ppr) needs it
