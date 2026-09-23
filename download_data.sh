@@ -28,12 +28,14 @@ dl() { # dl <url> <dest>  — resume-safe, multi-connection when aria2c is prese
   if [ -s "$dest" ]; then echo "  ✓ $(basename "$dest") (exists)"; return; fi
   echo "  ↓ $(basename "$dest")"
   mkdir -p "$(dirname "$dest")"
-  if command -v aria2c >/dev/null 2>&1; then
+  # Figshare blocks aria2 (403 on its User-Agent + flaky async 202), so those
+  # files always go through curl. aria2 (multi-stream) is used elsewhere.
+  if command -v aria2c >/dev/null 2>&1 && [[ "$url" != *figshare* ]]; then
     aria2c -c -x"$CONN" -s"$CONN" -k1M --max-tries=5 --retry-wait=5 \
            --console-log-level=warn --summary-interval=15 \
            -d "$(dirname "$dest")" -o "$(basename "$dest")" "$url"
   else
-    curl -fL --retry 3 --retry-delay 5 -C - -o "$dest" "$url"
+    curl -fL --retry 5 --retry-delay 5 -C - -o "$dest" "$url"
   fi
 }
 
