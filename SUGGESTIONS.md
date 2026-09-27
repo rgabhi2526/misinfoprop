@@ -10,23 +10,24 @@ Last updated: 2026-09-27
 | S-01 | T4.4 | Louvain on the graph as a third view | open |
 | S-02 | T4.1 | HDBSCAN instead of DBSCAN | accepted |
 | S-03 | T4.1 | Cosine + dimension reduction before density clustering | accepted |
-| S-04 | T8.1 | Participation coefficient alongside betweenness | open |
+| S-04 | T7.1 | Participation coefficient alongside betweenness | open |
 | S-05 | T4.2 | FINCH: own ~30-line implementation vs `finch-clust` | accepted |
 | S-06 | T4.3 | Treat HDBSCAN noise as "uncertain", not "no community" | accepted |
 | S-07 | T4.5 | Separate real disagreement from seed instability | accepted |
 | S-08 | T6.1 | Error enrichment as the first validation metric | open (recommended) |
 | S-09 | T6.2 | Baselines for "is disagreement informative" | open |
-| S-10 | T7.4 | Oracle design for TIMME | open |
+| S-10 | T8.4 | Oracle design for TIMME | open |
 | S-11 | T4 | Expect fine-grained, not R-vs-D, disagreement | open |
 | S-12 | T1.8 | VoterFraud: get text, or demote/drop | open |
 | S-13 | T1.9 | Reddit: demote to secondary or drop | open |
-| S-14 | T8.2 | Use Gab repost cascades to estimate spread | open |
+| S-14 | T7.2 | Use Gab repost cascades to estimate spread | open |
 | S-15 | T9.3 | Pitch the narrowed novelty claim to the advisor | open |
 | S-16 | T2.3 | Select best epoch on modularity, not NMI | done |
 | S-17 | T3.7 | igraph / cuGraph for graph metrics >200k nodes | open |
 | S-18 | T2.7 | Cache MVGRL diffusion to disk | open |
 | S-19 | T9.2 | Isolate the project env from conda base | open |
 | S-20 | T1.7 | Random-user sampling for Gab smoke runs | open |
+| S-21 | T7, T8 | IBM simulation before active learning; disagreement as a centrality re-ranker | accepted |
 
 ---
 
@@ -48,7 +49,7 @@ Density is near-meaningless in 256-d. L2-normalize (already done for k-means —
 raw vectors collapsed to [580, 3]), then PCA/UMAP to ~16–50 d. The paper's SpCL
 setup uses k-reciprocal Jaccard distance; a faithful option, costlier.
 
-### S-04 — Participation coefficient for bridges (T8.1)
+### S-04 — Participation coefficient for bridges (T7.1)
 Measures how evenly a node's edges spread across communities — closer to "bridge"
 than betweenness, and O(E) instead of O(VE). Earlier boundary-vs-betweenness
 numbers were computed on stale embeddings; redo after T2.6.
@@ -79,7 +80,7 @@ errors, disagreement is informative → first real result.
 Regions must beat: random node sets of equal size, lowest k-means margin nodes,
 lowest-degree nodes. Otherwise "disagreement" is just "hard nodes".
 
-### S-10 — Oracle for TIMME (T7.4)
+### S-10 — Oracle for TIMME (T8.4)
 Simulated oracle answers "same party?" for a pair. Only 2 classes → very coarse
 must-link / cannot-link. Only 1,206 of 20,811 nodes are labeled, so queries are
 restricted to labeled pairs. State this limitation up front.
@@ -99,7 +100,7 @@ topology-only ablation, or drop.
 Nodes are subreddits, not users; no labels; 40% of nodes had no edges. Useful as
 an unlabeled scale demo at best.
 
-### S-14 — Gab cascades (T8.2)
+### S-14 — Gab cascades (T7.2)
 Timestamped repost chains → estimate IC/LT transmission probabilities from data
 instead of assuming them. Unique among our datasets.
 
@@ -126,3 +127,12 @@ conda env for the project avoids fighting base.
 ### S-20 — Gab sampling (T1.7)
 The dump is grouped by user timeline, so `--limit N` = a few users' full
 histories. For representative smoke runs, sample users first, then stream.
+
+### S-21 — Simulate blocking before active learning (T7, T8) — accepted 2026-09-27
+Blunt risk assessment: as a standalone selector, disagreement nodes probably lose to
+degree/betweenness — they skew to low-degree boundary or metadata-poor nodes, which block
+little spread; HDBSCAN noise can flag 30–60% of nodes; the two views share one embedding,
+so part of the disagreement is algorithmic. Active learning has no oracle for "is a
+bridge", so its payoff for IBM is unproven. Plausible win: disagreement as a re-ranker —
+among high-centrality nodes, prefer ambiguous ones (hubs that join two groups). So build
+the IBM harness + strong baselines first (T7) and gate active learning (T8) on T7.4.

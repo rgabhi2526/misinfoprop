@@ -33,7 +33,7 @@ Must have:
 
 Pipeline needs (`TASKS.md`), not per-dataset:
 6. At least one dataset with ground truth, for T6 validation. Today only TIMME.
-7. Timestamped cascades are a bonus for T8. Only Gab has them at user level.
+7. Timestamped cascades are a bonus for T8 (now T7.2, S-21). Only Gab has them at user level.
 
 ## Discrepancies found
 

@@ -123,19 +123,26 @@ Paper §3.1-A.
 - [ ] T6.2 Compare against baselines: random nodes, low k-means margin, low-degree nodes — S-09
 - [ ] T6.3 Disagreement across embedding models (BGRL vs DGI vs MVGRL): same regions?
 
-## T7 — Active learning loop (paper §3.1-B…E) — later
-- [ ] T7.1 Over-segmentation pool U_os (region medoids, k_max NN, s_min)
-- [ ] T7.2 Under-segmentation pool U_us (closest cross-cluster pairs ∩ inconsistent pairs)
-- [ ] T7.3 Sampling distribution P(Y) (ε, π, ρ, ω)
-- [ ] T7.4 Oracle: simulated from TIMME party labels — S-10
-- [ ] T7.5 NP3 constrained refinement (must-link merge, cannot-link purification)
-- [ ] T7.6 Budget curves: quality vs #queries, vs random-pair baseline
-
-## T8 — Bridges & intervention — later
+## T7 — Bridges & IBM simulation — go/no-go for the idea (S-21)
+Moved ahead of active learning (2026-09-27): test the core claim cheaply first.
 Reference: `docs/ideas/project-idea-1.md`
-- [ ] T8.1 Do uncertainty regions coincide with bridge nodes? — S-04
-- [ ] T8.2 Diffusion model (IC/LT/SEIR) + spread estimation from Gab cascades — S-14
-- [ ] T8.3 Intervention baselines at fixed budget (none, random, degree, betweenness, ours)
+- [ ] T7.1 Profile uncertain nodes: share of graph, degree, `has_metadata`; overlap with
+      betweenness + participation coefficient — S-04
+- [ ] T7.2 Spread model: weighted cascade (p = 1/in-degree) on the raw directed edges;
+      IC/LT sensitivity check; Gab cascades as a data-driven estimate — S-14
+- [ ] T7.3 Blocking at fixed budget k: none, random, degree, PageRank, betweenness,
+      participation coefficient, disagreement, disagreement × betweenness
+- [ ] T7.4 Decision: disagreement (× centrality) beats centrality alone → T8;
+      otherwise report the negative result and rethink before building T8
+
+## T8 — Active learning loop (paper §3.1-B…E) — only if T7.4 passes
+Objective is blocking gain (T7.3), not label quality.
+- [ ] T8.1 Over-segmentation pool U_os (region medoids, k_max NN, s_min)
+- [ ] T8.2 Under-segmentation pool U_us (closest cross-cluster pairs ∩ inconsistent pairs)
+- [ ] T8.3 Sampling distribution P(Y) (ε, π, ρ, ω)
+- [ ] T8.4 Oracle: simulated from TIMME party labels — S-10 (no oracle for "is a bridge")
+- [ ] T8.5 NP3 constrained refinement (must-link merge, cannot-link purification)
+- [ ] T8.6 Budget curves: blocking gain vs #queries, vs random-pair baseline
 
 ## T9 — Housekeeping
 - [x] T9.1 Commit the current work — `6189707` (2026-09-27)

@@ -44,7 +44,7 @@ raw files ──► loader (train_<ds>.py) ──► common.make_data ──► 
       metrics.report / eval_embeddings.py / plot_umap.py ◄──────────────┘
                                                                         │
   ░░ NOT BUILT ░░  clustering views (T4) ──► disagreement regions (T5) ──► validation (T6)
-                   ──► active learning (T7) ──► bridges + IBM simulation (T8)
+                   ──► bridges + IBM simulation (T7) ──► active learning (T8, gated on T7)
 ```
 
 | Stage | Status | Tasks |
@@ -55,7 +55,7 @@ raw files ──► loader (train_<ds>.py) ──► common.make_data ──► 
 | Embedding evaluation | built | T3 |
 | Clustering views | not built — **next** | T4 |
 | Disagreement (core) | not built | T5 |
-| Validation / AL / IBM | not built | T6–T8 |
+| Validation / IBM / AL | not built (IBM before AL, S-21) | T6–T8 |
 
 ---
 
@@ -141,8 +141,10 @@ with the random seed, "disagreement" between two clusterings is partly noise (S-
   flag + region id + inlier/outlier type.
 - **T6 validation:** are region nodes more often mis-grouped (TIMME party) than
   others, and better than random / low-margin / low-degree baselines?
-- **T7/T8:** AAS pair sampling + oracle + NP3 refinement; then IBM with an assumed
-  weighted-cascade spread model (p = 1/in-degree), fixed blocking budget vs baselines.
+- **T7 IBM (go/no-go):** weighted cascade (p = 1/in-degree, assumed) on directed edges;
+  block k nodes; compare random / degree / PageRank / betweenness / participation
+  coefficient / disagreement / disagreement × betweenness. Success = spread blocked.
+- **T8 active learning (only if T7 shows a gain):** AAS pair sampling + oracle + NP3.
 
 ## 5. Evidence so far (read with care)
 All pre-2026-09-27 numbers came from broken loaders or selection — **superseded**.
@@ -162,6 +164,8 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-09-27** Plan reordered (S-21): IBM simulation + baselines is now T7 and gates
+  active learning (now T8).
 - **2026-09-27** Pipeline check before GPU training: sparse-adjacency GCN (fixes OOM,
   identical outputs), per-model seed, `--tag`/`--region` wiring for Pokec slices,
   output dir anchored to `training/out/`, requirements completed for a Linux CUDA box.
