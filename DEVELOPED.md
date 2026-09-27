@@ -138,12 +138,16 @@ with the random seed, "disagreement" between two clusterings is partly noise (S-
   deterministic → no seed noise.
 - **T5 disagreement:** link clusters from the two views that partly overlap
   (0 < IoU < 1); connected groups of linked clusters = regions of uncertainty; per-node
-  flag + region id + inlier/outlier type.
+  flag + region id + inlier/outlier type. Plus (S-22) a continuous **ambiguity score**:
+  co-membership entropy across a partition ensemble (HDBSCAN, FINCH levels, Louvain
+  seeds) — Nepusz-style bridgeness. HDBSCAN noise = outlier, never counted as a bridge.
 - **T6 validation:** are region nodes more often mis-grouped (TIMME party) than
   others, and better than random / low-margin / low-degree baselines?
-- **T7 IBM (go/no-go):** weighted cascade (p = 1/in-degree, assumed) on directed edges;
-  block k nodes; compare random / degree / PageRank / betweenness / participation
-  coefficient / disagreement / disagreement × betweenness. Success = spread blocked.
+- **T7 IBM (go/no-go):** rumor source **unknown** (random / degree-weighted seeds);
+  weighted cascade (p = 1/in-degree, assumed) + uniform-p sweep on directed edges; remove
+  k nodes; compare random / degree / PageRank / betweenness / participation coefficient /
+  modular centrality / graph-only bridgeness / ambiguity / ambiguity × PageRank, greedy
+  ceiling on the slice. Success = spread blocked. Why this shape: S-22 (literature).
 - **T8 active learning (only if T7 shows a gain):** AAS pair sampling + oracle + NP3.
 
 ## 5. Evidence so far (read with care)
@@ -151,6 +155,19 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - PureP smoke run (50 epochs, fixed pipeline): NMI 0.72 / 0.76 / 0.72
   (BGRL/DGI/MVGRL). Tiny, easy dataset — can't rank models.
 - Earlier "MVGRL doesn't cluster" and "boundary ≠ betweenness" — **withdrawn**, rerun after T2.6.
+- **Modularity (T7.0, `check_modularity.py`, Louvain vs degree-preserving rewired null):**
+  | Graph | Nodes | Mean deg | Q (real) | Q (null) | Cross-community edges |
+  |---|---|---|---|---|---|
+  | TIMME pooled | 20,811 | 395 | 0.26 | 0.04 | 50% (null 84%) |
+  | TIMME per relation | 15.8–20.8k | — | 0.26 (mention) – 0.34 (like) | 0.05–0.08 | — |
+  | Pokec slice (KNM) | 5,599 | 16 | 0.49 | 0.21 | 40% (null 67%) |
+  | Pokec full | 1,632,803 | 27 | **0.72** | 0.12 | 22% (null 71%) |
+  Real communities in all (Q far above null). TIMME is **moderate**: half its edges cross
+  communities, so bridges are not bottlenecks and hubs are likely competitive; pooling
+  relations costs ~0.05–0.08 Q vs likes/retweets alone. Full Pokec is **strongly** modular
+  (the regime where bridge-targeting beat hubs in the literature), but its 43 communities
+  are probably mostly geographic — region is also a node feature, so check that the
+  ambiguity score isn't just "has friends in two regions" (T7.1).
 
 ## 6. Environment
 - **Training runs on the user's Linux CUDA box**, not the Mac (8 GB RAM). Setup:
@@ -164,6 +181,8 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-09-27** Literature review (S-22): ambiguity score, outliers ≠ bridges (S-06
+  rejected), source-unknown blocking, stronger baselines; modularity measured (T7.0).
 - **2026-09-27** Plan reordered (S-21): IBM simulation + baselines is now T7 and gates
   active learning (now T8).
 - **2026-09-27** Pipeline check before GPU training: sparse-adjacency GCN (fixes OOM,

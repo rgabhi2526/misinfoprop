@@ -104,8 +104,8 @@ Two complementary clusterers on the same embedding (paper: density + nearest-nei
 
 - [ ] T4.1 View A: HDBSCAN (density) on L2-normalized, dimension-reduced embeddings — S-02, S-03
 - [ ] T4.2 View B: FINCH (first-neighbour, parameter-free) — S-05
-- [x] T4.3 Noise handling decided: HDBSCAN `-1` = uncertain (S-06, 2026-09-27) — (HDBSCAN `-1` = "uncertain", as in the paper) — S-06
-- [ ] T4.4 Optional view C: Louvain on the graph (topology-only) — S-01
+- [x] T4.3 Noise handling: HDBSCAN `-1` = **outlier**, kept separate from bridges (S-22 overturns S-06, 2026-09-27)
+- [ ] T4.4 Partition ensemble: HDBSCAN + all FINCH levels + Louvain over seeds (S-22; was optional view C, S-01)
 - [ ] T4.5 Check each view is **stable across seeds** before trusting its disagreement — S-07
 
 ## T5 — Disagreement / regions of uncertainty  ← CORE
@@ -114,6 +114,8 @@ Paper §3.1-A.
 - [ ] T5.1 Cluster-overlap graph: link cA_i–cB_j when 0 < IoU < 1
 - [ ] T5.2 Regions S_k = connected components of that graph (transitive closure)
 - [ ] T5.3 Per-node output: `in_region`, `region_id`, inlier/outlier type (β1/β2/β3)
+- [ ] T5.6 Continuous **ambiguity score** per node: entropy of co-membership across the
+      partition ensemble (Nepusz bridgeness with our embeddings); outlier flag separate — S-22
 - [ ] T5.4 Summary stats: #regions, sizes, % nodes in regions, per dataset
 - [ ] T5.5 Self-check on a synthetic case with known disagreement
 
@@ -126,12 +128,17 @@ Paper §3.1-A.
 ## T7 — Bridges & IBM simulation — go/no-go for the idea (S-21)
 Moved ahead of active learning (2026-09-27): test the core claim cheaply first.
 Reference: `docs/ideas/project-idea-1.md`
+- [x] T7.0 Measure modularity vs a rewired null (`training/check_modularity.py`) — S-22
+      (2026-09-27): TIMME Q 0.26 (null 0.04), Pokec slice 0.49 (null 0.21), Pokec full 0.72 (null 0.12) — DEVELOPED §5
 - [ ] T7.1 Profile uncertain nodes: share of graph, degree, `has_metadata`; overlap with
       betweenness + participation coefficient — S-04
-- [ ] T7.2 Spread model: weighted cascade (p = 1/in-degree) on the raw directed edges;
-      IC/LT sensitivity check; Gab cascades as a data-driven estimate — S-14
+- [ ] T7.2 Spread model: **source unknown** (random / degree-weighted seeds), node removal;
+      weighted cascade (p = 1/in-degree) on the raw directed edges + a sweep of uniform p;
+      IC/LT sensitivity; Gab cascades as a data-driven estimate — S-14, S-22
 - [ ] T7.3 Blocking at fixed budget k: none, random, degree, PageRank, betweenness,
-      participation coefficient, disagreement, disagreement × betweenness
+      participation coefficient, Comm/modular centrality, graph-only bridgeness (Louvain
+      ensemble, no metadata — isolates what metadata adds), ambiguity, ambiguity × PageRank;
+      greedy upper bound on the Pokec slice — S-22
 - [ ] T7.4 Decision: disagreement (× centrality) beats centrality alone → T8;
       otherwise report the negative result and rethink before building T8
 

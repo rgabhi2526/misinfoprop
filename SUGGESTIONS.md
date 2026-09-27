@@ -12,7 +12,7 @@ Last updated: 2026-09-27
 | S-03 | T4.1 | Cosine + dimension reduction before density clustering | accepted |
 | S-04 | T7.1 | Participation coefficient alongside betweenness | open |
 | S-05 | T4.2 | FINCH: own ~30-line implementation vs `finch-clust` | accepted |
-| S-06 | T4.3 | Treat HDBSCAN noise as "uncertain", not "no community" | accepted |
+| S-06 | T4.3 | Treat HDBSCAN noise as "uncertain", not "no community" | rejected (S-22) |
 | S-07 | T4.5 | Separate real disagreement from seed instability | accepted |
 | S-08 | T6.1 | Error enrichment as the first validation metric | open (recommended) |
 | S-09 | T6.2 | Baselines for "is disagreement informative" | open |
@@ -27,6 +27,7 @@ Last updated: 2026-09-27
 | S-18 | T2.7 | Cache MVGRL diffusion to disk | open |
 | S-19 | T9.2 | Isolate the project env from conda base | open |
 | S-20 | T1.7 | Random-user sampling for Gab smoke runs | open |
+| S-22 | T4, T5, T7 | Literature-based redesign: ambiguity score, outliers ≠ bridges, source-unknown blocking | accepted |
 | S-21 | T7, T8 | IBM simulation before active learning; disagreement as a centrality re-ranker | accepted |
 
 ---
@@ -61,7 +62,7 @@ sklearn `NearestNeighbors` + scipy `connected_components`, vs a pip dependency.
 Lean: write it, plus a self-check. Pick the partition level whose cluster count
 is closest to HDBSCAN's, or report several levels.
 
-### S-06 — Noise = uncertain (T4.3) — accepted
+### S-06 — Noise = uncertain (T4.3) — rejected 2026-09-27, see S-22
 The paper uses DBSCAN outliers explicitly (inlier/outlier pair types β1–β3).
 Expect a large noise share on low-degree nodes; decide before interpreting results.
 
@@ -136,3 +137,20 @@ so part of the disagreement is algorithmic. Active learning has no oracle for "i
 bridge", so its payoff for IBM is unproven. Plausible win: disagreement as a re-ranker —
 among high-centrality nodes, prefer ambiguous ones (hubs that join two groups). So build
 the IBM harness + strong baselines first (T7) and gate active learning (T8) on T7.4.
+
+### S-22 — Literature review: make the idea work (T4, T5, T7) — accepted 2026-09-27
+Support: bridge-targeting beats hub-targeting **under strong community structure**
+(Salathé & Jones 2010, PLoS Comp Bio); fuzzy-membership bridgeness (Nepusz et al. 2008,
+PRE) is the established form of "ambiguous membership"; overlapping-node immunization
+(arXiv 2212.14884, 2510.24360) and community-aware centralities (Ghalmane 2019 EPJ DS;
+arXiv 1806.05637) match or beat degree/betweenness. Against: with a *known* rumor source,
+location-aware methods win and global scores are near useless (IBM survey; arXiv
+1110.4723); PageRank ≈ 96% of IMM (Sci Rep 2026); fast greedy blocking exists (arXiv
+2312.17488). No prior found for "metadata+topology embedding → clustering disagreement →
+blocking targets" (closest: Nepusz; Telegram bridging arXiv 2411.05922; TIDE-MARK).
+Changes: (1) source-unknown node blocking; (2) continuous ambiguity score from a partition
+ensemble instead of binary regions; (3) outliers (HDBSCAN noise, low co-membership) ≠
+bridges — overturns S-06; (4) rank by ambiguity × influence, ambiguity alone as ablation;
+(5) measure modularity first (T7.0); (6) baselines incl. graph-only bridgeness and a
+greedy ceiling; (7) sweep spread probability. Claim: metadata-aware membership ambiguity
+improves source-unknown blocking over purely structural bridge/centrality scores.
