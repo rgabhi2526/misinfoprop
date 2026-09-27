@@ -10,3 +10,7 @@ output_ego_facebook/
 .serena/
 __pycache__/
 *.pyc
+training/out/
+*.npy
+archive/
+archive/

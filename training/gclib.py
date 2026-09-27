@@ -1,7 +1,7 @@
 """Shared graph-contrastive library: GCN encoder + BGRL / DGI / MVGRL + train/eval.
 
 Same encoder backbone and training harness feed all three models so the only
-thing that differs across a run is the objective family (see MODELS.md). Each
+thing that differs across a run is the objective family (see docs/MODELS.md). Each
 per-dataset script builds a PyG `Data` (symmetrized edges + ideology features)
 and hands it here.
 
@@ -21,6 +21,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, DeepGraphInfomax
 from torch_geometric.utils import dropout_edge
+
+import metrics as emb_metrics
 
 
 # --------------------------------------------------------------------------- #
@@ -77,7 +79,9 @@ def _drop_feat(x, p):
 
 
 def _augment(x, edge_index, cfg):
-    ei, _ = dropout_edge(edge_index, p=cfg.drop_edge)
+    # force_undirected: drop both directions of an edge together, so the
+    # augmented view stays a symmetric graph like the input
+    ei, _ = dropout_edge(edge_index, p=cfg.drop_edge, force_undirected=True)
     return _drop_feat(x, cfg.drop_feat), ei
 
 
@@ -91,8 +95,8 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
     embed_fn() -> current node embedding tensor (eval mode, no grad)
     post_step  -> optional callback after opt.step() (BGRL uses it for the EMA)
 
-    Every cfg.eval_every epochs we cluster the current embedding and score it
-    (NMI if labels exist, else modularity), keep the best-scoring embedding, and
+    Every cfg.eval_every epochs we cluster the current embedding and score it by
+    modularity (unsupervised), keep the best-scoring embedding, and
     stop early after cfg.patience windows without improvement. Also flags a
     collapsed embedding (near-zero std) — the classic BGRL failure mode.
 
@@ -115,7 +119,10 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
             std = float(emb.std())
             metrics = evaluate(emb, data.edge_index, cfg.clusters, labels, cfg.seed)
             metrics["emb_std"] = round(std, 4)
-            score = metrics.get("nmi", metrics["modularity"])  # prefer labels when present
+            # select on modularity only: selecting on NMI tunes the embedding on
+            # the same labels it is evaluated against (label leakage). NMI is
+            # still logged. Report modularity at best epoch as selection-biased.
+            score = metrics["modularity"]
             flag = "  ⚠ possible collapse" if std < cfg.collapse_std else ""
             print(f"[{tag}] eval ep {ep:4d}: {metrics} score={score:.4f}{flag}")
             if score > best["score"]:
@@ -279,11 +286,12 @@ def train_mvgrl(data, cfg: Cfg, labels=None):
 
 
 def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
-    """Attach a sparse PPR diffusion view (MODELS.md: use GDC, never dense N^2).
+    """Attach a sparse PPR diffusion view (docs/MODELS.md: use GDC, never dense N^2).
 
-    The approximate (scalable) PPR path needs `numba`. If numba is missing we
-    fall back to the exact dense PPR for small graphs; for large graphs the dense
-    matrix is infeasible, so we raise a clear "pip install numba" instead.
+    The approximate (scalable) PPR path needs a working `numba` (missing, or a
+    version PyG's kernel fails to compile under). On failure we fall back to the
+    exact dense PPR for small graphs; for large graphs the dense matrix is
+    infeasible, so we re-raise with a clear message instead.
 
     Cache the returned edges to disk per dataset — this is CPU-bound preprocessing.
     """
@@ -301,14 +309,15 @@ def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
 
     try:
         d = gdc(False)(data.clone())          # sparse/approx — required at scale
-    except ImportError:
+    except Exception as e:   # ImportError, or numba failing to compile get_ppr
         n = data.num_nodes
         if n > exact_max_nodes:
-            raise ImportError(
-                "GDC approximate PPR needs numba — run `pip install numba`. "
-                f"({n} nodes is too large for the exact dense fallback.)"
-            )
-        print(f"[mvgrl] numba not installed → exact dense PPR fallback ({n} nodes)")
+            raise RuntimeError(
+                "GDC approximate PPR failed — needs a numba compatible with this "
+                f"torch_geometric. ({n} nodes is too large for the exact fallback.)"
+            ) from e
+        print(f"[mvgrl] approx PPR failed ({type(e).__name__}) → exact dense "
+              f"PPR fallback ({n} nodes)")
         d = gdc(True)(data.clone())
 
     data.diff_edge_index = d.edge_index
@@ -321,47 +330,18 @@ def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
 # eval — cluster embeddings, score against graph (modularity) + labels (NMI)
 # --------------------------------------------------------------------------- #
 def evaluate(emb, edge_index, n_clusters, labels=None, seed=0):
+    """Cheap per-epoch score for best-epoch selection. Full report: emb_metrics.report."""
     import numpy as np
+    from sklearn.metrics import normalized_mutual_info_score
 
-    emb = emb.numpy()
-    # MiniBatchKMeans past ~50k nodes so periodic eval stays cheap at scale
-    if emb.shape[0] > 50000:
-        from sklearn.cluster import MiniBatchKMeans
-        km = MiniBatchKMeans(n_clusters=n_clusters, n_init=3,
-                             batch_size=4096, random_state=seed)
-    else:
-        from sklearn.cluster import KMeans
-        km = KMeans(n_clusters=n_clusters, n_init=10, random_state=seed)
-    pred = km.fit_predict(emb)
-
-    out = {"modularity": _modularity(edge_index, pred)}
+    pred, _ = emb_metrics.cluster(emb.numpy(), n_clusters, seed)
+    out = {"modularity": emb_metrics.modularity(edge_index.numpy(), pred)}
     if labels is not None:
-        from sklearn.metrics import normalized_mutual_info_score
         labels = np.asarray(labels)
         keep = labels >= 0            # -1 marks unlabeled nodes
         if keep.any():
-            out["nmi"] = float(
-                normalized_mutual_info_score(labels[keep], pred[keep])
-            )
+            out["nmi"] = float(normalized_mutual_info_score(labels[keep], pred[keep]))
     return out
-
-
-def _modularity(edge_index, comm):
-    """Newman modularity of a partition on an undirected edge list."""
-    import numpy as np
-
-    src, dst = edge_index.numpy()
-    m = src.size
-    if m == 0:
-        return 0.0
-    n = comm.shape[0]
-    deg = np.bincount(np.concatenate([src, dst]), minlength=n).astype(np.float64)
-    same = comm[src] == comm[dst]
-    intra = same.sum()                       # 2*edges within communities (both dirs)
-    # sum of (deg_c)^2 over communities
-    k = comm.max() + 1
-    dsum = np.bincount(comm, weights=deg, minlength=k)
-    return float(intra / (2 * m) - ((dsum / (2 * m)) ** 2).sum())
 
 
 # --------------------------------------------------------------------------- #
@@ -373,6 +353,9 @@ TRAINERS = {"bgrl": train_bgrl, "dgi": train_dgi, "mvgrl": train_mvgrl}
 def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
     """Train each model on the same data; return {name: (emb, metrics)}."""
     torch.manual_seed(cfg.seed)
+    ei = data.edge_index.cpu().numpy()
+    graph = (emb_metrics.graph_stats(ei, data.num_nodes, cfg.seed)
+             if data.num_nodes <= emb_metrics.GRAPH_MAX else None)
     results = {}
     for name in models:
         if name == "mvgrl" and not hasattr(data, "diff_edge_index"):
@@ -381,6 +364,8 @@ def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
         t0 = time.time()
         emb, metrics = TRAINERS[name](data, cfg, labels)  # best emb + its metrics
         metrics["seconds"] = round(time.time() - t0, 1)
+        metrics["report"] = emb_metrics.report(
+            emb.numpy(), ei, cfg.clusters, labels, cfg.seed, graph=graph)
         print(f"[{name}] {metrics}")
         results[name] = (emb, metrics)
     return results

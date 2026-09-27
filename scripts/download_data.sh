@@ -2,10 +2,10 @@
 # Download every dataset into data_final/. Idempotent: skips files that already
 # exist (non-empty) and resumes partial downloads (curl -C -). Re-run any time.
 #
-#   ./download_data.sh            # everything
-#   ./download_data.sh reddit     # one dataset: timme|reddit|voterfraud|gab
-#   CONN=32 ./download_data.sh    # more parallel streams per file (default 16)
-#   # different servers at once:  ./download_data.sh gab & ./download_data.sh voterfraud &
+#   scripts/download_data.sh            # everything
+#   scripts/download_data.sh reddit     # one dataset: timme|reddit|voterfraud|gab
+#   CONN=32 scripts/download_data.sh    # more parallel streams per file (default 16)
+#   # different servers at once:  scripts/download_data.sh gab & scripts/download_data.sh voterfraud &
 #
 # Sources:
 #   timme       github.com/PatriciaXiao/TIMME (data is in-repo)
@@ -14,13 +14,13 @@
 #   gab         Zenodo  10.5281/zenodo.1418347  (6GB, md5 below)
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")" && pwd)/data_final"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)/data_final"
 mkdir -p "$ROOT"
 
 # Faster downloads: aria2c opens CONN parallel streams per file (segmented,
 # resume-safe). Install it (`brew install aria2` / `apt install aria2`) to use
 # it; otherwise we fall back to single-stream curl. Override streams with
-# CONN=32 ./download_data.sh
+# CONN=32 scripts/download_data.sh
 CONN="${CONN:-16}"
 
 dl() { # dl <url> <dest>  — resume-safe, multi-connection when aria2c is present

@@ -9,7 +9,7 @@ import argparse
 import numpy as np
 import torch
 from torch_geometric.data import Data
-from torch_geometric.utils import to_undirected, coalesce
+from torch_geometric.utils import remove_self_loops, subgraph, to_undirected
 
 
 def remap_ids(src, dst):
@@ -24,31 +24,68 @@ def remap_ids(src, dst):
     return edge_index, id2idx, uniq
 
 
-def make_data(edge_index, x, num_nodes=None):
-    """Symmetrize edges (embedding stage is undirected — MODELS.md §3), coalesce
-    duplicates, wrap in a PyG Data. Directed edges stay in the raw files for
-    downstream diffusion/centrality; we only undirect the copy used here."""
+def make_data(edge_index, x, num_nodes=None, lcc=True):
+    """Symmetrize edges (embedding stage is undirected — docs/MODELS.md §3), coalesce
+    duplicates, drop self-loops, keep only the largest connected component, wrap
+    in a PyG Data. Directed edges stay in the raw files for downstream
+    diffusion/centrality; we only undirect the copy used here.
+
+    data.orig_idx maps each kept node back to its loader index — index labels
+    with it (labels[data.orig_idx]). Isolated / tiny components carry no
+    community or bridge signal and get embedded from features alone (40% of
+    reddit was degree-0 and formed its own UMAP blob)."""
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+
     n = num_nodes if num_nodes is not None else int(edge_index.max()) + 1
-    edge_index = to_undirected(edge_index, num_nodes=n)
-    edge_index = coalesce(edge_index, num_nodes=n)
-    x = standardize(x)
-    return Data(x=x, edge_index=edge_index, num_nodes=n)
+    edge_index, _ = remove_self_loops(edge_index)
+    edge_index = to_undirected(edge_index, num_nodes=n)   # also coalesces
+    keep = torch.arange(n)
+    if lcc:
+        s, d = edge_index.numpy()
+        _, comp = connected_components(coo_matrix((np.ones(s.size), (s, d)), shape=(n, n)),
+                                       directed=False)
+        keep = torch.from_numpy(np.flatnonzero(comp == np.bincount(comp).argmax()))
+        edge_index, _ = subgraph(keep, edge_index, relabel_nodes=True, num_nodes=n)
+        print(f"largest connected component: {keep.numel()}/{n} nodes kept")
+    data = Data(x=standardize(x[keep]), edge_index=edge_index, num_nodes=keep.numel())
+    data.orig_idx = keep
+    return data
+
+
+ENCODER = "paraphrase-multilingual-MiniLM-L12-v2"   # one encoder for all datasets (English + Slovak)
+
+
+def encode_texts(texts, cache=None):
+    """Sentence-embed per-node texts -> float32 tensor [N, 384 + 1].
+
+    Blank text -> zero vector; the last column is the `has_metadata` flag, so the
+    model can tell "no metadata" from "metadata near the origin" (R4: nodes
+    without metadata are kept and embedded mostly from topology).
+    ponytail: the encoder truncates at 128 tokens; put the most informative text first.
+    `cache` (.npy path): reuse a previous encoding — delete it to rebuild."""
+    import os
+
+    if cache and os.path.exists(cache):
+        return torch.from_numpy(np.load(cache))
+    from sentence_transformers import SentenceTransformer
+
+    has = np.array([bool(t and t.strip()) for t in texts])
+    model = SentenceTransformer(ENCODER, device="cuda" if torch.cuda.is_available() else "cpu")
+    x = np.zeros((len(texts), model.get_sentence_embedding_dimension() + 1), np.float32)
+    x[has, :-1] = model.encode([t for t, h in zip(texts, has) if h], batch_size=256,
+                               show_progress_bar=True, convert_to_numpy=True,
+                               normalize_embeddings=True)
+    x[:, -1] = has
+    if cache:
+        np.save(cache, x)
+    return torch.from_numpy(x)
 
 
 def standardize(x):
     x = x.float()
     mu, sd = x.mean(0, keepdim=True), x.std(0, keepdim=True)
     return (x - mu) / (sd + 1e-8)
-
-
-def degree_features(edge_index, n, dim=64):
-    """Fallback node features when a dataset ships none: log-degree bucketed into
-    a small random projection. ponytail: cheap, deterministic, good enough as a
-    structural prior; swap for real ideology features when available."""
-    deg = torch.bincount(edge_index.reshape(-1), minlength=n).float()
-    g = torch.Generator().manual_seed(0)
-    proj = torch.randn(1, dim, generator=g)
-    return torch.log1p(deg).unsqueeze(1) * proj
 
 
 def base_args(dataset, default_dir, clusters=2, epochs=500):

@@ -2,7 +2,7 @@
 
 One script + one notebook per dataset. All three models share the same GCN
 encoder and training harness (`gclib.py`), so a run only varies the *objective
-family* — the comparison stays fair (MODELS.md §5).
+family* — the comparison stays fair (docs/MODELS.md §5).
 
 ```
 gclib.py            GCN encoder, BGRL/DGI/MVGRL, train loop, diffusion, eval
@@ -18,25 +18,37 @@ requirements.txt
 pip install -r requirements.txt          # torch + PyG must match your CUDA
 python train_timme.py                     # all 3 models, full data
 python train_reddit.py     --limit 100000 # quick sanity pass on a slice
-python train_voterfraud.py --models bgrl  # one model only
-python train_gab.py        --limit 200000 # gab is 6GB; start small
+python train_pokec.py --region "zilinsky kraj" # small slice; omit for full 1.63M
+python train_gab.py        --limit 200000 # 48GB dump; parse+encode cached once
+python eval_embeddings.py timme           # full metrics report on saved embeddings
+python plot_umap.py timme                 # UMAP grid (timme | reddit)
 ```
 
 Common flags: `--dim 256 --layers 2 --epochs 500 --clusters K --models bgrl dgi mvgrl --device cuda --limit N`.
 Outputs go to `out/<ds>/`: `<ds>_<model>_emb.pt` (node embeddings) and
-`<ds>_metrics.json` (modularity, NMI where labels exist, wall-clock).
+`<ds>_metrics.json` (best-epoch metrics, wall-clock, and the full `metrics.report`:
+health / labeled / unlabeled / task sections — see `metrics.py`).
 
 ## Per-dataset notes
 
+Final datasets (T0, 2026-09-27): **timme** and **pokec**. gab and reddit are reserve.
+All text goes through `common.encode_texts` (`paraphrase-multilingual-MiniLM-L12-v2`,
+384-d + `has_metadata` flag); nodes without metadata are kept.
+
 | Dataset | Graph | Node features | Labels (NMI) |
 |---|---|---|---|
-| **timme** | pooled follow/mention/favorite/reply/retweet | GloVe description+status (`features.npz`) | R/D party (`dict.csv`) |
+| **timme** | `P_all` (21k users): pooled follow/mention/favorite/reply/retweet | bio + latest tweet text → multilingual encoder | R/D: `dict.csv` + `additional_labels/` (1,206 in LCC); independents unlabeled |
 | **reddit** | subreddit→subreddit hyperlinks (body+title) | shipped 300-d subreddit embeddings | none |
-| **voterfraud** | retweet edges (all months) | user community centralities + one-hot community | `user_community` |
-| **gab** | repost/reply/quote: actor→author | sentence-transformer over user's posts | none |
+| **pokec** | 30.6M directed friendships (1.63M users) | interest free text (Slovak) → multilingual encoder + gender, age, region one-hot | none |
+| **gab** | repost: actuser→author; reply/quote: author→parent author | sentence-transformer over each author's own posts | none |
 
-## Design decisions (from MODELS.md)
+## Design decisions (from docs/MODELS.md)
 
+- **Largest connected component only** — `make_data` drops isolated nodes and
+  small components (40% of reddit was degree-0); `data.orig_idx` maps kept
+  nodes back, and loaders return labels already indexed by it.
+- **Best epoch selected by modularity, never NMI** — selecting on the labels you
+  report against is leakage. Treat best-epoch modularity as selection-biased.
 - **Symmetrized for embedding only** — `common.make_data` undirects a copy;
   raw directed edges stay in `data_final/` for downstream diffusion/centrality.
 - **Same feature matrix into all 3 models** per dataset → output differences are
