@@ -96,6 +96,10 @@ raw files ──► loader (train_<ds>.py) ──► common.make_data ──► 
   - **MVGRL** — adjacency view vs diffusion (PPR) view, cross-view discrimination.
     Exact dense PPR fallback for small graphs when numba fails.
 - Augmentation: drop 20% of edges (both directions together) and 20% of feature columns.
+- GCN runs on a **sparse CSR adjacency** (`gclib._adj`, self-loops added there), not an
+  edge list: PyG's edge-list path builds an E×256 message tensor (TIMME 8.2M edges ≈
+  12 GB/layer). Same numbers — `test_gclib.py` checks outputs + grads match.
+- Seed reset before each model, so `--models dgi` alone == DGI in a full run.
 - `_fit`: every 25 epochs cluster the embedding (k-means on L2-normalized vectors),
   keep the best epoch **by modularity**, early-stop after 5 evals without improvement,
   warn if embedding std collapses.
@@ -120,7 +124,10 @@ raw files ──► loader (train_<ds>.py) ──► common.make_data ──► 
 | task | ARI vs Louvain partition, boundary-node vs betweenness overlap | graph-only agreement; bridge hint (skipped >200k nodes) |
 
 - `eval_embeddings.py <ds>` scores saved embeddings; refuses stale ones (node-count check).
-- `plot_umap.py <ds>` — UMAP grid (models × colourings). Self-check: `python metrics.py`.
+- `plot_umap.py <ds>` — UMAP grid (models × colourings). Self-checks: `python metrics.py`,
+  `python test_gclib.py`.
+- Outputs live in `training/out/<tag>/<tag>_<model>_emb.pt`; `--tag` (default = dataset)
+  and `--region` (Pokec slice) must match across train / eval / plot / disagreement.
 
 **Intuition to keep:** seed stability matters most for us — if a clustering changes
 with the random seed, "disagreement" between two clusterings is partly noise (S-07).
@@ -144,7 +151,10 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - Earlier "MVGRL doesn't cluster" and "boundary ≠ betweenness" — **withdrawn**, rerun after T2.6.
 
 ## 6. Environment
-- Python: `/opt/anaconda3/bin/python` (conda base: torch 2.5, torch_geometric 2.8,
+- **Training runs on the user's Linux CUDA box**, not the Mac (8 GB RAM). Setup:
+  `training/requirements.txt` (includes a numba/GDC check — base's numba 0.60 fails on
+  PyG 2.8, so MVGRL at scale needs a numba that passes it).
+- Mac (dev only) Python: `/opt/anaconda3/bin/python` (conda base: torch 2.5, torch_geometric 2.8,
   networkx 3.7, sentence-transformers, umap-learn). `conda run` drops stdin.
 - Base's numba can't compile PyG's approximate PPR → MVGRL uses the exact fallback on
   small graphs only.
@@ -152,6 +162,9 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-09-27** Pipeline check before GPU training: sparse-adjacency GCN (fixes OOM,
+  identical outputs), per-model seed, `--tag`/`--region` wiring for Pokec slices,
+  output dir anchored to `training/out/`, requirements completed for a Linux CUDA box.
 - **2026-09-27** Reserve loaders (gab, reddit) + rejected `test_disagreement.py` moved to
   `archive/training/`; `training/` now holds only the TIMME + Pokec pipeline.
 - **2026-09-27** Repo reorganized: docs/, scripts/, archive/; living docs at root;

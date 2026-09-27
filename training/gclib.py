@@ -20,7 +20,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, DeepGraphInfomax
-from torch_geometric.utils import dropout_edge
+from torch_geometric.utils import (add_remaining_self_loops, dropout_edge,
+                                   to_torch_csr_tensor)
 
 import metrics as emb_metrics
 
@@ -61,14 +62,29 @@ class GCNEncoder(nn.Module):
         d = in_dim
         for i in range(layers):
             o = out_dim if i == layers - 1 else hidden
-            self.convs.append(GCNConv(d, o))
+            # self-loops are added in _adj (sparse input would otherwise get
+            # add_self_loops, which stacks +1 on the diffusion view's own loops)
+            self.convs.append(GCNConv(d, o, add_self_loops=False))
             self.acts.append(nn.PReLU(o))
             d = o
 
-    def forward(self, x, edge_index, edge_weight=None):
+    def forward(self, x, adj):
         for conv, act in zip(self.convs, self.acts):
-            x = act(conv(x, edge_index, edge_weight))
+            x = act(conv(x, adj))
         return x
+
+
+def _adj(edge_index, n, edge_weight=None):
+    """Edge list -> sparse CSR A^T (row = target, col = source) for GCNConv.
+
+    Same numbers as GCNConv(edge_index, edge_weight): add_remaining_self_loops
+    is exactly what gcn_norm does on the edge-list path. Sparse matmul avoids
+    the E x C message tensor (TIMME: ~12 GB/layer as an edge list).
+    """
+    if edge_weight is None:   # explicit ones: coalesce would dedupe, not sum, duplicates
+        edge_weight = torch.ones(edge_index.size(1), device=edge_index.device)
+    ei, ew = add_remaining_self_loops(edge_index, edge_weight, 1., n)
+    return to_torch_csr_tensor(ei.flip(0), ew, size=(n, n))
 
 
 def _drop_feat(x, p):
@@ -82,7 +98,7 @@ def _augment(x, edge_index, cfg):
     # force_undirected: drop both directions of an edge together, so the
     # augmented view stays a symmetric graph like the input
     ei, _ = dropout_edge(edge_index, p=cfg.drop_edge, force_undirected=True)
-    return _drop_feat(x, cfg.drop_feat), ei
+    return _drop_feat(x, cfg.drop_feat), _adj(ei, x.size(0))
 
 
 # --------------------------------------------------------------------------- #
@@ -158,13 +174,14 @@ class BGRL(nn.Module):
         for pt, po in zip(self.target.parameters(), self.online.parameters()):
             pt.data = self.ema * pt.data + (1 - self.ema) * po.data
 
-    def embed(self, x, edge_index):
-        return self.online(x, edge_index)
+    def embed(self, x, adj):
+        return self.online(x, adj)
 
 
 def train_bgrl(data, cfg: Cfg, labels=None):
     m = BGRL(data.num_features, cfg).to(cfg.device)
     x, ei = data.x.to(cfg.device), data.edge_index.to(cfg.device)
+    a = _adj(ei, x.size(0))
     m.train()
 
     def step():
@@ -182,7 +199,7 @@ def train_bgrl(data, cfg: Cfg, labels=None):
     def embed():
         m.eval()
         with torch.no_grad():
-            z = m.embed(x, ei)
+            z = m.embed(x, a)
         m.train()
         return z
 
@@ -194,8 +211,8 @@ def train_bgrl(data, cfg: Cfg, labels=None):
 # --------------------------------------------------------------------------- #
 # DGI — InfoMax (contrast point vs BGRL)
 # --------------------------------------------------------------------------- #
-def _corrupt(x, edge_index):
-    return x[torch.randperm(x.size(0), device=x.device)], edge_index
+def _corrupt(x, adj):
+    return x[torch.randperm(x.size(0), device=x.device)], adj
 
 
 def train_dgi(data, cfg: Cfg, labels=None):
@@ -206,17 +223,18 @@ def train_dgi(data, cfg: Cfg, labels=None):
         summary=lambda z, *a, **k: torch.sigmoid(z.mean(0)),
         corruption=_corrupt,
     ).to(cfg.device)
-    x, ei = data.x.to(cfg.device), data.edge_index.to(cfg.device)
+    x = data.x.to(cfg.device)
+    a = _adj(data.edge_index.to(cfg.device), x.size(0))
     m.train()
 
     def step():
-        pos, neg, summ = m(x, ei)
+        pos, neg, summ = m(x, a)
         return m.loss(pos, neg, summ)
 
     def embed():
         m.eval()
         with torch.no_grad():
-            z, _, _ = m(x, ei)
+            z, _, _ = m(x, a)
         m.train()
         return z
 
@@ -242,20 +260,20 @@ class MVGRL(nn.Module):
         s = s.expand_as(h)
         return self.disc(h, s).squeeze(-1)
 
-    def forward(self, x, ei_a, ei_d, ew_d):
-        ha = self.enc_a(x, ei_a)
-        hd = self.enc_d(x, ei_d, ew_d)
+    def forward(self, x, a, d):
+        ha = self.enc_a(x, a)
+        hd = self.enc_d(x, d)
         xc = x[torch.randperm(x.size(0), device=x.device)]
-        ha_c = self.enc_a(xc, ei_a)
-        hd_c = self.enc_d(xc, ei_d, ew_d)
+        ha_c = self.enc_a(xc, a)
+        hd_c = self.enc_d(xc, d)
         sa, sd = self._readout(ha), self._readout(hd)
         # cross-view: summary of one view discriminates nodes of the other
         pos = torch.cat([self.disc_scores(ha, sd), self.disc_scores(hd, sa)])
         neg = torch.cat([self.disc_scores(ha_c, sd), self.disc_scores(hd_c, sa)])
         return pos, neg
 
-    def embed(self, x, ei_a, ei_d, ew_d):
-        return self.enc_a(x, ei_a) + self.enc_d(x, ei_d, ew_d)
+    def embed(self, x, a, d):
+        return self.enc_a(x, a) + self.enc_d(x, d)
 
 
 def train_mvgrl(data, cfg: Cfg, labels=None):
@@ -263,14 +281,17 @@ def train_mvgrl(data, cfg: Cfg, labels=None):
         "MVGRL needs a diffusion view — call add_diffusion(data) first"
     m = MVGRL(data.num_features, cfg).to(cfg.device)
     x = data.x.to(cfg.device)
-    ei_a = data.edge_index.to(cfg.device)
-    ei_d = data.diff_edge_index.to(cfg.device)
-    ew_d = data.diff_edge_weight.to(cfg.device)
+    n = x.size(0)
+    a = _adj(data.edge_index.to(cfg.device), n)
+    # diffusion weights are asymmetric (normalization_out="col"): _adj's flip
+    # keeps GCNConv's source->target reading of diff_edge_index
+    d = _adj(data.diff_edge_index.to(cfg.device), n,
+             data.diff_edge_weight.to(cfg.device))
     bce = nn.BCEWithLogitsLoss()
     m.train()
 
     def step():
-        pos, neg = m(x, ei_a, ei_d, ew_d)
+        pos, neg = m(x, a, d)
         logits = torch.cat([pos, neg])
         lbl = torch.cat([torch.ones_like(pos), torch.zeros_like(neg)])
         return bce(logits, lbl)
@@ -278,7 +299,7 @@ def train_mvgrl(data, cfg: Cfg, labels=None):
     def embed():
         m.eval()
         with torch.no_grad():
-            z = m.embed(x, ei_a, ei_d, ew_d)
+            z = m.embed(x, a, d)
         m.train()
         return z
 
@@ -361,6 +382,8 @@ def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
         if name == "mvgrl" and not hasattr(data, "diff_edge_index"):
             print("[mvgrl] computing diffusion view (one-time, CPU)…")
             add_diffusion(data)
+        # per model, after the diffusion step: --models dgi alone == dgi after bgrl
+        torch.manual_seed(cfg.seed)
         t0 = time.time()
         emb, metrics = TRAINERS[name](data, cfg, labels)  # best emb + its metrics
         metrics["seconds"] = round(time.time() - t0, 1)

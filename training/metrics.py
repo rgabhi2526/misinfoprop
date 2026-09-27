@@ -8,8 +8,9 @@ Sections:
               edge-reconstruction AUC, seed stability (ARI across seeds)
   task        ARI vs graph partition, boundary-node vs betweenness overlap
 
-Caveat baked into the output: TIMME is 2 classes / 583 nodes, so label metrics
-sit near the ceiling and cannot separate models on their own.
+Caveat baked into the output: TIMME is 2 classes, 1,206 labeled of 20,811 nodes,
+so label metrics are computed on a small labeled subset and cannot separate
+models on their own.
 """
 from __future__ import annotations
 

@@ -91,7 +91,8 @@ def standardize(x):
 def base_args(dataset, default_dir, clusters=2, epochs=500):
     p = argparse.ArgumentParser(description=f"Train BGRL/DGI/MVGRL on {dataset}")
     p.add_argument("--data-dir", default=default_dir)
-    p.add_argument("--out-dir", default=f"./out/{dataset}")
+    import os   # anchor to training/, where eval/plot/disagreement read
+    p.add_argument("--out-dir", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "out", dataset))
     p.add_argument("--models", nargs="+", default=["bgrl", "dgi", "mvgrl"])
     p.add_argument("--dim", type=int, default=256)
     p.add_argument("--layers", type=int, default=2)

@@ -10,6 +10,9 @@ Features (decision T0, 2026-09-27; metadata used as features only):
 No labels (R6). Physical / lifestyle fields (eyes, smoking, zodiac, ...) are not used.
 --region restricts to users whose region starts with the given text (e.g.
 "zilinsky kraj") and their induced friendships — a small slice for fast iteration.
+Give a slice its own --tag so downstream scripts find it:
+    python train_pokec.py --region "zilinsky kraj, kysucke nove mesto" --tag pokec_knm
+    -> out/pokec_knm/pokec_knm_<model>_emb.pt
 Text encodings are cached as pokec_text_<region|all>.npy next to the data.
 """
 from __future__ import annotations
@@ -80,13 +83,16 @@ def load_data(data_dir=DEFAULT_DIR, limit=None, region=None):
 def main():
     p = common.base_args("pokec", DEFAULT_DIR, clusters=10)
     p.add_argument("--region", default=None, help='e.g. "zilinsky kraj" (default: all)')
+    p.add_argument("--tag", default="pokec", help="out/<tag>/<tag>_<model>_emb.pt, e.g. pokec_knm")
+    p.set_defaults(out_dir=None)                   # default: out/<tag>/ next to this file
     a = p.parse_args()
     data, labels = load_data(a.data_dir, a.limit, a.region)
     print(f"pokec[{a.region or 'all'}]: {data.num_nodes} nodes, {data.edge_index.size(1)} edges, "
           f"{data.num_features} feat dims")
     cfg = common.cfg_from_args(a)
     results = gclib.run_all(data, cfg, labels=labels, models=a.models)
-    gclib.save(results, a.out_dir, "pokec")
+    out_dir = a.out_dir or os.path.join(os.path.dirname(os.path.abspath(__file__)), "out", a.tag)
+    gclib.save(results, out_dir, a.tag)
 
 
 if __name__ == "__main__":

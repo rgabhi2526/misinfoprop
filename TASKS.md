@@ -78,8 +78,11 @@ Reference: `docs/MODELS.md`, `training/gclib.py`, `training/README.md`
 - [x] T2.3 Select best epoch by **modularity**, not NMI (label leakage) (2026-09-27)
 - [x] T2.4 Symmetric edge dropout in augmentations (2026-09-27)
 - [x] T2.5 MVGRL exact-PPR fallback when numba fails (2026-09-27)
-- [ ] T2.6 **Retrain all datasets on A100** — every `.pt` in `training/out/` is stale
-  - [ ] timme (P_all)  - [ ] reddit  - [ ] gab  - [ ] voterfraud (if kept)
+- [x] T2.5a Sparse-adjacency GCN (edge list OOMs: TIMME ~12 GB/layer, Pokec ~46 GB);
+  numerically identical, `training/test_gclib.py`. Per-model seed reset. (2026-09-27)
+- [ ] T2.6 **Retrain on the Linux CUDA box (user runs)** — every `.pt` in `training/out/` is stale
+  - [ ] preflight: `python test_gclib.py` on cuda + numba/GDC check in `requirements.txt`
+  - [ ] timme (P_all)  - [ ] pokec slice (`--tag pokec_knm`)  - [ ] pokec full
 - [ ] T2.7 Cache MVGRL diffusion to disk — S-18
 
 ## T3 — Embedding evaluation
@@ -93,11 +96,14 @@ Reference: `training/metrics.py`, `training/eval_embeddings.py`, `training/plot_
 - [ ] T3.6 Pick the embedding(s) to feed T4 — by probe/NMI on TIMME **and** seed stability
 - [ ] T3.7 Graph metrics for >200k nodes (VoterFraud, Gab) — S-17
 
-## T4 — Clustering views  ← next
+## T4 — Clustering views  ← PAUSED until T2.6 (user trains the models)
+Draft: `training/disagreement.py` (T4 + T5), uncommitted, untested, not reviewed.
+Self-check draft parked in `archive/training/test_disagreement.py`. Resume only after the
+user has trained TIMME + Pokec-slice embeddings and asks to continue.
 Two complementary clusterers on the same embedding (paper: density + nearest-neighbour).
 
-- [~] T4.1 View A: HDBSCAN (density) on L2-normalized, dimension-reduced embeddings — S-02, S-03
-- [~] T4.2 View B: FINCH (first-neighbour, parameter-free) — S-05
+- [ ] T4.1 View A: HDBSCAN (density) on L2-normalized, dimension-reduced embeddings — S-02, S-03
+- [ ] T4.2 View B: FINCH (first-neighbour, parameter-free) — S-05
 - [x] T4.3 Noise handling decided: HDBSCAN `-1` = uncertain (S-06, 2026-09-27) — (HDBSCAN `-1` = "uncertain", as in the paper) — S-06
 - [ ] T4.4 Optional view C: Louvain on the graph (topology-only) — S-01
 - [ ] T4.5 Check each view is **stable across seeds** before trusting its disagreement — S-07

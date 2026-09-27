@@ -1,10 +1,18 @@
-# Install torch + PyG matching your CUDA (A100 → cu121 wheels), e.g.:
+# Linux + CUDA GPU box. Install torch + PyG matching your CUDA first (A100 → cu121 wheels), e.g.:
 #   pip install torch --index-url https://download.pytorch.org/whl/cu121
 #   pip install torch_geometric
+# then: pip install -r requirements.txt
 torch>=2.1
 torch_geometric>=2.4        # DeepGraphInfomax, GDC, dropout_edge, coalesce
-scikit-learn>=1.3           # KMeans + NMI for eval
+scikit-learn>=1.3           # KMeans, NMI, HDBSCAN (disagreement.py needs >=1.3)
+scipy>=1.10                 # sparse LCC, spearmanr
+networkx>=3.0               # metrics.py: nx.community.louvain_communities
 pandas>=2.0
 numpy>=1.24
 sentence-transformers>=2.2  # text → node features (common.encode_texts)
-numba>=0.58                 # MVGRL only: GDC approximate PPR (get_ppr) needs it
+numba>=0.58                 # MVGRL only: GDC approximate PPR (get_ppr) is numba-jitted
+# check numba compiles get_ppr (prints torch.Size([2, N]); a numba error = incompatible
+# numba for this PyG — pin another numba version; numba 0.60 + PyG 2.8 fails on the Mac):
+#   python -c "import torch;from torch_geometric.data import Data;from torch_geometric.transforms import GDC;e=torch.tensor([[0,1,1,2],[1,0,2,1]]);print(GDC(diffusion_kwargs=dict(method='ppr',alpha=0.15,eps=1e-4),sparsification_kwargs=dict(method='threshold',eps=1e-4),exact=False)(Data(edge_index=e,num_nodes=3)).edge_index.shape)"
+umap-learn>=0.5             # plot_umap.py
+matplotlib>=3.7             # plot_umap.py

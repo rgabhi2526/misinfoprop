@@ -1,13 +1,14 @@
 """UMAP of saved embeddings: rows = models, columns = colourings.
 
     python plot_umap.py timme     # party | k-means k=2 | boundary margin
-    python plot_umap.py reddit    # k-means k=10 | log degree | boundary margin
+    python plot_umap.py pokec --region "zilinsky kraj, kysucke nove mesto" --tag pokec_knm
+                                  # k-means k=10 | log degree | boundary margin
 
-Writes out/<ds>/<ds>_umap.png.
+Writes out/<tag>/<tag>_umap.png (tag defaults to the dataset).
 """
+import argparse
 import importlib
 import os
-import sys
 
 import matplotlib
 matplotlib.use("Agg")
@@ -51,8 +52,10 @@ def continuous(ax, xy, v, cmap, label, fig):
     fig.colorbar(sc, ax=ax, fraction=0.04, pad=0.01).set_label(label, color=MUTED, fontsize=8)
 
 
-def main(ds):
-    data, labels = importlib.import_module(f"train_{ds}").load_data()
+def main(ds, region=None, tag=None):
+    tag = tag or ds
+    loader = importlib.import_module(f"train_{ds}")
+    data, labels = loader.load_data(region=region) if region else loader.load_data()
     n = data.num_nodes
     deg = np.bincount(data.edge_index[0].numpy(), minlength=n)
     k = 2 if ds == "timme" else 10
@@ -61,7 +64,7 @@ def main(ds):
 
     fig, axes = plt.subplots(3, 3, figsize=(16, 15), facecolor="white")
     for r, m in enumerate(MODELS):
-        emb = torch.load(os.path.join(HERE, "out", ds, f"{ds}_{m}_emb.pt"),
+        emb = torch.load(os.path.join(HERE, "out", tag, f"{tag}_{m}_emb.pt"),
                          map_location="cpu", weights_only=True).numpy()
         assert len(emb) == n, f"{m}: {len(emb)} rows != {n} nodes — retrain with current loader"
         xy = umap.UMAP(metric="cosine", n_neighbors=15, min_dist=0.1,
@@ -86,13 +89,18 @@ def main(ds):
             ax.set_xticks([]); ax.set_yticks([])
             for s in ax.spines.values(): s.set_color("#e3e2de")
             ax.set_title(f"{m.upper()} · {cols[j]}", fontsize=10, color=INK, loc="left")
-    fig.suptitle(f"{ds}: UMAP (cosine, n_neighbors=15, min_dist=0.1) of L2-normalized embeddings",
+    fig.suptitle(f"{tag}: UMAP (cosine, n_neighbors=15, min_dist=0.1) of L2-normalized embeddings",
                  color=INK, x=0.01, ha="left")
     fig.tight_layout()
-    out = os.path.join(HERE, "out", ds, f"{ds}_umap.png")
+    out = os.path.join(HERE, "out", tag, f"{tag}_umap.png")
     fig.savefig(out, dpi=110)
     print("saved", out)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    p = argparse.ArgumentParser()
+    p.add_argument("dataset")
+    p.add_argument("--region", default=None, help="pokec only: region slice")
+    p.add_argument("--tag", default=None, help="out/<tag>/ (default: dataset)")
+    a = p.parse_args()
+    main(a.dataset, a.region, a.tag)

@@ -14,18 +14,24 @@ requirements.txt
 
 ## Run
 
+Training runs on the Linux CUDA GPU box (not the Mac).
+
 ```bash
 pip install -r requirements.txt          # torch + PyG must match your CUDA
 python train_timme.py                     # all 3 models, full data
-python train_pokec.py --region "zilinsky kraj" # small slice; omit for full 1.63M
+python train_pokec.py --region "zilinsky kraj, kysucke nove mesto" --tag pokec_knm  # small slice
+python train_pokec.py                     # full 1.63M -> out/pokec/
 python eval_embeddings.py timme           # full metrics report on saved embeddings
 python plot_umap.py timme                 # UMAP grid of saved embeddings
+python eval_embeddings.py pokec --region "zilinsky kraj, kysucke nove mesto" --tag pokec_knm
+python plot_umap.py pokec --region "zilinsky kraj, kysucke nove mesto" --tag pokec_knm
 ```
 
 Common flags: `--dim 256 --layers 2 --epochs 500 --clusters K --models bgrl dgi mvgrl --device cuda --limit N`.
-Outputs go to `out/<ds>/`: `<ds>_<model>_emb.pt` (node embeddings) and
-`<ds>_metrics.json` (best-epoch metrics, wall-clock, and the full `metrics.report`:
-health / labeled / unlabeled / task sections — see `metrics.py`).
+Outputs go to `out/<tag>/` (tag = dataset unless `--tag` is set; pokec slices need
+their own tag, and eval/plot/disagreement must get the same `--region/--tag`):
+`<tag>_<model>_emb.pt` (node embeddings) and `<tag>_metrics.json` (best-epoch
+metrics, wall-clock, and the full `metrics.report`: health / labeled / unlabeled / task sections — see `metrics.py`).
 
 ## Per-dataset notes
 
@@ -53,9 +59,9 @@ All text goes through `common.encode_texts` (`paraphrase-multilingual-MiniLM-L12
 - **MVGRL diffusion** uses PyG `GDC` (sparse/approx PPR), never a dense N² matrix.
   It is CPU-bound preprocessing — computed once in `run_all`; cache
   `data.diff_edge_index/diff_edge_weight` to disk to avoid recomputing per run.
-- **Scale (VoterFraud, 1.9M nodes)** — full-batch on an A100 with sparse ops.
-  The trainers are batch-agnostic, so wrap them in a `NeighborLoader` if VRAM is
-  tight; use `--limit` for a quick pass first.
+- **Scale (Pokec full, 1.63M nodes)** — the GCN uses a sparse adjacency,
+  full-batch, on the CUDA GPU. The trainers are batch-agnostic, so wrap them in a
+  `NeighborLoader` if VRAM is tight; iterate on a `--region` slice first.
 
 ## Not built
 
