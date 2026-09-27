@@ -16,8 +16,8 @@ Major project /
 ├── docs/        MODELS.md · ideas/project-idea*.md · papers/active_learning.pdf
 ├── scripts/     download_data.sh (fetches data_final/)
 ├── training/    pipeline code: common.py gclib.py metrics.py train_<ds>.py (+ .ipynb
-│                wrappers) eval_embeddings.py plot_umap.py · out/ = generated embeddings
-├── archive/     pre-pipeline exploration (VGAE on Facebook-ego, early notebooks) — not maintained
+│                wrappers) eval_embeddings.py plot_umap.py disagreement.py · out/ = generated
+├── archive/     not maintained: early notebooks, VGAE outputs, reserve loaders (training/)
 ├── data/        Pokec, Orkut, SNAP ego nets (raw, gitignored)
 └── data_final/  TIMME, Gab, Reddit, VoterFraud (raw, gitignored) + DATASETS.md
 ```
@@ -84,8 +84,7 @@ raw files ──► loader (train_<ds>.py) ──► common.make_data ──► 
 |---|---|---|---|
 | `train_timme.py` (`P_all`) | 20,811 | bio + latest tweet → 384 + flag (98% have text) | 1,206 R/D (bonus only) |
 | `train_pokec.py` | 1.63M (full) · `--region` slice | interest text → 384 + flag, gender, age + known flag, region one-hot | none |
-| `train_gab.py` (reserve) | TBD (needs 48 GB parse) | own post text → 384 + flag | none |
-| `train_reddit.py` (reserve) | ~31k | shipped subreddit embeddings | none — violates R4, fix before use |
+| Gab, Reddit (reserve) | loaders archived in `archive/training/` | — | — |
 
 ## 2. Embedding models — `training/gclib.py` (T2; background `docs/MODELS.md`)
 
@@ -153,6 +152,8 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-09-27** Reserve loaders (gab, reddit) + rejected `test_disagreement.py` moved to
+  `archive/training/`; `training/` now holds only the TIMME + Pokec pipeline.
 - **2026-09-27** Repo reorganized: docs/, scripts/, archive/; living docs at root;
   `train_pokec.ipynb` added, `train_voterfraud.ipynb` + stale `inst.txt` removed.
 - **2026-09-27** Datasets final: TIMME `P_all` + Pokec; VoterFraud loader deleted.

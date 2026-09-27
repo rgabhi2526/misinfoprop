@@ -43,7 +43,7 @@ Datasets must not change after this. Discussion log: `DISCUSSION.md` Topic 1.
 - [x] T0.4 **Final: TIMME `P_all` + Pokec** (2026-09-27). Gab, Reddit reserve; VoterFraud,
       Orkut, Facebook-ego dropped. Features: TIMME bio + latest tweet text; Pokec interest
       text + gender/age/region; one multilingual encoder for all text.
-  - [ ] T0.4a Discuss: full Pokec (1.63M) vs regional slice first — user leans full
+  - [x] T0.4a Develop T4–T8 on TIMME + a Pokec region slice; full Pokec for the final run (2026-09-27)
 - [x] T0.5 Rewrite `data_final/DATASETS.md` (2026-09-27)
 - [~] T0.6 Loaders: `common.encode_texts` (+ `has_metadata`), TIMME text features,
       new `train_pokec.py` (`--region`), Gab on shared encoder, VoterFraud loader deleted
@@ -96,9 +96,9 @@ Reference: `training/metrics.py`, `training/eval_embeddings.py`, `training/plot_
 ## T4 — Clustering views  ← next
 Two complementary clusterers on the same embedding (paper: density + nearest-neighbour).
 
-- [ ] T4.1 View A: HDBSCAN (density) on L2-normalized, dimension-reduced embeddings — S-02, S-03
-- [ ] T4.2 View B: FINCH (first-neighbour, parameter-free) — S-05
-- [ ] T4.3 Decide noise handling (HDBSCAN `-1` = "uncertain", as in the paper) — S-06
+- [~] T4.1 View A: HDBSCAN (density) on L2-normalized, dimension-reduced embeddings — S-02, S-03
+- [~] T4.2 View B: FINCH (first-neighbour, parameter-free) — S-05
+- [x] T4.3 Noise handling decided: HDBSCAN `-1` = uncertain (S-06, 2026-09-27) — (HDBSCAN `-1` = "uncertain", as in the paper) — S-06
 - [ ] T4.4 Optional view C: Louvain on the graph (topology-only) — S-01
 - [ ] T4.5 Check each view is **stable across seeds** before trusting its disagreement — S-07
 
@@ -132,6 +132,6 @@ Reference: `docs/ideas/project-idea-1.md`
 - [ ] T8.3 Intervention baselines at fixed budget (none, random, degree, betweenness, ours)
 
 ## T9 — Housekeeping
-- [ ] T9.1 Commit the current work (no AI co-author line — user rule)
+- [x] T9.1 Commit the current work — `6189707` (2026-09-27)
 - [ ] T9.2 Resolve conda-base `checkov` vs networkx 3.7 conflict — S-19
 - [ ] T9.3 Advisor check-in with the narrowed novelty claim — S-15

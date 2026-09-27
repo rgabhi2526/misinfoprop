@@ -19,6 +19,9 @@
 - Run Python with `/opt/anaconda3/bin/python` (conda base). `conda run` drops stdin.
 - The project path has a trailing space: `.../Major project /`. Quote it.
 - Commits: user is sole author, never add an AI `Co-Authored-By` line.
+- **Never start model training yourself.** Training (`train_*.py`, notebooks,
+  `gclib.run_all`, any GPU job) is run by the user or only after explicit approval
+  for that specific run. Prepare the exact command and hand it over instead.
 - After finishing a task, update `TASKS.md` / `SUGGESTIONS.md`.
 - **Update `DEVELOPED.md` whenever something major changes** — a stage is built or
   reworked, a dataset/feature/model decision changes, a result supersedes an old one,

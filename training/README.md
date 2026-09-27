@@ -17,11 +17,9 @@ requirements.txt
 ```bash
 pip install -r requirements.txt          # torch + PyG must match your CUDA
 python train_timme.py                     # all 3 models, full data
-python train_reddit.py     --limit 100000 # quick sanity pass on a slice
 python train_pokec.py --region "zilinsky kraj" # small slice; omit for full 1.63M
-python train_gab.py        --limit 200000 # 48GB dump; parse+encode cached once
 python eval_embeddings.py timme           # full metrics report on saved embeddings
-python plot_umap.py timme                 # UMAP grid (timme | reddit)
+python plot_umap.py timme                 # UMAP grid of saved embeddings
 ```
 
 Common flags: `--dim 256 --layers 2 --epochs 500 --clusters K --models bgrl dgi mvgrl --device cuda --limit N`.
@@ -31,16 +29,15 @@ health / labeled / unlabeled / task sections — see `metrics.py`).
 
 ## Per-dataset notes
 
-Final datasets (T0, 2026-09-27): **timme** and **pokec**. gab and reddit are reserve.
+Final datasets (T0, 2026-09-27): **timme** and **pokec**. gab and reddit are reserve;
+their loaders live in `archive/training/` (restore to use).
 All text goes through `common.encode_texts` (`paraphrase-multilingual-MiniLM-L12-v2`,
 384-d + `has_metadata` flag); nodes without metadata are kept.
 
 | Dataset | Graph | Node features | Labels (NMI) |
 |---|---|---|---|
 | **timme** | `P_all` (21k users): pooled follow/mention/favorite/reply/retweet | bio + latest tweet text → multilingual encoder | R/D: `dict.csv` + `additional_labels/` (1,206 in LCC); independents unlabeled |
-| **reddit** | subreddit→subreddit hyperlinks (body+title) | shipped 300-d subreddit embeddings | none |
 | **pokec** | 30.6M directed friendships (1.63M users) | interest free text (Slovak) → multilingual encoder + gender, age, region one-hot | none |
-| **gab** | repost: actuser→author; reply/quote: author→parent author | sentence-transformer over each author's own posts | none |
 
 ## Design decisions (from docs/MODELS.md)
 
@@ -62,7 +59,5 @@ All text goes through `common.encode_texts` (`paraphrase-multilingual-MiniLM-L12
 
 ## Not built
 
-- Gab feature cap (`MAX_CHARS=4000`) and encoder (`all-MiniLM-L6-v2`) are
-  defaults — raise/swap in `train_gab.py` if the ideology signal looks thin.
-- Cluster count `K` for the label-less datasets (reddit, gab) is a guess (10).
+- Cluster count `K` for pokec (no labels) is a guess (10).
   Set `--clusters` once you have a target community count.

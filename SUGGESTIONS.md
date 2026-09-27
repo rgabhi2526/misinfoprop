@@ -8,11 +8,11 @@ Last updated: 2026-09-27
 | ID | Task | Suggestion | Status |
 |---|---|---|---|
 | S-01 | T4.4 | Louvain on the graph as a third view | open |
-| S-02 | T4.1 | HDBSCAN instead of DBSCAN | open (recommended) |
-| S-03 | T4.1 | Cosine + dimension reduction before density clustering | open (recommended) |
+| S-02 | T4.1 | HDBSCAN instead of DBSCAN | accepted |
+| S-03 | T4.1 | Cosine + dimension reduction before density clustering | accepted |
 | S-04 | T8.1 | Participation coefficient alongside betweenness | open |
-| S-05 | T4.2 | FINCH: own ~30-line implementation vs `finch-clust` | open |
-| S-06 | T4.3 | Treat HDBSCAN noise as "uncertain", not "no community" | open (recommended) |
+| S-05 | T4.2 | FINCH: own ~30-line implementation vs `finch-clust` | accepted |
+| S-06 | T4.3 | Treat HDBSCAN noise as "uncertain", not "no community" | accepted |
 | S-07 | T4.5 | Separate real disagreement from seed instability | accepted |
 | S-08 | T6.1 | Error enrichment as the first validation metric | open (recommended) |
 | S-09 | T6.2 | Baselines for "is disagreement informative" | open |
@@ -38,12 +38,12 @@ as the faithful baseline, add C only as an ablation (A∩B vs A∩C vs B∩C).
 Earlier evidence: graph-only clustering hit NMI 0.82 on PureP vs 0.70 for
 embeddings — needs re-checking on P_all after retraining.
 
-### S-02 — HDBSCAN over DBSCAN (T4.1)
+### S-02 — HDBSCAN over DBSCAN (T4.1) — accepted
 One global `eps` cannot fit power-law graphs whose density varies by orders of
 magnitude. HDBSCAN has no `eps`, ships in sklearn ≥1.3 (no new dependency), and
 still labels noise. The paper used DBSCAN; say so and justify the swap.
 
-### S-03 — Cosine + reduce dims before density clustering (T4.1)
+### S-03 — Cosine + reduce dims before density clustering (T4.1) — accepted (PCA)
 Density is near-meaningless in 256-d. L2-normalize (already done for k-means —
 raw vectors collapsed to [580, 3]), then PCA/UMAP to ~16–50 d. The paper's SpCL
 setup uses k-reciprocal Jaccard distance; a faithful option, costlier.
@@ -53,14 +53,14 @@ Measures how evenly a node's edges spread across communities — closer to "brid
 than betweenness, and O(E) instead of O(VE). Earlier boundary-vs-betweenness
 numbers were computed on stale embeddings; redo after T2.6.
 
-### S-05 — FINCH implementation (T4.2)
+### S-05 — FINCH implementation (T4.2) — accepted: own implementation
 FINCH = link each point to its first nearest neighbour, take connected
 components, recurse on cluster means → a hierarchy of partitions. ~30 lines with
 sklearn `NearestNeighbors` + scipy `connected_components`, vs a pip dependency.
 Lean: write it, plus a self-check. Pick the partition level whose cluster count
 is closest to HDBSCAN's, or report several levels.
 
-### S-06 — Noise = uncertain (T4.3)
+### S-06 — Noise = uncertain (T4.3) — accepted
 The paper uses DBSCAN outliers explicitly (inlier/outlier pair types β1–β3).
 Expect a large noise share on low-degree nodes; decide before interpreting results.
 
