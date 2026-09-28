@@ -72,8 +72,11 @@ def encode_texts(texts, cache=None):
 
     has = np.array([bool(t and t.strip()) for t in texts])
     model = SentenceTransformer(ENCODER, device="cuda" if torch.cuda.is_available() else "cpu")
-    x = np.zeros((len(texts), model.get_sentence_embedding_dimension() + 1), np.float32)
-    x[has, :-1] = model.encode([t for t, h in zip(texts, has) if h], batch_size=256,
+    dim = getattr(model, "get_embedding_dimension", None) or model.get_sentence_embedding_dimension
+    x = np.zeros((len(texts), dim() + 1), np.float32)
+    # 128 tokens never needed >500 chars (Pokec sample); tokenizing the full text (up to
+    # 58k chars) is CPU work the model throws away — ~2x faster, identical embeddings
+    x[has, :-1] = model.encode([t[:1000] for t, h in zip(texts, has) if h], batch_size=256,
                                show_progress_bar=True, convert_to_numpy=True,
                                normalize_embeddings=True)
     x[:, -1] = has
