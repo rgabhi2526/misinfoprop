@@ -14,3 +14,4 @@ training/out/
 *.npy
 archive/
 archive/
+temp.txt
