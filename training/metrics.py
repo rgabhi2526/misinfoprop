@@ -15,6 +15,7 @@ models on their own.
 from __future__ import annotations
 
 import itertools
+import time
 
 import numpy as np
 from scipy.stats import spearmanr
@@ -28,9 +29,15 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import normalize
 
 SAMPLE = 10_000     # cap for O(n^2)-ish metrics (silhouette, kNN, eff. rank)
-# ponytail: networkx is pure python; graph-algorithm metrics are skipped above
-# this size. Swap in igraph/cuGraph if pokec/gab need them.
+# ponytail: graph metrics (igraph Louvain + 500-pivot betweenness) are skipped above
+# this size; TIMME takes ~25 s. Raise it for full Pokec if the task metrics are needed.
 GRAPH_MAX = 200_000
+_T0 = time.time()
+
+
+def log(msg):
+    """Timestamped progress line; flush so `!python ...` in Colab shows it live."""
+    print(f"[{time.time() - _T0:7.1f}s] {msg}", flush=True)
 
 
 def cluster(emb, k, seed=0):
@@ -131,18 +138,23 @@ def _edge_auc(z, edge_index, rng, n_pairs=100_000):
 def graph_stats(edge_index, n, seed=0):
     """Embedding-independent graph side of the task metrics: Louvain partition
     + sampled betweenness. Compute once per dataset and pass to report()."""
-    import networkx as nx
+    import random
+
+    import igraph as ig   # C core: networkx took hours on TIMME's 4.1M edges
 
     src, dst = np.asarray(edge_index)
-    g = nx.Graph()
-    g.add_nodes_from(range(n))
-    g.add_edges_from(zip(src[src < dst].tolist(), dst[src < dst].tolist()))
-    gp = np.zeros(n, dtype=np.int64)
-    for c, s in enumerate(nx.community.louvain_communities(g, seed=seed)):
-        gp[list(s)] = c
-    # ponytail: sampled betweenness (500 pivots); exact is O(VE)
-    btw = nx.betweenness_centrality(g, k=min(n, 500), seed=seed)
-    return {"partition": gp, "betweenness": np.array([btw[i] for i in range(n)])}
+    keep = src < dst
+    g = ig.Graph(n=n, edges=np.stack([src[keep], dst[keep]], 1))
+    log(f"graph stats: Louvain on {n} nodes / {g.ecount()} edges")
+    ig.set_random_number_generator(random.Random(seed))
+    gp = np.array(g.community_multilevel().membership, dtype=np.int64)
+    # ponytail: sampled betweenness (500 pivots, unnormalized — only ranks are used);
+    # exact is O(VE)
+    piv = np.random.default_rng(seed).choice(n, min(n, 500), replace=False).tolist()
+    log(f"graph stats: betweenness from {len(piv)} pivots")
+    btw = np.array(g.betweenness(sources=piv), dtype=np.float64)
+    log(f"graph stats: done ({gp.max() + 1} Louvain communities)")
+    return {"partition": gp, "betweenness": btw}
 
 
 def _task(z, edge_index, pred, centers, y, graph):
@@ -180,6 +192,7 @@ def report(emb, edge_index, k, labels=None, seed=0, n_seeds=5, graph=None):
     rng = np.random.default_rng(seed)
     n = len(emb)
     z = normalize(emb)
+    log(f"report: k-means k={k} x {n_seeds} seeds on {n} x {emb.shape[1]}")
     pred, centers = cluster(emb, k, seed)
     deg = np.bincount(edge_index[0], minlength=n)
 
@@ -203,9 +216,10 @@ def report(emb, edge_index, k, labels=None, seed=0, n_seeds=5, graph=None):
         },
     }
     if y is not None and (y >= 0).any():
+        log(f"report: label metrics on {int((y >= 0).sum())} labeled nodes")
         rep["labeled"] = _labeled(z, y, pred, seed, rng)
     if n > GRAPH_MAX:
-        rep["task"] = {"skipped": f"n={n} > {GRAPH_MAX} (networkx too slow)"}
+        rep["task"] = {"skipped": f"n={n} > GRAPH_MAX={GRAPH_MAX}"}
     else:
         rep["task"] = _task(z, edge_index, pred, centers, y,
                             graph or graph_stats(edge_index, n, seed))

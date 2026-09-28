@@ -67,6 +67,7 @@ def main(ds, region=None, tag=None):
         emb = torch.load(os.path.join(HERE, "out", tag, f"{tag}_{m}_emb.pt"),
                          map_location="cpu", weights_only=True).numpy()
         assert len(emb) == n, f"{m}: {len(emb)} rows != {n} nodes — retrain with current loader"
+        metrics.log(f"umap: {m} ({n} nodes)")
         xy = umap.UMAP(metric="cosine", n_neighbors=15, min_dist=0.1,
                        random_state=0).fit_transform(normalize(emb))
         pred, _ = metrics.cluster(emb, k)

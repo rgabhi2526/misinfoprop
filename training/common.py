@@ -11,6 +11,8 @@ import torch
 from torch_geometric.data import Data
 from torch_geometric.utils import remove_self_loops, subgraph, to_undirected
 
+from metrics import log
+
 
 def remap_ids(src, dst):
     """Map arbitrary node ids (str/int) in two parallel arrays to contiguous
@@ -38,6 +40,7 @@ def make_data(edge_index, x, num_nodes=None, lcc=True):
     from scipy.sparse.csgraph import connected_components
 
     n = num_nodes if num_nodes is not None else int(edge_index.max()) + 1
+    log(f"make_data: {edge_index.size(1)} raw edges, {n} nodes -> symmetrize + LCC")
     edge_index, _ = remove_self_loops(edge_index)
     edge_index = to_undirected(edge_index, num_nodes=n)   # also coalesces
     keep = torch.arange(n)
@@ -47,7 +50,8 @@ def make_data(edge_index, x, num_nodes=None, lcc=True):
                                        directed=False)
         keep = torch.from_numpy(np.flatnonzero(comp == np.bincount(comp).argmax()))
         edge_index, _ = subgraph(keep, edge_index, relabel_nodes=True, num_nodes=n)
-        print(f"largest connected component: {keep.numel()}/{n} nodes kept")
+        log(f"make_data: largest connected component {keep.numel()}/{n} nodes kept, "
+            f"{edge_index.size(1)} directed edges")
     data = Data(x=standardize(x[keep]), edge_index=edge_index, num_nodes=keep.numel())
     data.orig_idx = keep
     return data
@@ -67,12 +71,15 @@ def encode_texts(texts, cache=None):
     import os
 
     if cache and os.path.exists(cache):
+        log(f"encode_texts: loaded cache {cache}")
         return torch.from_numpy(np.load(cache))
     from sentence_transformers import SentenceTransformer
 
     has = np.array([bool(t and t.strip()) for t in texts])
     model = SentenceTransformer(ENCODER, device="cuda" if torch.cuda.is_available() else "cpu")
     dim = getattr(model, "get_embedding_dimension", None) or model.get_sentence_embedding_dimension
+    log(f"encode_texts: {has.sum()}/{len(texts)} nodes have text; encoding on {model.device} "
+        f"(first run only — cached to {cache})")
     x = np.zeros((len(texts), dim() + 1), np.float32)
     # 128 tokens never needed >500 chars (Pokec sample); tokenizing the full text (up to
     # 58k chars) is CPU work the model throws away — ~2x faster, identical embeddings
@@ -82,6 +89,7 @@ def encode_texts(texts, cache=None):
     x[:, -1] = has
     if cache:
         np.save(cache, x)
+        log(f"encode_texts: saved {cache}")
     return torch.from_numpy(x)
 
 

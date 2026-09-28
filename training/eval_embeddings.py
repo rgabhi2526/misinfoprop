@@ -14,6 +14,7 @@ import os
 import torch
 
 import metrics
+from metrics import log
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -38,7 +39,9 @@ for f in sorted(glob.glob(os.path.join(out_dir, f"{tag}_*_emb.pt"))):
     emb = torch.load(f, map_location="cpu", weights_only=True)
     assert emb.shape[0] == data.num_nodes, (f"{name}: {emb.shape[0]} rows != {data.num_nodes} nodes — "
                                            "embedding predates the current loader, retrain")
+    log(f"eval: {name} ({emb.shape[0]} x {emb.shape[1]}), k={k}")
     rep[name] = metrics.report(emb.numpy(), ei, k, labels, graph=graph)
-    print(name, json.dumps(rep[name], indent=1))
+    print(name, json.dumps(rep[name], indent=1), flush=True)
 with open(os.path.join(out_dir, f"{tag}_report.json"), "w") as fh:
     json.dump(rep, fh, indent=2)
+log(f"eval: wrote {os.path.join(out_dir, f'{tag}_report.json')}")

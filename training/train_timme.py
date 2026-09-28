@@ -43,6 +43,7 @@ def load_data(data_dir=DEFAULT_DIR, limit=None):
         ids = ids.iloc[1:]
     id2idx = pd.Series(np.arange(len(ids)), index=ids.to_numpy())
     n = len(ids)
+    common.log(f"timme: {n} users in {data_dir}")
 
     info = json.load(open(os.path.join(data_dir, "../formatted_location/simplified_user_info.json")))
     texts = [" ".join(filter(None, ((info.get(i) or {}).get("description"),
@@ -58,6 +59,7 @@ def load_data(data_dir=DEFAULT_DIR, limit=None):
         a, b = df[0].str.strip().map(id2idx), df[1].str.strip().map(id2idx)
         ok = a.notna() & b.notna()
         src.append(a[ok].to_numpy(np.int64)); dst.append(b[ok].to_numpy(np.int64))
+        common.log(f"timme: {os.path.basename(fn)}: {int(ok.sum())} edges")
     edge_index = torch.from_numpy(np.stack([np.concatenate(src), np.concatenate(dst)]))
 
     labels = np.full(n, -1, dtype=np.int64)
@@ -71,6 +73,7 @@ def load_data(data_dir=DEFAULT_DIR, limit=None):
         ok = idx.notna() & y.notna()
         labels[idx[ok].to_numpy(np.int64)] = y[ok].to_numpy(np.int64)
 
+    common.log(f"timme: {int((labels >= 0).sum())} users labeled R/D")
     data = common.make_data(edge_index, x, num_nodes=n)
     return data, labels[data.orig_idx.numpy()]
 

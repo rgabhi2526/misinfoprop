@@ -49,6 +49,7 @@ INTEREST = ["hobbies", "I_like_music", "I_like_movies", "I_like_books", "my_acti
 
 
 def load_data(data_dir=DEFAULT_DIR, limit=None, region=None):
+    common.log(f"pokec: reading profiles ({region or 'all regions'})")
     p = pd.read_csv(os.path.join(data_dir, "soc-pokec-profiles.txt"), sep="\t",
                     header=None, names=COLS + ["_trailing"], usecols=COLS[:8] + INTEREST,
                     dtype=str, na_values=["null"], quoting=3)
@@ -57,12 +58,14 @@ def load_data(data_dir=DEFAULT_DIR, limit=None, region=None):
     p = p.reset_index(drop=True)
     uid2idx = pd.Series(np.arange(len(p)), index=p["user_id"].astype(np.int64).to_numpy())
     n = len(p)
+    common.log(f"pokec: {n} users; reading friendships (30.6M rows for full Pokec)")
 
     e = pd.read_csv(os.path.join(data_dir, "soc-pokec-relationships.txt"), sep="\t",
                     header=None, dtype=np.int64, nrows=limit)
     a, b = e[0].map(uid2idx), e[1].map(uid2idx)
     ok = a.notna() & b.notna()                     # induced subgraph when --region is set
     edge_index = torch.from_numpy(np.stack([a[ok].to_numpy(np.int64), b[ok].to_numpy(np.int64)]))
+    common.log(f"pokec: {int(ok.sum())} friendships kept; building interest texts")
 
     texts = ["; ".join(f"{c}: {v}" for c, v in zip(INTEREST, row) if isinstance(v, str))
              for row in p[INTEREST].itertuples(index=False)]

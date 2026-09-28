@@ -181,6 +181,9 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-09-28** `graph_stats` moved from networkx to igraph (TIMME: hours → ~25 s; new
+  dependency `igraph`); timestamped, flushed progress logs (`metrics.log`) in all scripts;
+  text capped at 1000 chars before tokenizing (identical embeddings, ~2x faster).
 - **2026-09-27** Literature review (S-22): ambiguity score, outliers ≠ bridges (S-06
   rejected), source-unknown blocking, stronger baselines; modularity measured (T7.0).
 - **2026-09-27** Plan reordered (S-21): IBM simulation + baselines is now T7 and gates

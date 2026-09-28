@@ -24,6 +24,7 @@ from torch_geometric.utils import (add_remaining_self_loops, dropout_edge,
                                    to_torch_csr_tensor)
 
 import metrics as emb_metrics
+from metrics import log
 
 
 # --------------------------------------------------------------------------- #
@@ -119,6 +120,9 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
     Returns (best_embedding_cpu, best_metrics).
     """
     opt = torch.optim.AdamW(params, lr=cfg.lr, weight_decay=cfg.wd)
+    log(f"[{tag}] training: up to {cfg.epochs} epochs, eval every {cfg.eval_every}, "
+        f"patience {cfg.patience}, device {cfg.device}")
+    t0 = time.time()
     best = {"score": float("-inf"), "emb": None, "epoch": 0, "metrics": {}}
     wait = 0
     for ep in range(1, cfg.epochs + 1):
@@ -128,7 +132,7 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
         opt.step()
         if post_step is not None:
             post_step()
-        _log(tag, ep, loss, cfg)
+        _log(tag, ep, loss, cfg, t0)
 
         if ep % cfg.eval_every == 0 or ep == cfg.epochs:
             emb = embed_fn().detach().cpu()
@@ -140,17 +144,18 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
             # still logged. Report modularity at best epoch as selection-biased.
             score = metrics["modularity"]
             flag = "  ⚠ possible collapse" if std < cfg.collapse_std else ""
-            print(f"[{tag}] eval ep {ep:4d}: {metrics} score={score:.4f}{flag}")
+            log(f"[{tag}] eval ep {ep:4d}: {metrics} score={score:.4f}{flag}")
             if score > best["score"]:
                 best.update(score=score, emb=emb, epoch=ep, metrics=metrics)
                 wait = 0
             else:
                 wait += 1
                 if cfg.patience and wait >= cfg.patience:
-                    print(f"[{tag}] early stop at ep {ep} "
-                          f"(best ep {best['epoch']}, score {best['score']:.4f})")
+                    log(f"[{tag}] early stop at ep {ep} "
+                        f"(best ep {best['epoch']}, score {best['score']:.4f})")
                     break
     best["metrics"]["best_epoch"] = best["epoch"]
+    log(f"[{tag}] done: best epoch {best['epoch']}, modularity {best['score']:.4f}")
     return best["emb"], best["metrics"]
 
 
@@ -328,6 +333,9 @@ def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
             exact=exact,
         )
 
+    t0 = time.time()
+    log(f"[mvgrl] diffusion view: approximate PPR (alpha={alpha}, eps={eps}) on "
+        f"{data.num_nodes} nodes / {data.edge_index.size(1)} edges")
     try:
         d = gdc(False)(data.clone())          # sparse/approx — required at scale
     except Exception as e:   # ImportError, or numba failing to compile get_ppr
@@ -337,13 +345,15 @@ def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
                 "GDC approximate PPR failed — needs a numba compatible with this "
                 f"torch_geometric. ({n} nodes is too large for the exact fallback.)"
             ) from e
-        print(f"[mvgrl] approx PPR failed ({type(e).__name__}) → exact dense "
-              f"PPR fallback ({n} nodes)")
+        log(f"[mvgrl] approx PPR failed ({type(e).__name__}: {e}) → exact dense "
+            f"PPR fallback ({n} nodes, ~{n * n * 4 / 2**30:.1f} GB per dense copy)")
         d = gdc(True)(data.clone())
 
     data.diff_edge_index = d.edge_index
     data.diff_edge_weight = d.edge_weight if d.edge_weight is not None \
         else torch.ones(d.edge_index.size(1))
+    log(f"[mvgrl] diffusion view ready: {d.edge_index.size(1)} edges "
+        f"in {time.time() - t0:.0f}s")
     return data
 
 
@@ -374,29 +384,38 @@ TRAINERS = {"bgrl": train_bgrl, "dgi": train_dgi, "mvgrl": train_mvgrl}
 def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
     """Train each model on the same data; return {name: (emb, metrics)}."""
     torch.manual_seed(cfg.seed)
+    gpu = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "none"
+    log(f"run_all: models {list(models)} | {data.num_nodes} nodes, "
+        f"{data.edge_index.size(1)} edges, {data.num_features} features | "
+        f"device {cfg.device} (GPU: {gpu})")
     ei = data.edge_index.cpu().numpy()
     graph = (emb_metrics.graph_stats(ei, data.num_nodes, cfg.seed)
              if data.num_nodes <= emb_metrics.GRAPH_MAX else None)
     results = {}
     for name in models:
         if name == "mvgrl" and not hasattr(data, "diff_edge_index"):
-            print("[mvgrl] computing diffusion view (one-time, CPU)…")
             add_diffusion(data)
         # per model, after the diffusion step: --models dgi alone == dgi after bgrl
         torch.manual_seed(cfg.seed)
         t0 = time.time()
         emb, metrics = TRAINERS[name](data, cfg, labels)  # best emb + its metrics
         metrics["seconds"] = round(time.time() - t0, 1)
+        log(f"[{name}] trained in {metrics['seconds']}s — computing full report")
         metrics["report"] = emb_metrics.report(
             emb.numpy(), ei, cfg.clusters, labels, cfg.seed, graph=graph)
-        print(f"[{name}] {metrics}")
+        r = metrics["report"]
+        log(f"[{name}] report: modularity {r['unlabeled']['modularity']:.3f}, "
+            f"seed-stability ARI {r['unlabeled']['seed_stability_ari']:.3f}, "
+            f"edge AUC {r['unlabeled']['edge_reconstruction_auc']:.3f}"
+            + (f", probe acc {r['labeled']['probe_acc']:.3f}" if "labeled" in r else ""))
         results[name] = (emb, metrics)
     return results
 
 
-def _log(tag, ep, loss, cfg):
+def _log(tag, ep, loss, cfg, t0):
     if ep == 1 or ep % cfg.log_every == 0 or ep == cfg.epochs:
-        print(f"[{tag}] epoch {ep:4d}/{cfg.epochs}  loss {loss.item():.4f}")
+        log(f"[{tag}] epoch {ep:4d}/{cfg.epochs}  loss {loss.item():.4f}  "
+            f"({(time.time() - t0) / ep:.2f}s/epoch)")
 
 
 def save(results, out_dir, dataset):
@@ -409,5 +428,5 @@ def save(results, out_dir, dataset):
         summary[name] = metrics
     with open(os.path.join(out_dir, f"{dataset}_metrics.json"), "w") as f:
         json.dump(summary, f, indent=2)
-    print(f"saved embeddings + metrics to {out_dir}")
+    log(f"saved embeddings + metrics to {out_dir}")
     return summary
