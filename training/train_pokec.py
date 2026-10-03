@@ -48,9 +48,7 @@ INTEREST = ["hobbies", "I_like_music", "I_like_movies", "I_like_books", "my_acti
             "science_technology", "computers_internet", "cars", "travelling", "health"]
 
 
-def load_data(data_dir=DEFAULT_DIR, limit=None, region=None, cache_dir=None):
-    """cache_dir: where the text-encoding cache (+ resumable chunks) lives; on Colab
-    point it at Drive so a crash keeps finished chunks. Default: data_dir."""
+def load_data(data_dir=DEFAULT_DIR, limit=None, region=None):
     common.log(f"pokec: reading profiles ({region or 'all regions'})")
     p = pd.read_csv(os.path.join(data_dir, "soc-pokec-profiles.txt"), sep="\t",
                     header=None, names=COLS + ["_trailing"], usecols=COLS[:8] + INTEREST,
@@ -71,7 +69,7 @@ def load_data(data_dir=DEFAULT_DIR, limit=None, region=None, cache_dir=None):
     common.log(f"pokec: {edge_index.size(1)} friendships kept; building interest texts")
 
     tag = (region or "all").replace(" ", "_").replace(",", "")
-    cache = os.path.join(cache_dir or data_dir, f"pokec_text_{tag}.npy")
+    cache = os.path.join(data_dir, f"pokec_text_{tag}.npy")
     texts = [] if os.path.exists(cache) else \
         ["; ".join(f"{c}: {v}" for c, v in zip(INTEREST, row) if isinstance(v, str))
          for row in p[INTEREST].itertuples(index=False)]

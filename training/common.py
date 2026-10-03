@@ -82,8 +82,8 @@ def encode_texts(texts, cache=None):
         f"(first run only — cached to {cache})")
     x = np.zeros((len(texts), dim() + 1), np.float32)
     rows = np.flatnonzero(has)
-    # Encode in chunks, each saved as <cache>.partNNN.npy: a Colab crash/disconnect
-    # resumes from the last finished chunk instead of from zero, and peak RAM stays at
+    # Encode in chunks, each saved as <cache>.partNNN.npy: a crash resumes
+    # from the last finished chunk instead of from zero, and peak RAM stays at
     # one chunk of encoder output instead of the whole 1M-row list.
     chunk = 100_000
     for i, s in enumerate(range(0, rows.size, chunk)):
