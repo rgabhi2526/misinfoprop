@@ -4,7 +4,7 @@ The point of truth for **what has been built** and **how it behaves**. Scope and
 live in `TASKS.md` (T-ids), options and decisions in `SUGGESTIONS.md` (S-ids),
 cross-session disputes in `DISCUSSION.md`, dataset facts in `data_final/DATASETS.md`.
 **Update this file whenever something major changes** (rule in `CLAUDE.md`).
-Last updated: 2026-09-27
+Last updated: 2026-10-03
 
 ---
 
@@ -181,6 +181,12 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-10-03** Colab RAM crash on full Pokec (during text encoding): `encode_texts`
+  now encodes in 100k-row chunks saved as `<cache>.partNNN.npy` (resumes after a crash);
+  Pokec loader frees the edge frames + 23 interest string columns before encoding and
+  takes `cache_dir`. Resumable training: `Cfg.ckpt_dir` saves model+optimizer+best emb
+  every eval window and each finished model's result; rerunning `run_all` skips finished
+  models and resumes the current one. Notebook mounts Drive and caches the built graph.
 - **2026-09-28** `graph_stats` moved from networkx to igraph (TIMME: hours → ~25 s; new
   dependency `igraph`); timestamped, flushed progress logs (`metrics.log`) in all scripts;
   text capped at 1000 chars before tokenizing (identical embeddings, ~2x faster).

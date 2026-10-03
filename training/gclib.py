@@ -50,6 +50,10 @@ class Cfg:
     eval_every: int = 25      # evaluate embedding quality every N epochs
     patience: int = 5         # stop after this many eval windows with no improvement (0 = off)
     collapse_std: float = 1e-3  # warn if embedding std drops below this (BGRL can collapse)
+    # checkpoints: dir (e.g. on Google Drive) for resumable training. Every eval window
+    # saves model+optimizer+best embedding; each finished model saves its result, and a
+    # rerun of run_all skips finished models and resumes the unfinished one. None = off.
+    ckpt_dir: str | None = None
 
 
 # --------------------------------------------------------------------------- #
@@ -105,7 +109,13 @@ def _augment(x, edge_index, cfg):
 # --------------------------------------------------------------------------- #
 # shared training harness: periodic eval + best-embedding + early stop + collapse
 # --------------------------------------------------------------------------- #
-def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
+def _save(obj, path):
+    import os
+    torch.save(obj, path + ".tmp")
+    os.replace(path + ".tmp", path)     # atomic: a disconnect mid-write keeps the old file
+
+
+def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None, module=None):
     """Run the epoch loop for any of the three models.
 
     step_fn()  -> scalar loss (one forward/backward's worth; grads already needed)
@@ -124,8 +134,20 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
         f"patience {cfg.patience}, device {cfg.device}")
     t0 = time.time()
     best = {"score": float("-inf"), "emb": None, "epoch": 0, "metrics": {}}
-    wait = 0
-    for ep in range(1, cfg.epochs + 1):
+    wait, start = 0, 1
+    ckpt = None
+    if cfg.ckpt_dir and module is not None:
+        import os
+        os.makedirs(cfg.ckpt_dir, exist_ok=True)
+        ckpt = os.path.join(cfg.ckpt_dir, f"{tag.lower()}_train.pt")
+        if os.path.exists(ckpt):
+            c = torch.load(ckpt, map_location=cfg.device, weights_only=False)
+            module.load_state_dict(c["model"])
+            opt.load_state_dict(c["opt"])
+            best, wait, start = c["best"], c["wait"], c["epoch"] + 1
+            log(f"[{tag}] resumed from {ckpt} at epoch {c['epoch']} "
+                f"(best ep {best['epoch']}, score {best['score']:.4f})")
+    for ep in range(start, cfg.epochs + 1):
         opt.zero_grad()
         loss = step_fn()
         loss.backward()
@@ -150,10 +172,13 @@ def _fit(tag, params, step_fn, embed_fn, data, cfg, labels, post_step=None):
                 wait = 0
             else:
                 wait += 1
-                if cfg.patience and wait >= cfg.patience:
-                    log(f"[{tag}] early stop at ep {ep} "
-                        f"(best ep {best['epoch']}, score {best['score']:.4f})")
-                    break
+            if ckpt:
+                _save({"model": module.state_dict(), "opt": opt.state_dict(),
+                       "best": best, "wait": wait, "epoch": ep}, ckpt)
+            if cfg.patience and wait >= cfg.patience:
+                log(f"[{tag}] early stop at ep {ep} "
+                    f"(best ep {best['epoch']}, score {best['score']:.4f})")
+                break
     best["metrics"]["best_epoch"] = best["epoch"]
     log(f"[{tag}] done: best epoch {best['epoch']}, modularity {best['score']:.4f}")
     return best["emb"], best["metrics"]
@@ -210,7 +235,7 @@ def train_bgrl(data, cfg: Cfg, labels=None):
 
     params = list(m.online.parameters()) + list(m.predictor.parameters())
     return _fit("BGRL", params, step, embed, data, cfg, labels,
-                post_step=m.update_target)
+                post_step=m.update_target, module=m)
 
 
 # --------------------------------------------------------------------------- #
@@ -243,7 +268,7 @@ def train_dgi(data, cfg: Cfg, labels=None):
         m.train()
         return z
 
-    return _fit("DGI", m.parameters(), step, embed, data, cfg, labels)
+    return _fit("DGI", m.parameters(), step, embed, data, cfg, labels, module=m)
 
 
 # --------------------------------------------------------------------------- #
@@ -308,7 +333,7 @@ def train_mvgrl(data, cfg: Cfg, labels=None):
         m.train()
         return z
 
-    return _fit("MVGRL", m.parameters(), step, embed, data, cfg, labels)
+    return _fit("MVGRL", m.parameters(), step, embed, data, cfg, labels, module=m)
 
 
 def add_diffusion(data, alpha=0.15, eps=1e-4, exact_max_nodes=50000):
@@ -391,8 +416,14 @@ def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
     ei = data.edge_index.cpu().numpy()
     graph = (emb_metrics.graph_stats(ei, data.num_nodes, cfg.seed)
              if data.num_nodes <= emb_metrics.GRAPH_MAX else None)
+    import os
     results = {}
     for name in models:
+        done = cfg.ckpt_dir and os.path.join(cfg.ckpt_dir, f"{name}_result.pt")
+        if done and os.path.exists(done):
+            results[name] = torch.load(done, weights_only=False)
+            log(f"[{name}] already finished — loaded {done}")
+            continue
         if name == "mvgrl" and not hasattr(data, "diff_edge_index"):
             add_diffusion(data)
         # per model, after the diffusion step: --models dgi alone == dgi after bgrl
@@ -409,6 +440,8 @@ def run_all(data, cfg: Cfg, labels=None, models=("bgrl", "dgi", "mvgrl")):
             f"edge AUC {r['unlabeled']['edge_reconstruction_auc']:.3f}"
             + (f", probe acc {r['labeled']['probe_acc']:.3f}" if "labeled" in r else ""))
         results[name] = (emb, metrics)
+        if done:
+            _save(results[name], done)
     return results
 
 

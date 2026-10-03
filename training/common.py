@@ -81,14 +81,31 @@ def encode_texts(texts, cache=None):
     log(f"encode_texts: {has.sum()}/{len(texts)} nodes have text; encoding on {model.device} "
         f"(first run only — cached to {cache})")
     x = np.zeros((len(texts), dim() + 1), np.float32)
-    # 128 tokens never needed >500 chars (Pokec sample); tokenizing the full text (up to
-    # 58k chars) is CPU work the model throws away — ~2x faster, identical embeddings
-    x[has, :-1] = model.encode([t[:1000] for t, h in zip(texts, has) if h], batch_size=256,
-                               show_progress_bar=True, convert_to_numpy=True,
-                               normalize_embeddings=True)
+    rows = np.flatnonzero(has)
+    # Encode in chunks, each saved as <cache>.partNNN.npy: a Colab crash/disconnect
+    # resumes from the last finished chunk instead of from zero, and peak RAM stays at
+    # one chunk of encoder output instead of the whole 1M-row list.
+    chunk = 100_000
+    for i, s in enumerate(range(0, rows.size, chunk)):
+        part = f"{cache}.part{i:03d}.npy" if cache else None
+        idx = rows[s:s + chunk]
+        if part and os.path.exists(part):
+            x[idx, :-1] = np.load(part)
+            log(f"encode_texts: chunk {i} loaded from {part}")
+            continue
+        # 128 tokens never needed >500 chars (Pokec sample); tokenizing the full text (up
+        # to 58k chars) is CPU work the model throws away — ~2x faster, identical embeddings
+        x[idx, :-1] = model.encode([texts[j][:1000] for j in idx], batch_size=256,
+                                   show_progress_bar=True, convert_to_numpy=True,
+                                   normalize_embeddings=True)
+        if part:
+            np.save(part, x[idx, :-1])
+        log(f"encode_texts: chunk {i} done ({min(s + chunk, rows.size)}/{rows.size})")
     x[:, -1] = has
     if cache:
         np.save(cache, x)
+        for i in range(-(-rows.size // chunk)):
+            os.remove(f"{cache}.part{i:03d}.npy")
         log(f"encode_texts: saved {cache}")
     return torch.from_numpy(x)
 

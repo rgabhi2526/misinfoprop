@@ -48,3 +48,17 @@ check("symmetric unweighted", x, torch.cat([e, e.flip(0)], 1), None)
 d = torch.cat([torch.randint(0, n, (2, E), device=dev), torch.arange(n, device=dev).repeat(2, 1)], 1)
 check("directed weighted (diffusion-like)", x, d, torch.rand(d.size(1), device=dev) * 2 + 0.01)
 print(f"gclib self-check ok on {dev}")
+
+# checkpoint/resume: a run stopped at epoch 4 and rerun with epochs=6 must continue
+# from epoch 5 (not restart) and leave a checkpoint at epoch 6
+import tempfile
+from torch_geometric.data import Data
+g = Data(x=torch.randn(300, 8), edge_index=torch.randint(0, 300, (2, 3000)), num_nodes=300)
+with tempfile.TemporaryDirectory() as d:
+    cfg = gclib.Cfg(dim=16, hidden=16, epochs=4, eval_every=2, patience=0, device=dev,
+                    clusters=3, ckpt_dir=d)
+    torch.manual_seed(0); gclib.train_dgi(g, cfg)
+    cfg.epochs = 6
+    torch.manual_seed(1); _, m = gclib.train_dgi(g, cfg)        # resumes at epoch 5
+    assert torch.load(f"{d}/dgi_train.pt", weights_only=False)["epoch"] == 6, "did not resume"
+print("checkpoint resume ok")

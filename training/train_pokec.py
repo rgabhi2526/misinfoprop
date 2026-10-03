@@ -48,7 +48,9 @@ INTEREST = ["hobbies", "I_like_music", "I_like_movies", "I_like_books", "my_acti
             "science_technology", "computers_internet", "cars", "travelling", "health"]
 
 
-def load_data(data_dir=DEFAULT_DIR, limit=None, region=None):
+def load_data(data_dir=DEFAULT_DIR, limit=None, region=None, cache_dir=None):
+    """cache_dir: where the text-encoding cache (+ resumable chunks) lives; on Colab
+    point it at Drive so a crash keeps finished chunks. Default: data_dir."""
     common.log(f"pokec: reading profiles ({region or 'all regions'})")
     p = pd.read_csv(os.path.join(data_dir, "soc-pokec-profiles.txt"), sep="\t",
                     header=None, names=COLS + ["_trailing"], usecols=COLS[:8] + INTEREST,
@@ -65,12 +67,17 @@ def load_data(data_dir=DEFAULT_DIR, limit=None, region=None):
     a, b = e[0].map(uid2idx), e[1].map(uid2idx)
     ok = a.notna() & b.notna()                     # induced subgraph when --region is set
     edge_index = torch.from_numpy(np.stack([a[ok].to_numpy(np.int64), b[ok].to_numpy(np.int64)]))
-    common.log(f"pokec: {int(ok.sum())} friendships kept; building interest texts")
+    del e, a, b, ok                                # ~1.5 GB of pandas edge frames
+    common.log(f"pokec: {edge_index.size(1)} friendships kept; building interest texts")
 
-    texts = ["; ".join(f"{c}: {v}" for c, v in zip(INTEREST, row) if isinstance(v, str))
-             for row in p[INTEREST].itertuples(index=False)]
     tag = (region or "all").replace(" ", "_").replace(",", "")
-    x_text = common.encode_texts(texts, cache=os.path.join(data_dir, f"pokec_text_{tag}.npy"))
+    cache = os.path.join(cache_dir or data_dir, f"pokec_text_{tag}.npy")
+    texts = [] if os.path.exists(cache) else \
+        ["; ".join(f"{c}: {v}" for c, v in zip(INTEREST, row) if isinstance(v, str))
+         for row in p[INTEREST].itertuples(index=False)]
+    p = p.drop(columns=INTEREST)                   # the 23 string columns are most of the RAM
+    x_text = common.encode_texts(texts, cache=cache)
+    del texts
 
     age = pd.to_numeric(p["AGE"], errors="coerce").fillna(0).to_numpy()
     regions = pd.get_dummies(p["region"].fillna("unknown")).to_numpy(np.float32)
