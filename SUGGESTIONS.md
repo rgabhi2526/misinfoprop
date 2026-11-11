@@ -3,7 +3,7 @@
 Each entry maps to a task in `TASKS.md`. Status:
 **open** (needs a call) · **accepted** (do it) · **done** · **rejected** (with reason).
 When a suggestion is accepted, add/adjust the task in `TASKS.md` and link back here.
-Last updated: 2026-09-27
+Last updated: 2026-10-04
 
 | ID | Task | Suggestion | Status |
 |---|---|---|---|
@@ -28,6 +28,7 @@ Last updated: 2026-09-27
 | S-19 | T9.2 | Isolate the project env from conda base | open |
 | S-20 | T1.7 | Random-user sampling for Gab smoke runs | open |
 | S-22 | T4, T5, T7 | Literature-based redesign: ambiguity score, outliers ≠ bridges, source-unknown blocking | accepted |
+| S-23 | T10 | Two clean views, cross-fitted misfit score, regime map; GNNs dropped | accepted |
 | S-21 | T7, T8 | IBM simulation before active learning; disagreement as a centrality re-ranker | accepted |
 
 ---
@@ -154,3 +155,38 @@ bridges — overturns S-06; (4) rank by ambiguity × influence, ambiguity alone 
 (5) measure modularity first (T7.0); (6) baselines incl. graph-only bridgeness and a
 greedy ceiling; (7) sweep spread probability. Claim: metadata-aware membership ambiguity
 improves source-unknown blocking over purely structural bridge/centrality scores.
+
+### S-23 — Make-it-work redesign (T10) — accepted 2026-10-03, revised 2026-10-04
+GNN embeddings (BGRL/DGI/MVGRL) sorted nodes by degree (k-means Q ≤ 0, NMI ≈ 0) and an
+untrained spectral embedding matched their party probe (0.96). A content view built from GNN
+output has already seen the graph, so T-vs-C disagreement would be meaningless. New design:
+topology view = Leiden on the graph; content view = cross-fitted text classifier predicting the
+topology community (Newman & Clauset 2016); scores = misfit (1 − p_C[own community]) and JS
+disagreement vs label-spread p_T. Evidence: detection works on planted graphs and survives
+text nuisance; TIMME text carries community signal, Pokec text barely. Blocking gate failed on
+TIMME (structure wins even under content-aware spread; content-weighted gateway ≈ structural
+gateway). User decision 2026-10-04: reframe as detector + regime map of when content-aware
+targeting pays off; no GPU/MAGI training (Leiden already finds the communities).
+
+
+## S-24 (2026-11-01) — Hypothesis tests and thesis framing (-> T10.13)
+H1-H4 (radicalisation funnel, filter over centrality, scenario search, infiltrator detection,
+real-TIMME bridge test, PHEME rumor feature, extended regime sweep) all say: misfit is a decent
+*detector* of accounts whose content contradicts their neighbourhood and a poor *blocking target*.
+Recommended thesis: "text-vs-topology disagreement as a screening score + a measured boundary of
+when content-aware blocking pays off (agreement-gated spread, beta >= ~6; real data ~0.3)".
+Open: (1) real-data validation beyond 11 TIMME party nodes; (2) rumor-detection test needs
+labelled cascades with sharer text + follow edges (FakeNewsNet/Twitter15-16 hydrated); (3) advisor check-in T9.3.
+Caveats: all positive results synthetic; infiltrator-detection positives partly circular.
+
+## S-25 → T11 Misfit re-homing (2026-11-11)
+Decided with user: target = argmax p_C; intervention = (b) link recommendation + (c) degree-preserving
+rewire dropping weakest (no-interaction) old-community follows; headline = recommendation (M1 precision
+vs held-out interactions), simulation (M2) supporting; misinformation kept only as a secondary
+correction-reach metric (echo-chamber risk noted, not a focus). Leak control (bio-only text) done: signal survives.
+Open: structural confound — misfits may just be boundary nodes; M1 must beat Kumari target and
+link predictors under degree x participation matching.
+Round 2 (2026-11-11): recommend both community-level and account-level; test BOTH claims
+("text beats structure" and "misfits under-served"); cross-layer held-out (follow -> engagement) accepted,
+claim is "follow graph misses ties visible in engagement", not future prediction; Pokec = M2 simulation only.
+Outcome (2026-11-11): account-level text recommender not robust (P@10 vs AA misfit CI>0 12/27, <0 9/27); rewiring helps only under selective exposure (TIMME weak, null at beta 0.3; Pokec supported at beta>=3). See `results/hypotheses/h5/README.md`.
