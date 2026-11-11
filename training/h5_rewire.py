@@ -65,7 +65,7 @@ def rewire(F, t, target, treated, eng, k, drop="dormant", add="rank", counts=Non
         ad += [(u, v) for v in cand[order[:d]]]
         rem += [(u, v) for v in rng.choice(pool, d, replace=False)]
         used[u] = d
-    G = F.tolil() if False else F.copy()
+    G = F.copy()
     for lst, val in ((rem, -1.0), (ad, 1.0)):
         if lst:
             a = np.array(lst)
@@ -152,7 +152,8 @@ def summarize(out):
     for j, nm in enumerate(names):
         res[nm] = {iv: {"mean": float(v[:, j].mean()),
                         "vs_none": boot(v[:, j] - out["none"][:, j]),
-                        "vs_random": boot(v[:, j] - out["random_rewire"][:, j])} for iv, v in out.items()}
+                        "vs_random": boot(v[:, j] - out["random_rewire"][:, j]),
+                        "vs_text": boot(v[:, j] - out["rehome_text"][:, j])} for iv, v in out.items()}
     return res
 
 
