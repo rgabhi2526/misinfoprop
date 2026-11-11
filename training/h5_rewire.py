@@ -20,6 +20,7 @@ Spread: live-edge IC on the undirected follow graph (blocking.edge_probs), conte
   in {t == c0}, outcome = share of misfits with tc == c0 reached.
 
     python h5_rewire.py timme        # reduced grid, Pool(4), writes ../results/hypotheses/h5/h5_rewire_timme.json
+    python h5_rewire.py pokec        # Pokec slice, no engagement layer (drops = random own-community edges), writes h5_rewire_pokec.json
     python h5_rewire.py --selftest
 """
 import os
@@ -203,6 +204,40 @@ def run_timme(sims=100):
     return res
 
 
+def run_pokec(sims=100, tag="pokec_knm"):
+    """Pokec slice. No engagement layer -> eng=None: drops are random own-community edges."""
+    import views
+    z = np.load(os.path.join(OUT, f"{tag}_views", "ambiguity.npz"))
+    t, p_c = z["t"], z["p_C"]
+    F = views.load_pokec(tag)["A"].tocsr()
+    n = len(t)
+    assert F.shape[0] == n == p_c.shape[0], (F.shape, n)
+    F.setdiag(0); F.eliminate_zeros()
+    tc, k = p_c.argmax(1), p_c.shape[1]
+    ok = t >= 0
+    q = np.quantile(z["misfit"][ok], 0.9)
+    mis = np.flatnonzero(ok & (z["misfit"] >= q) & (tc != t))
+    H = (F @ sp.csr_matrix((np.ones(n), (np.arange(n), np.where(ok, t, 0))), shape=(n, k))).toarray()
+    H[np.arange(n), np.where(ok, t, 0)] = -1; ext = H.argmax(1)
+    meta = {"n": int(n), "n_comm": int(k), "n_misfits": int(len(mis)), "edges": int(F.nnz // 2)}
+    jobs = []
+    for kk in (1, 5):
+        G = interventions(F, t, tc, ext, mis, None, kk)
+        meta[f"k{kk}"] = {iv: {"edges": int(g.nnz // 2), "edges_changed": int((abs(g - F)).nnz // 2)}
+                          for iv, g in G.items()}
+        log(f"{tag} k={kk}: {meta[f'k{kk}']}")
+        for model in ("wc", "ic:2"):
+            for beta in (0.3, 1, 3, 6):
+                jobs.append((f"{tag}|k{kk}|{model}|b{beta}", G, t, tc, mis, model, beta, sims))
+    res = {}
+    with Pool(4) as p:
+        for key, r in p.imap_unordered(_job, jobs):
+            res[key] = r
+    os.makedirs(RES, exist_ok=True)
+    json.dump({"sims": sims, "meta": meta, "results": res}, open(os.path.join(RES, "h5_rewire_pokec.json"), "w"), indent=1)
+    return res
+
+
 def selftest():
     rng = np.random.default_rng(0)
     n = 120; t = np.repeat([0, 1], n // 2)
@@ -245,4 +280,4 @@ if __name__ == "__main__":
         selftest()
     else:
         selftest()
-        run_timme()
+        run_pokec() if sys.argv[1] == "pokec" else run_timme()
