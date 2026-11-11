@@ -33,3 +33,29 @@ needs a structural ranker inside it.
 ## Read with care
 3 Leiden settings, 1 seed each for the bio classifier; ~11 scorers x 3 settings -> multiple comparisons.
 Cross-layer held-out (follow -> engagement), no timestamps: claim is "follow graph misses ties visible in engagement".
+
+
+## T11.1b robustness
+Pre-registered: primary scorer aa_x_text = AA * p_C(u)[t_v] vs `aa` and `aa_x_struct` = AA * p_T(u)[t_v]; metric P@10 (R@100 secondary).
+27 settings = 9 communities (r0.5/1.0/2.0 x s0..s2) x bio-classifier seeds 0,1,2. Misfits/controls built as in `h5_rec.run`.
+Paired per-user difference, 95% bootstrap CI over users (2000 draws). Misfit-specific gain = mean diff on misfits - mean diff on controls (groups bootstrapped independently).
+Counts are the number of settings (of 27) whose CI is > 0 / < 0 / spans 0. Per-setting means and CIs: `h5_robust.json`. Run: `python h5_rec.py --robust`.
+
+| paired difference (aa_x_text minus ...) | group | CI>0 | CI<0 | spans 0 |
+|---|---|---|---|---|
+| text-aa P@10 | misfit | 12 | 9 | 6 |
+| text-aa P@10 | control | 15 | 0 | 12 |
+| text-aa P@10 | gain | 3 | 11 | 13 |
+| text-aa_x_struct P@10 | misfit | 15 | 9 | 3 |
+| text-aa_x_struct P@10 | control | 8 | 5 | 14 |
+| text-aa_x_struct P@10 | gain | 16 | 9 | 2 |
+| text-aa R@100 | misfit | 24 | 2 | 1 |
+| text-aa R@100 | control | 17 | 5 | 5 |
+| text-aa R@100 | gain | 13 | 3 | 11 |
+| text-aa_x_struct R@100 | misfit | 24 | 0 | 3 |
+| text-aa_x_struct R@100 | control | 12 | 0 | 15 |
+| text-aa_x_struct R@100 | gain | 24 | 0 | 3 |
+
+Mean P@10 by resolution (averaged over 9 settings per row): misfits r0.5 AA 0.090 / text 0.080 / struct 0.115; r1.0 0.096 / 0.092 / 0.094; r2.0 0.077 / 0.123 / 0.070. Controls r0.5 0.158 / 0.157 / 0.157; r1.0 0.146 / 0.154 / 0.160; r2.0 0.141 / 0.178 / 0.166.
+
+**Verdict: NOT ROBUST.** The account-level text advantage is resolution-dependent. On P@10, AA x p_C beats AA with a positive misfit CI in only 12/27 settings (negative in 9/27), and the misfit-specific gain over AA is positive in 3/27 and negative in 11/27 (so it is, if anything, not misfit-specific); versus AA x p_T the misfit gain is positive in 16/27 and negative in 9/27. The gain is concentrated at fine resolution (r2.0, k~14-15: misfit P@10 0.123 vs AA 0.077 vs AA x p_T 0.070); at r0.5/r1.0 it is null or negative (r0.5: 0.080 vs 0.090 vs 0.115). R@100 is more favourable (misfit CI>0 vs AA in 24/27, vs AA x p_T in 24/27, misfit-specific gain vs AA x p_T positive in 24/27, never negative), so the secondary metric supports text > structural community weighting while the primary P@10 does not.
