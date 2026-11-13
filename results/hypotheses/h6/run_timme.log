@@ -1,0 +1,26 @@
+[   21.4s] timme: n=20811 comms=4 edges=892149
+[   74.5s] timme (0, 'kumari', 2): success=0.225 misfit_auc=0.485
+[   74.5s] timme (0, 'safeness', 2): success=0.190 misfit_auc=0.513
+[   74.5s] timme (0, 'safeness', 5): success=0.335 misfit_auc=0.527
+[   74.5s] timme (0, 'kumari', 5): success=0.420 misfit_auc=0.523
+[  115.8s] timme (1, 'kumari', 5): success=0.405 misfit_auc=0.531
+[  115.9s] timme (0, 'random', 5): success=0.145 misfit_auc=0.435
+[  116.0s] timme (1, 'kumari', 2): success=0.195 misfit_auc=0.474
+[  116.1s] timme (0, 'random', 2): success=0.065 misfit_auc=0.460
+[  159.7s] timme (1, 'random', 5): success=0.115 misfit_auc=0.435
+[  159.7s] timme (1, 'safeness', 2): success=0.175 misfit_auc=0.459
+[  159.7s] timme (1, 'random', 2): success=0.085 misfit_auc=0.452
+[  159.8s] timme (1, 'safeness', 5): success=0.295 misfit_auc=0.516
+[  204.7s] timme (2, 'safeness', 5): success=0.370 misfit_auc=0.522
+[  204.9s] timme (2, 'kumari', 2): success=0.275 misfit_auc=0.501
+[  205.4s] timme (2, 'safeness', 2): success=0.195 misfit_auc=0.479
+[  205.5s] timme (2, 'kumari', 5): success=0.485 misfit_auc=0.530
+[  238.0s] timme (2, 'random', 2): success=0.030 misfit_auc=0.456
+[  238.2s] timme (2, 'random', 5): success=0.145 misfit_auc=0.434
+[  238.4s] timme kumari|k2: succ=0.232 misfit=0.487 participation=0.541 consensus_entropy=0.505 persistence_low=0.542 degree=0.534
+[  238.4s] timme kumari|k5: succ=0.437 misfit=0.528 participation=0.562 consensus_entropy=0.511 persistence_low=0.564 degree=0.534
+[  238.4s] timme safeness|k2: succ=0.187 misfit=0.484 participation=0.588 consensus_entropy=0.515 persistence_low=0.579 degree=0.534
+[  238.4s] timme safeness|k5: succ=0.333 misfit=0.522 participation=0.665 consensus_entropy=0.534 persistence_low=0.647 degree=0.534
+[  238.4s] timme random|k2: succ=0.060 misfit=0.456 participation=0.483 consensus_entropy=0.475 persistence_low=0.497 degree=0.500
+[  238.4s] timme random|k5: succ=0.135 misfit=0.435 participation=0.546 consensus_entropy=0.459 persistence_low=0.546 degree=0.459
+/opt/anaconda3/bin/python h6_deception.py timme  678.49s user 45.37s system 299% cpu 4:01.75 total

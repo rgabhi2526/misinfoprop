@@ -1,0 +1,26 @@
+[   27.3s] pokec: n=5599 comms=11 edges=45043
+[   51.9s] pokec (0, 'kumari', 5): success=0.685 misfit_auc=0.557
+[   51.9s] pokec (0, 'safeness', 2): success=0.300 misfit_auc=0.511
+[   51.9s] pokec (0, 'kumari', 2): success=0.405 misfit_auc=0.532
+[   52.5s] pokec (0, 'safeness', 5): success=0.500 misfit_auc=0.571
+[   64.4s] pokec (0, 'random', 2): success=0.115 misfit_auc=0.488
+[   64.7s] pokec (1, 'kumari', 2): success=0.355 misfit_auc=0.483
+[   64.9s] pokec (0, 'random', 5): success=0.275 misfit_auc=0.455
+[   67.2s] pokec (1, 'kumari', 5): success=0.675 misfit_auc=0.554
+[   77.4s] pokec (1, 'safeness', 5): success=0.490 misfit_auc=0.575
+[   78.8s] pokec (1, 'safeness', 2): success=0.285 misfit_auc=0.515
+[   79.7s] pokec (1, 'random', 2): success=0.105 misfit_auc=0.453
+[   80.3s] pokec (1, 'random', 5): success=0.305 misfit_auc=0.438
+[   89.8s] pokec (2, 'kumari', 2): success=0.360 misfit_auc=0.484
+[   93.1s] pokec (2, 'kumari', 5): success=0.650 misfit_auc=0.552
+[   94.0s] pokec (2, 'safeness', 2): success=0.245 misfit_auc=0.506
+[   94.9s] pokec (2, 'safeness', 5): success=0.475 misfit_auc=0.551
+[  100.1s] pokec (2, 'random', 2): success=0.140 misfit_auc=0.459
+[  102.9s] pokec (2, 'random', 5): success=0.280 misfit_auc=0.461
+[  103.0s] pokec kumari|k2: succ=0.373 misfit=0.500 participation=0.598 consensus_entropy=0.478 persistence_low=0.662 degree=0.561
+[  103.0s] pokec kumari|k5: succ=0.670 misfit=0.554 participation=0.563 consensus_entropy=0.434 persistence_low=0.588 degree=0.562
+[  103.0s] pokec safeness|k2: succ=0.277 misfit=0.510 participation=0.702 consensus_entropy=0.529 persistence_low=0.650 degree=0.562
+[  103.0s] pokec safeness|k5: succ=0.488 misfit=0.565 participation=0.814 consensus_entropy=0.571 persistence_low=0.731 degree=0.561
+[  103.0s] pokec random|k2: succ=0.120 misfit=0.467 participation=0.496 consensus_entropy=0.481 persistence_low=0.505 degree=0.509
+[  103.0s] pokec random|k5: succ=0.287 misfit=0.452 participation=0.540 consensus_entropy=0.472 persistence_low=0.558 degree=0.432
+/opt/anaconda3/bin/python h6_deception.py pokec  267.66s user 10.49s system 256% cpu 1:48.28 total
