@@ -4,7 +4,7 @@ The point of truth for **what has been built** and **how it behaves**. Scope and
 live in `TASKS.md` (T-ids), options and decisions in `SUGGESTIONS.md` (S-ids),
 cross-session disputes in `DISCUSSION.md`, dataset facts in `data_final/DATASETS.md`.
 **Update this file whenever something major changes** (rule in `CLAUDE.md`).
-Last updated: 2026-11-11
+Last updated: 2026-11-18
 
 ---
 
@@ -151,6 +151,8 @@ with the random seed, "disagreement" between two clusterings is partly noise (S-
 - **T8 active learning (only if T7 shows a gain):** AAS pair sampling + oracle + NP3.
 
 ## 5. Evidence so far (read with care)
+**2026-11-18 (H2 correction, H6, final_results).** *H2* (`results/hypotheses/h2/README.md`) verdict is now "mixed": infected share 0/6900 filter configs CI>0 (unchanged); synthetic cross-community share 764/6900 CI>0, almost all beta>=6, median +4.4 pts, random-from-shortlist control 0/2250; real data still noise (TIMME 7/1840, Pokec 1/920). *H6* community-deception detection (`results/hypotheses/h6/README.md`, commits 3ea4736, fdfb58f): NOT SUPPORTED. Misfit is a weak, mostly non-specific signal: +0.04..+0.10 AUC over the unattacked same-population baseline under kumari/safeness, +0.01..+0.03 under matched random rewire. The earlier "misfit detects successful kumari hiding" was circular (success = label flip; a matched random control gives the same succ AUC). participation / persistence_low detect rewired targets better but also fire on random rewiring. *final_results/* (commits 99306e6, f81c104, ef14696) is the single-script ground truth for all numbers: `build_results.py` -> `results_long.csv` (14063 rows), `results_summary.csv` (22 experiments E01-E22), `metrics_glossary.csv` (273), `FINAL_RESULTS.md`, `_gaps.md`. Regenerate with `cd final_results && /opt/anaconda3/bin/python build_results.py`. `h5_probe.py` now saves `results/hypotheses/h5/h5_probe.json`. Dashboard: https://claude.ai/artifact/5iP76RnE7TAZZuSEfMQHcz. H5 caveat: random_rewire's gain over none is +0.4..+3.5 pp for model wc at beta>=3 only; for ic:2 it is about 0 (r2.0 k5 b6 -0.34 pp).
+
 **2026-11-11 (T11 re-homing, `results/hypotheses/h5/README.md`).** Misfits under-served by follow graph (supported); community-level text target wins (k=4: 0.54 vs 0.14 struct vs 0.41 Kumari). Account-level text recommender NOT robust over 27 settings (P@10 vs AA: misfit CI>0 12/27, <0 9/27; R@100 CI>0 24/27). Rewiring simulation (correction reach): TIMME weakly supported (targeting residual over random rewire CI>0 in 4/7 beta>=3 cells, null at real beta 0.3); Pokec supported at beta>=3 (+4.0..+8.7 pp over random, CI>0 in 8/8 cells; beta is swept, not measured). Re-homing helps only under selective exposure.
 
 **2026-10-04 (S-23, T10) supersedes the GNN-based plan.** Pipeline now: `views.py` (Leiden
@@ -195,6 +197,7 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-11-18** H2 verdict corrected to "mixed" (synthetic cross-community share 764/6900 CI>0, beta>=6; infected share 0/6900); H6 deception-detection experiment recorded, NOT SUPPORTED (circular success result retracted); `final_results/` ground-truth tables added (`build_results.py`, E01-E22); `h5_probe.py` writes `h5_probe.json`; H5 random_rewire range qualified to model wc. TASKS T11.4/T11.5; dashboard artifact linked.
 - **2026-11-11** T11.1b/T11.2: `training/h5_rec.py --robust` (27-setting account-level robustness, `h5_robust.json`) and `training/h5_rewire.py` (degree-preserving rewiring + content-aware IC on TIMME and Pokec; `h5_rewire_timme.json`, `h5_rewire_pokec.json`). Results in `results/hypotheses/h5/README.md`.
 - **2026-11-11** Direction change to misfit re-homing (TASKS T11, advisor). `training/h5_probe.py`:
   misfits follow one community but engage with their text-predicted one (retweet hit 0.60-0.66 vs

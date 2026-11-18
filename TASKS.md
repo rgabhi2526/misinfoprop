@@ -176,7 +176,7 @@ Two clean views (graph only / text only) → mismatch scores → validation → 
       (control −7.3 ± 2.9), tie on TIMME even with oracle receptivity
 - [x] T10.13 Hypothesis tests H1-H4 (2026-11-01; user asked "does it work anywhere?"). Details: `results/hypotheses/*/README.md`
   - H1 radicalisation funnel (`h1_funnel.py`): misfit-blocking NOT supported (0/120 cells CI>0; misfit finds recruiters AUC 0.59-0.65 vs degree 0.95)
-  - H2 misfit as filter over PageRank/betweenness (`h2_*.py`): NOT supported (0/1550 synthetic configs CI>0; real TIMME 7/1840, Pokec 1/920 = chance level)
+  - H2 misfit as filter over PageRank/betweenness (`h2_*.py`): **mixed** (corrected 2026-11-18). Infected share: 0/6900 filter configs CI>0 (unchanged). Synthetic cross-community share: 764/6900 CI>0, almost all beta>=6, median +4.4 pts; random-from-shortlist control 0/2250. Real data still noise (TIMME 7/1840, Pokec 1/920). Details: `results/hypotheses/h2/README.md`
   - H3 scenario ranking (`h3_scenarios.py`): only *detection* of mismatched nodes clearly works (precision@20 +36..+76 pts); blocking needs beta>=6 + hub-placed/no-hub
   - H4a infiltrator/campaign detection with realistic text (`h4a_*.py`): works for non-structural infiltrators (gain AUC +0.1..+0.4 at text acc >=0.46, mix >=0.4); loses to degree/PageRank for recruiters/hubs/peripheral
   - H4b real TIMME interactions (`h4b_*.py`): misfit nodes NOT special bridges (cross-edge count ~0 after controls; receive less); real agreement beta ~0.3 vs >=6 needed
@@ -204,8 +204,10 @@ relabels only and its target is structural, so only the rewiring mechanics carry
 - [x] T11.2 M2 degree-preserving rewire + content-aware IC (`training/h5_rewire.py`, TIMME + Pokec): correction reach vs random rewire.
       TIMME: WEAKLY SUPPORTED - targeting residual over random rewire CI>0 in 4/7 beta>=3 cells, null at real beta 0.3.
       Pokec: SUPPORTED at beta>=3 (swept, no measured beta) - +4.0..+8.7 pp over random rewire, CI>0 in all 8 cells. Details: `results/hypotheses/h5/README.md`
+- [x] T11.4 H6 community-deception detection (Kumari/safeness/random attacks, TIMME + Pokec; commits 3ea4736, fdfb58f; `results/hypotheses/h6/README.md`): **NOT SUPPORTED**. Misfit is a weak, mostly non-specific signal (+0.04..+0.10 AUC over unattacked same-population baseline under kumari/safeness, +0.01..+0.03 under matched random rewire). Earlier "misfit detects successful kumari hiding" was circular (success = label flip; matched random control gives the same succ AUC). participation / persistence_low detect rewired targets better but also fire on random rewiring.
+- [x] T11.5 `final_results/` ground truth (commits 99306e6, f81c104, ef14696): `build_results.py` -> `results_long.csv` (14063 rows), `results_summary.csv` (22 experiments E01-E22), `metrics_glossary.csv` (273), `FINAL_RESULTS.md`, `_gaps.md`; `h5_probe.py` now writes `results/hypotheses/h5/h5_probe.json`. Regenerate: `cd final_results && /opt/anaconda3/bin/python build_results.py`. Source of truth for report numbers. Dashboard artifact (navigates final_results): https://claude.ai/artifact/5iP76RnE7TAZZuSEfMQHcz
 - [ ] T11.3 M3 structure-content alignment (NMI / modularity), secondary only
-  - Thesis consequence: the detection / "wrongly placed" claim is supported on real data; re-homing helps information reach misfits only under selective exposure (beta>=3), not at TIMME's measured beta (~0.3).
+- Thesis consequence: the detection / "wrongly placed" claim is supported on real data; re-homing helps information reach misfits only under selective exposure (beta>=3), not at TIMME's measured beta (~0.3).
 
 ## T9 — Housekeeping
 - [x] T9.1 Commit the current work — `6189707` (2026-09-27)

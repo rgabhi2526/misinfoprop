@@ -190,3 +190,4 @@ Round 2 (2026-11-11): recommend both community-level and account-level; test BOT
 ("text beats structure" and "misfits under-served"); cross-layer held-out (follow -> engagement) accepted,
 claim is "follow graph misses ties visible in engagement", not future prediction; Pokec = M2 simulation only.
 Outcome (2026-11-11): account-level text recommender not robust (P@10 vs AA misfit CI>0 12/27, <0 9/27); rewiring helps only under selective exposure (TIMME weak, null at beta 0.3; Pokec supported at beta>=3). See `results/hypotheses/h5/README.md`.
+H6 outcome (2026-11-18): misfit does not detect community deception (NOT SUPPORTED; +0.04..+0.10 AUC over unattacked baseline under kumari/safeness, +0.01..+0.03 under matched random rewire; earlier success-AUC claim was circular). `final_results/` (E01-E22) is the report's source of truth for all numbers.
