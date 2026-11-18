@@ -2,8 +2,8 @@
 
 Run: `cd final_results && /opt/anaconda3/bin/python build_results.py` (deterministic, ~10 s).
 
-Rows: results_long 14028; results_summary 22; metrics_glossary 270.
-Per experiment (long): E01 24, E02 100, E03 52, E04 33, E05 234, E06 30, E07 2616, E08 509, E09 59, E10 1653, E11 1266, E12 595, E13 2262, E14 1187, E15 29, E16 34, E17 65, E18 168, E19 684, E20 1020, E21 816, E22 592.
+Rows: results_long 14063; results_summary 22; metrics_glossary 273.
+Per experiment (long): E01 24, E02 100, E03 52, E04 33, E05 234, E06 30, E07 2616, E08 509, E09 59, E10 1653, E11 1301, E12 595, E13 2262, E14 1187, E15 29, E16 34, E17 65, E18 168, E19 684, E20 1020, E21 816, E22 592.
 
 Gap 1 filled: training/h5_probe.py now writes results/hypotheses/h5/h5_probe.json (rerun on cached bio embeddings; matches TASKS numbers). Also resolved: T10.5 0.62 vs 0.32 lives in results/scores/*.npz. H6 (E22) included per coordinator message (commit fdfb58f, no fix_round marker); detectors are methods, attacks are in `setting`; random and noise attacks are role control.
 
@@ -28,5 +28,5 @@ Gap 1 filled: training/h5_probe.py now writes results/hypotheses/h5/h5_probe.jso
 - Verdict mapping from README/TASKS wording: NOT SUPPORTED/NO/NOT ROBUST -> not supported; WEAKLY SUPPORTED, conditional, gate-passed-only-in-regime -> partly supported; E02 failed; E01/E03/E04 descriptive. E06 and E09 marked partly supported (my mapping; TASKS has no explicit label).
 
 ## Open questions
-- Authors' exact definition of the H2 "configs" counts (README claim of no positive cross CIs is not reproducible).
+- Authors' exact definition of the H2 "1550 configs" total (cross-community claim now corrected in the README; E11 verdict is "mixed").
 - Should E02 GNN rows be role ours or baseline?

@@ -437,6 +437,48 @@ def e11_h2():
             for key, sd in g.items():
                 m, c = tci([np.mean(v) for v in sd.values()])
                 cnt += 1; pos += m - c > 0; neg += m + c < 0
+            if ds.startswith('planted'):
+                # per-family counts (added 2026-11-18 after the H2 README correction)
+                fam = collections.defaultdict(lambda: [0, 0])
+                posg, bybeta, byplace = [], collections.Counter(), collections.Counter()
+                for key, sd in g.items():
+                    m, c = tci([np.mean(v) for v in sd.values()])
+                    fm = rule_of(key[-1])
+                    fam[fm][0] += 1
+                    if m - c > 0:
+                        fam[fm][1] += 1; posg.append(100 * m); bybeta[key[4]] += 1; byplace[key[3]] += 1
+                sfam = f'synthetic family counts, metric={"infected" if met == "inf" else "cross-community"} share'
+                for fm, (nc, npos) in sorted(fam.items()):
+                    x.addds(ds, dt, sfam + f'; family={fm}', f'misfit filter ({fm})', 'n_configs', nc, f, 'derived: configs per filter family (mu x place x beta x pool x budget)', role_='ours')
+                    x.addds(ds, dt, sfam + f'; family={fm}', f'misfit filter ({fm})', 'n_configs_ci_above_0', npos, f, 'derived: configs with mean-ci>0 (t over seeds)', role_='ours')
+                if met == 'cross':
+                    for b, nb in sorted(bybeta.items()):
+                        x.addds(ds, dt, sfam + f'; positives by beta={b}', 'misfit filters (all rules)', 'n_configs_ci_above_0', nb, f, 'derived: positives with this beta', role_='ours')
+                    for pl, npl in sorted(byplace.items()):
+                        x.addds(ds, dt, sfam + f'; positives by place={pl}', 'misfit filters (all rules)', 'n_configs_ci_above_0', npl, f, 'derived: positives with this placement', role_='ours')
+                    x.addds(ds, dt, sfam + '; positives', 'misfit filters (all rules)', 'median_positive_gain_pts', float(np.median(posg)), f, 'derived: median over positive configs of mean gain x100', role_='ours')
+                    x.addds(ds, dt, sfam + '; positives', 'misfit filters (all rules)', 'max_positive_gain_pts', float(np.max(posg)), f, 'derived: max over positive configs of mean gain x100', role_='ours')
+                # random-from-shortlist and centrality-only controls
+                gc = collections.defaultdict(lambda: collections.defaultdict(list))
+                for r in d:
+                    nm = r['name']
+                    if r['metric'] != met:
+                        continue
+                    if rule_of(nm) == 'rand' or nm.startswith('random'):
+                        lab = 'random-from-shortlist'
+                    elif nm.endswith('|cent'):
+                        lab = 'centrality-only'
+                    else:
+                        continue
+                    gc[(lab,) + tuple(r.get(k) for k in ('place', 'beta', 'mu')) + (nm,)][r['seed']].append(r['gain'])
+                cc = collections.defaultdict(lambda: [0, 0])
+                for key, sd in gc.items():
+                    m, c = tci([np.mean(v) for v in sd.values()])
+                    cc[key[0]][0] += 1; cc[key[0]][1] += m - c > 0
+                for lab, (nc, npos) in sorted(cc.items()):
+                    sc = sfam + f'; control={lab}'
+                    x.addds(ds, dt, sc, lab, 'n_configs', nc, f, 'derived: control configs', role_='control')
+                    x.addds(ds, dt, sc, lab, 'n_configs_ci_above_0', int(npos), f, 'derived: control configs with mean-ci>0', role_='control')
             s = f'ALL {ds} configs, metric={"infected" if met == "inf" else "cross-community"} share (rand controls and plain centrality excluded)'
             x.addds(ds, dt, s, 'misfit filters (all rules)', 'n_configs', cnt, f, 'derived: count of configs', role_='ours')
             x.addds(ds, dt, s, 'misfit filters (all rules)', 'n_configs_ci_above_0', pos, f, 'derived: configs with mean-ci>0 (t over seeds)', role_='ours')
@@ -826,9 +868,9 @@ def build_summary():
       'cells (setting x budget) where misfit beats best structural', 'not supported', 'Recruiter-detection AUC of misfit 0.59-0.65 vs degree 0.95 in the hub case (rows in long file).')
     S('E11', 'H2', 'blocking (misfit as filter)', 'Does misfit improve a PageRank/betweenness shortlist?', 'synthetic; TIMME; Pokec slice', 'synthetic + simulation-on-real',
       'misfit filter rules over centrality shortlists',
-      [('TIMME configs CI>0 (infected)', E(dataset='TIMME', setting=('in', 'ALL TIMME configs, metric=infected'), metric='n_configs_ci_above_0')), ('TIMME configs CI>0 (cross)', E(dataset='TIMME', setting=('in', 'ALL TIMME configs, metric=cross'), metric='n_configs_ci_above_0')), ('Pokec configs CI>0 (cross)', E(dataset='Pokec slice', setting=('in', 'metric=cross'), metric='n_configs_ci_above_0', method='misfit filters (all rules)')), ('synthetic configs CI>0 (infected)', E(dataset='planted DC-SBM n=4000', setting=('in', 'ALL planted DC-SBM n=4000 configs, metric=infected'), metric='n_configs_ci_above_0'))],
-      'best of PageRank/betweenness top-k', [('TIMME configs total (infected)', E(dataset='TIMME', setting=('in', 'ALL TIMME configs, metric=infected'), metric='n_configs')), ('synthetic configs total (infected)', E(dataset='planted DC-SBM n=4000', setting=('in', 'ALL planted DC-SBM n=4000 configs, metric=infected'), metric='n_configs'))],
-      'configs with 95% CI above 0', 'not supported', 'Config counts here are recomputed from raw files with a documented definition and differ from the README (7/1840 TIMME, 1/920 Pokec, 0/1550 synthetic); cross-community positives are more numerous than the README states. See _gaps.md. No pre-registration.')
+      [('TIMME configs CI>0 (infected)', E(dataset='TIMME', setting=('in', 'ALL TIMME configs, metric=infected'), metric='n_configs_ci_above_0')), ('TIMME configs CI>0 (cross)', E(dataset='TIMME', setting=('in', 'ALL TIMME configs, metric=cross'), metric='n_configs_ci_above_0')), ('Pokec configs CI>0 (cross)', E(dataset='Pokec slice', setting=('in', 'metric=cross'), metric='n_configs_ci_above_0', method='misfit filters (all rules)')), ('synthetic configs CI>0 (infected)', E(dataset='planted DC-SBM n=4000', setting=('in', 'ALL planted DC-SBM n=4000 configs, metric=infected'), metric='n_configs_ci_above_0')), ('synthetic configs CI>0 (cross)', E(dataset='planted DC-SBM n=4000', setting=('in', 'ALL planted DC-SBM n=4000 configs, metric=cross'), metric='n_configs_ci_above_0'))],
+      'best of PageRank/betweenness top-k', [('TIMME configs total (infected)', E(dataset='TIMME', setting=('in', 'ALL TIMME configs, metric=infected'), metric='n_configs')), ('synthetic configs total (infected)', E(dataset='planted DC-SBM n=4000', setting=('in', 'ALL planted DC-SBM n=4000 configs, metric=infected'), metric='n_configs')), ('synthetic configs total (cross)', E(dataset='planted DC-SBM n=4000', setting=('in', 'ALL planted DC-SBM n=4000 configs, metric=cross'), metric='n_configs'))],
+      'configs with 95% CI above 0', 'mixed', 'Infected share: no support (0 of 6900 synthetic, 7/1840 TIMME, 1/920 Pokec = noise). Synthetic cross-community share: positives at strong content gating (beta>=6), mostly hub placement; random-from-shortlist control has 0 positives, so not noise. Real data: noise. Counts recomputed from raw files (README corrected 2026-11-18; its 0/1550 is a narrower count of the same conclusion). No pre-registration.')
     S('E12', 'H3', 'blocking + detection scenarios', 'In which scenarios could misfit targeting help?', 'planted DC-SBM', 'synthetic',
       'misfit (detection, random placement) precision@20', [('misfit precision@20', E(method='misfit', metric='precision_at_k', setting=('in', 'scenario=e_detect_random'), source_key=('in', 'prec@20')))],
       'PageRank (precision@20)', [('pagerank precision@20', E(method='pagerank', metric='precision_at_k', setting=('in', 'scenario=e_detect_random'), source_key=('in', 'prec@20')))],
@@ -954,6 +996,8 @@ GLOSS = {
  'degree_product': ('baseline', 'Link score: product of endpoint degrees.'), 'pr_product': ('baseline', 'Link score: product of endpoint PageRanks.'),
  'link prod': ('method', 'H2 link rule: product of centrality and receptivity.'), 'link prod_misfit': ('method', 'H2 link rule: product with misfit.'), 'link rankavg': ('method', 'H2 link rule: rank average.'), 'link recv': ('method', 'H2 link rule: receptivity only.'), 'link misfit': ('method', 'H2 link rule: misfit only.'), 'link rand': ('control', 'Random links from the shortlist.'), 'struct': ('baseline', 'Structural link score baseline.'),
  'random-from-shortlist': ('control', 'Random pick from the centrality shortlist.'),
+ 'centrality-only': ('control', 'Plain PageRank/betweenness/degree top-k with no misfit filter (gain 0 by construction, up to ties).'),
+ 'median_positive_gain_pts': ('metric', 'Median gain (points) over configs whose CI lies above 0.'), 'max_positive_gain_pts': ('metric', 'Largest gain (points) among configs whose CI lies above 0.'),
  'case-control logit': ('method', 'Logit of observed vs random interactions on text agreement, giving the agreement beta.'),
  'BGRL': ('method', 'Self-supervised GNN embedding with bootstrapped latents, no negatives.'), 'DGI': ('method', 'Self-supervised GNN embedding by local-global infomax.'), 'MVGRL': ('method', 'Self-supervised GNN embedding contrasting adjacency and PPR-diffusion views.'),
  'spectral probe': ('baseline', 'Linear probe on spectral embedding of the graph.'), 'spectral64 probe': ('baseline', 'Standardised probe on a 64-d spectral embedding.'), 'neighbour-vote': ('baseline', 'Predict label by out-of-fold vote of graph neighbours.'),

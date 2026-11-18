@@ -55,6 +55,7 @@ bridge_struct_x_recv,method,Structural bridge score multiplied by receptivity.
 bridge_struct_x_recv_ORACLE,baseline,Same with oracle (true) receptivity.
 btw,baseline,Betweenness centrality.
 case-control logit,method,"Logit of observed vs random interactions on text agreement, giving the agreement beta."
+centrality-only,control,"Plain PageRank/betweenness/degree top-k with no misfit filter (gain 0 by construction, up to ties)."
 chance (size-weighted),control,Hit rate expected by chance given community sizes.
 cn,baseline,Recommend by common neighbours.
 collective_influence,baseline,Collective influence heuristic summing neighbour degrees in a ball.
@@ -143,10 +144,12 @@ low_degree,baseline,Inverse of degree.
 majority class,control,Always predict the most common class.
 matched controls,control,Low-misfit nodes matched on degree and participation decile.
 max_cell_gain_pts,metric,"Largest per-cell gain among the best-selected strategies, in points."
+max_positive_gain_pts,metric,Largest gain (points) among configs whose CI lies above 0.
 mean_gain_vs_best_structural_pts,metric,"Mean gain over cells at a given beta, in points."
 median_acceptance_own_community,metric,Median GloVe acceptance of own community across TIMME nodes.
 median_degree_percentile,metric,Median degree percentile of a node set (0.5 = typical).
 median_diff_vs_matched_controls,metric,Median across robustness cells of the difference vs matched controls.
+median_positive_gain_pts,metric,Median gain (points) over configs whose CI lies above 0.
 mis_frac,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
 mis_max,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
 mis_mean,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
