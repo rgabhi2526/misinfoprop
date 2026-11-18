@@ -1,0 +1,163 @@
+% Requires: booktabs, graphicx, amsmath; \newcommand{\pc}{p_C}
+\providecommand{\pc}{p_C}
+
+\section{Method}
+\label{sec:method}
+We look for \emph{misfits}: accounts whose structural community disagrees with what their text says. The method is label-free and has four parts: a misfit score, a leak control for evaluating it, a re-homing target, and a rewiring intervention with a cascade measure of its effect.
+
+\paragraph{Communities and text classifier.}
+Let $G$ be a social graph and $t_i$ the community of node $i$ found by Leiden \cite{traag2019leiden} (best of 100 runs). Let $x_i$ be the node's text embedding (sentence embeddings \cite{reimers2019sbert}, 384-d MiniLM). A text-only classifier is trained to predict $t$ from $x$. To keep a node's own label from informing its own score, the classifier is \emph{cross-fitted}: each node is scored by a model trained on the other folds (5-fold, logistic regression). This yields $\pc[i,c]$, the probability that node $i$'s text belongs to community $c$.
+
+\paragraph{Misfit and disagreement scores.}
+The misfit score is one minus the probability that the text places the node in its own community,
+\begin{equation}
+\mathrm{misfit}_i = 1 - \pc[i,\,t_i].
+\label{eq:misfit}
+\end{equation}
+A second score, \emph{disagreement}, is the Jensen--Shannon divergence between $\pc[i,\cdot]$ and a structural membership $p_T[i,\cdot]$ obtained from label spread over the Leiden runs. It follows the ambiguity idea of Sani et al.~\cite{sani2025aas}, applied to nodes rather than images. A high score marks a node whose graph position and text disagree. It may be a bridge, a recruiter, an infiltrator, or simply a user the follow graph under-serves.
+
+\paragraph{Leak control.}
+Real text can contain the community signal directly (for example, a latest tweet about a party). Where the dataset allows, we therefore evaluate with bio-only text as the valid setting, and treat richer text (bio plus latest tweet, GloVe) only as a leak-control reference.
+
+\paragraph{Re-homing target.}
+For node $i$ the target community is the one its text fits best,
+\begin{equation}
+\tau_i = \arg\max_c \pc[i,c].
+\label{eq:target}
+\end{equation}
+Re-homing means steering the node's ties toward $\tau_i$, either as link recommendations or as rewiring.
+
+\paragraph{Rewiring intervention and cascade measure.}
+For each treated (misfit) node, \emph{rehome\_text} drops up to $k$ dormant own-community follow edges and adds the same number of edges into $\tau_i$, which keeps degrees unchanged. We compare it to four controls: \emph{none}; \emph{random\_rewire} (same drop counts, random adds); \emph{rehome\_struct} (target is the structurally neighbouring community with most of the node's edges, in the style of Kumari et al.~\cite{kumari2021deception}); and \emph{rehome\_text} applied to random nodes. We then simulate cascades with weighted-cascade acceptance (``wc'', $p{=}1/\text{in-degree}$) \cite{kempe2003influence} and a content-gating strength $\beta$: a node accepts content from its own community more readily by a factor $e^{\beta}$. \emph{Correction reach} is the share of nodes reached by correcting content, in percentage points (pp).
+
+\paragraph{Pipeline.}
+In summary:
+\begin{enumerate}
+\item Detect communities $t_i$ with Leiden on the graph.
+\item Embed each node's text and fit the cross-fitted classifier to get $\pc[i,\cdot]$.
+\item Score every node with misfit (Eq.~\ref{eq:misfit}) and disagreement; take the top-scoring nodes as misfits.
+\item Compute each misfit's target $\tau_i$ (Eq.~\ref{eq:target}).
+\item Either test whether the node's held-out cross-community ties land in $\tau_i$, or rewire toward $\tau_i$ and measure correction reach in a cascade simulation.
+\end{enumerate}
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Setup}
+\textbf{Datasets.} \emph{TIMME} \cite{xiao2020timme}: 20{,}811 Twitter accounts with bios, tweets, and follow, retweet, like and mention layers. \emph{Pokec slice}: a regional slice of the SNAP Pokec network \cite{snap} with interest text and profile fields. \emph{Synthetic}: a degree-corrected stochastic block model ($n{=}4000$, $K{=}8$) with planted mismatched nodes; $\mu$ is community mixing, $\sigma$ text noise, and ``nuisance'' the strength of a community-blind text block. The graphs have real community structure: Louvain modularity $Q$ is 0.256 (TIMME), 0.49 (Pokec slice) and 0.715 (full Pokec), against 0.035, 0.206 and 0.124 for a degree-preserving rewired null. Text predicts the Leiden community above the majority rate on TIMME (0.622 vs 0.318) and only barely on Pokec (0.278 vs 0.249), so misfit is weak on Pokec.
+
+\textbf{Baselines.} Centrality (degree, PageRank, betweenness); structural scores (participation, consensus entropy); a text score (content outlier: text far from the own-community centroid); Adamic--Adar and common neighbours for links \cite{adamic2003friends}; and controls (random, chance, none, random\_rewire, shuffled text).
+
+\textbf{Metrics} (Table~\ref{tab:metrics}). Shares, AUC and precision are fractions; gains and reach are in pp.
+
+\textbf{Uncertainty.} Intervals are 95\% and of three kinds, always stated per table: paired bootstrap over simulations, bootstrap over users, and $t$-intervals over seeds (2--12 seeds). Where no spread was stored (detection: mean of 3 seeds; engagement: single run) we show none and bold nothing. We bold a best value only where an interval supports it.
+
+\begin{table}[t]
+\caption{Metric definitions.}
+\label{tab:metrics}
+\centering\small
+\begin{tabular}{@{}p{0.24\linewidth}p{0.70\linewidth}@{}}
+\toprule
+Metric & Definition\\
+\midrule
+AUC & Probability that a random positive outranks a random negative; 0.5 is chance.\\
+precision@$k$ & Share of the top-$k$ items that are true.\\
+modularity $Q$ & Edges inside communities minus random expectation.\\
+cross-ties in target & Share of held-out cross-community ties landing in the target community.\\
+correction reach & Share of nodes reached by correcting content in the cascade (pp); contrasts are paired.\\
+gain vs.\ best structural & Percentage-point difference in spread removed against the best structural baseline.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Detecting planted misfits (synthetic)}
+Fig.~\ref{fig:e05} and Table~\ref{tab:e05} compare misfit with five baselines over text noise $\sigma$ and nuisance, at $\mu{=}0.5$. Degree, participation and consensus entropy sit at chance (0.50--0.51) throughout. When text has no community-blind variation (nuisance 0), the text-outlier baseline is nearly as good as misfit (0.961 vs 0.964 at $\sigma{=}0.5$). The advantage appears with nuisance variation, as real text has: at nuisance 1.5 misfit reaches 0.904 at $\sigma{=}1$ against 0.607 for content outlier. Misfit and disagreement are within 0.025 of each other, and with three seeds and no stored spread we do not rank them. The result holds on synthetic data, where the planted text mismatch is what misfit measures.
+
+\begin{figure}[t]
+\centering\includegraphics[width=\linewidth]{fig_e05.pdf}
+\caption{(E05) Detection AUC for planted mismatches versus text noise $\sigma$ ($\mu{=}0.5$). Left: no nuisance text variation. Right: nuisance 1.5. Misfit and disagreement are ours. Means over 3 seeds; no spread stored.}
+\label{fig:e05}
+\end{figure}
+
+\begin{table}[t]
+\caption{(E05) Detection AUC, planted DC-SBM, $\mu{=}0.5$ (mean of 3 seeds, no spread stored; nothing bolded).}
+\label{tab:e05}
+\centering\footnotesize
+\resizebox{\linewidth}{!}{\input{tab_e05.tex}}
+\end{table}
+
+\subsection{Engagement goes to the text-predicted community (TIMME)}
+For the top-10\% misfits of TIMME follow communities, Fig.~\ref{fig:e17} and Table~\ref{tab:e17} give the share of held-out cross-community ties that land in $\arg\max \pc$, against size-weighted chance. With bio-only text the share is 0.599 for retweets at $k{=}4$ communities (chance 0.401), 0.585 for likes and 0.508 for mentions; at $k{=}15$ it is 0.280 against 0.123 for retweets. Ties staying in the node's own community are 0.173 (retweets, $k{=}4$). The bio-only classifier predicts the community with accuracy 0.446 at $k{=}4$, so the result survives weak text. The leaky text variant gives higher shares (0.664 for retweets) and is kept only as a leak-control reference. No interval was stored (single run); the tie counts (about $1.3\times10^5$) are not independent, so the gap above chance is large but not formally tested.
+
+\begin{figure}[t]
+\centering\includegraphics[width=\linewidth]{fig_e17.pdf}
+\caption{(E17) Share of held-out cross-community ties of top-10\% misfits that land in the text-predicted community (bio-only text) versus size-weighted chance, by tie type and number of follow communities $k$. Single run, no interval stored.}
+\label{fig:e17}
+\end{figure}
+
+\begin{table}[t]
+\caption{(E17) Cross-community tie share in the target community, TIMME.}
+\label{tab:e17}
+\centering\footnotesize
+\begin{tabular}{@{}llccc@{}}
+\toprule
+$k$ & Tie & bio-only $\arg\max\pc$ & chance & leaky (ref.)\\
+\midrule
+4 & retweet & 0.599 & 0.401 & 0.664\\
+4 & like & 0.585 & 0.402 & 0.629\\
+4 & mention & 0.508 & 0.399 & 0.543\\
+5 & retweet & 0.542 & 0.356 & --\\
+15 & retweet & 0.280 & 0.123 & --\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Rewiring toward the text-predicted community (Pokec)}
+Fig.~\ref{fig:e21} (right) and Table~\ref{tab:rew} show correction reach under the wc model with $k{=}5$ rewires per misfit. At $\beta{=}6$, \emph{rehome\_text} raises reach from 50.34 to 61.26, a gain of +10.92 pp [9.76, 12.13] over no rewiring and +8.00 pp [6.87, 9.10] over \emph{random\_rewire}. Rewiring toward the structural community gives only +2.46 pp, no better than random (+2.92), and applying \emph{rehome\_text} to random nodes gives +0.63 [0.05, 1.31]. The gain over random rewiring is clear from $\beta{=}1$ (+5.29 [3.98, 6.56]); at $\beta{=}0.3$ it vanishes (+0.39 [$-$0.88, 1.65]). Under the independent-cascade model (ic:2) the same contrast is +8.68 [6.96, 10.65] at $\beta{=}6$. Total infected share is nearly unchanged (+0.110 pp). The effect holds at $\beta\ge 3$, with the caveat that $\beta$ is swept rather than measured, selective exposure is assumed, and Pokec text is only weakly informative, so the simulator rather than text accuracy drives much of this effect. Intervals exclude rewiring-draw variance.
+
+\begin{figure}[t]
+\centering\includegraphics[width=\linewidth]{fig_e21.pdf}
+\caption{(E20/E21) Correction reach gain over no rewiring (pp, wc model, $k{=}5$) versus content-gating $\beta$, with 95\% paired-bootstrap intervals over simulations (points offset horizontally for legibility). Left: TIMME (E20, see Section~\ref{sec:other}). Right: Pokec slice (E21).}
+\label{fig:e21}
+\end{figure}
+
+\begin{table}[t]
+\caption{(E20/E21) Correction reach at $\beta{=}6$ (wc, $k{=}5$), reach in \% of nodes and contrasts in pp with 95\% bootstrap intervals.}
+\label{tab:rew}
+\centering\footnotesize
+\resizebox{\linewidth}{!}{\input{tab_rew.tex}}
+\end{table}
+
+\subsection{Other applications}
+\label{sec:other}
+The same score can be used for further tasks. These work only under a stated condition, summarised in Table~\ref{tab:further}.
+
+\textbf{Party validation (TIMME).} Misfit scores 0.682 AUC (one-sided $p{=}0.019$) for party-label mismatches, against 0.541 for a shuffled-text null and 0.361 for degree. There are only 11 positives among 595 labelled nodes, and within degree strata participation (0.769) is above misfit (0.744).
+
+\textbf{Combining with centrality for blocking.} In a favourable synthetic cell (hub placement, $\beta{=}6$, mismatch share 10\%) misfit$\times$PageRank beats the best structural blocker by +1.38 pts [0.40, 2.36], while that blocker removes 33.0 pts. TIMME's implied gating is $\beta{=}1.44$, below the regime where misfit helps.
+
+\textbf{Edge-level link friction.} On synthetic graphs at $\beta{=}4$, \emph{bridge\_struct\_x\_recv} removes 14.9 pts [13, 16.8] more cross-community infection than \emph{bridge\_struct}; at $\beta{=}0$ it is worse ($-$7.3 [$-$10.2, $-$4.4]) and on TIMME (40{,}000 links) it is not different ($-$0.5 [$-$1.2, 0.2]). It therefore needs strong gating.
+
+\textbf{Detection on planted scenarios.} Precision@20 on planted mismatches is 0.787 [0.729, 0.846] for misfit, 0.6375 for disagreement and 0.0312 for PageRank (hub placement: 0.725 vs 0.369). For blocking, misfit helps only at strong gating ($+4.46$ [3.34, 5.58] at $\beta{=}6$) and hurts at realistic $\beta{=}1.4$ ($-2.15$ [$-2.59$, $-1.70$]).
+
+\textbf{Infiltrator detection.} Misfit reaches 0.772 AUC [0.752, 0.792] against 0.508 for betweenness and 0.501 for PageRank and degree (text accuracy 0.61, random placement). It works for non-structural infiltrators when text accuracy is about 0.45 or higher; recruiters and hub or peripheral cases lose to PageRank or low-degree.
+
+\textbf{Rewiring on TIMME.} Rewiring misfits toward their text-predicted community gives +4.72 pp [3.05, 6.91] at $\beta{=}6$ over no rewiring, but the part attributable to text targeting, \emph{rehome\_text} minus \emph{random\_rewire}, is +1.26 [$-$0.33, 2.22], not distinguishable from generic rewiring. At $\beta{=}0.3$, near TIMME's measured agreement (0.20--0.29), the effect is gone (+0.10 [$-$0.37, 0.56]).
+
+\begin{table}[t]
+\caption{Other applications; the test ID is given in parentheses. Intervals 95\%.}
+\label{tab:further}
+\centering\footnotesize
+\begin{tabular}{@{}p{0.17\linewidth}p{0.2\linewidth}p{0.23\linewidth}p{0.3\linewidth}@{}}
+\toprule
+Use (ID) & Ours & Best competitor / control & Condition\\
+\midrule
+Party validation (E06) & AUC 0.682 & shuffled text 0.541; degree 0.361 & 11 positives; participation higher within degree\\
+Blocking, misfit$\times$PR (E08) & +1.38 pts [0.40, 2.36] & best structural removes 33.0 pts & one favourable cell; TIMME $\beta{=}1.44$\\
+Link friction (E09) & +14.9 pts [13, 16.8] ($\beta{=}4$) & TIMME $-0.5$ [$-1.2$, 0.2]; $\beta{=}0$: $-7.3$ & only at strong gating\\
+Planted detection (E12) & precision@20 0.787 [0.729, 0.846] & PageRank 0.0312 & blocking helps only at $\beta\ge 6$\\
+Infiltrators (E13) & AUC 0.772 [0.752, 0.792] & betweenness 0.508 & fails for recruiters, hubs\\
+TIMME rewiring (E20) & +4.72 pp vs none [3.05, 6.91] & random\_rewire +3.46 pp; residual +1.26 [$-$0.33, 2.22] & text targeting not distinguishable from random rewiring\\
+\bottomrule
+\end{tabular}
+\end{table}
