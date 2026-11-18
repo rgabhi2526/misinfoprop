@@ -658,20 +658,21 @@ def e17_probe():
     d = jl(f)
     for st, v in d.items():
         for var, r in v.items():
-            text = 'bio only (leak control)' if var == 'bio only' else 'bio + latest tweet + GloVe (leaky)'
+            text = 'bio only (clean text, no leak)' if var == 'bio only' else 'bio + latest tweet + GloVe (leak control, not a valid result)'
+            leaky = var != 'bio only'
             base = f'follow communities {st} (k={r["k"]})'
             if r['acc'] is not None:
                 x.add(base + '; ' + text, 'text classifier p_C', 'text_to_community_acc', r['acc'], f, f'{st}.{var}.acc', role_='ours')
             x.add(base + '; ' + text, 'top-10% misfits', 'n_misfits', r['n_misfits'], f, f'{st}.{var}.n_misfits', role_='ours')
             for L in ['retweet', 'like', 'mention']:
                 s = f'{base}; {text}; held-out {L}'
-                x.add(s, 'argmax p_C (text target)', 'cross_ties_in_target_share', r[L]['hit_argmax_pC'], f, f'{st}.{var}.{L}.hit_argmax_pC', n=r[L]['n_cross'], role_='ours')
+                x.add(s, 'argmax p_C (text target)', 'cross_ties_in_target_share', r[L]['hit_argmax_pC'], f, f'{st}.{var}.{L}.hit_argmax_pC', n=r[L]['n_cross'], role_='reference' if leaky else 'ours')
                 x.add(s, 'chance (size-weighted)', 'cross_ties_in_target_share', r[L]['chance'], f, f'{st}.{var}.{L}.chance', n=r[L]['n_cross'], role_='control')
                 x.add(s, 'own follow community', 'ties_staying_in_own_community_share', r[L]['own_community_share'], f, f'{st}.{var}.{L}.own_community_share', role_='reference')
     f = 'TASKS.md'
     # ponytail: the Kumari-extraction retweet share (0.53) and control own-community share (0.69) are not printed by
     # h5_probe.py; hand-entered from TASKS.md T11.0 (listed in _gaps.md)
-    x.add('follow communities r1.0_s0 (k=4); bio + latest tweet + GloVe (leaky); held-out retweet', 'Kumari extraction target', 'cross_ties_in_target_share', 0.53, f, 'T11.0 text (hand-entered)', role_='baseline')
+    x.add('follow communities r1.0_s0 (k=4); bio + latest tweet + GloVe (leak control, not a valid result); held-out retweet', 'Kumari extraction target', 'cross_ties_in_target_share', 0.53, f, 'T11.0 text (hand-entered)', role_='reference')
     x.add('follow communities r1.0_s0 (k=4); matched controls; held-out retweet', 'matched controls', 'ties_staying_in_own_community_share', 0.69, f, 'T11.0 text (hand-entered)', role_='control')
 
 
@@ -826,7 +827,7 @@ def build_summary():
       [('BGRL Q', E(method='BGRL', metric='modularity_Q', setting=('in', 'single run'))), ('DGI Q', E(method='DGI', metric='modularity_Q', setting=('in', 'single run'))), ('MVGRL Q', E(method='MVGRL', metric='modularity_Q', setting=('in', 'single run')))],
       'spectral64 probe / neighbour-vote (graph-only)',
       [('spectral64 fair-probe acc', E(method='spectral64 probe', metric='probe_acc')), ('neighbour-vote acc', E(method='neighbour-vote', metric='probe_acc'))],
-      'modularity Q of k-means clusters (and fair-probe accuracy)', 'failed', 'Clusters sort by degree (Q <= 0, NMI about 0); fair probe not better than graph-only baselines. Superseded by T10 (S-23). Single run, no CI; old probe was biased.')
+      'modularity Q of k-means clusters (and fair-probe accuracy)', 'failed', 'Clusters sort by degree (Q <= 0, NMI about 0); fair probe not better than graph-only baselines. Abandoned phase-1 method, superseded by T10 (S-23). Single run, no CI; old probe was biased.')
     S('E03', 'T10.1/T10.2', 'view construction', 'Can graph-only (T) and text-only (C) partitions be built cleanly, and do they differ?', 'TIMME; Pokec slice', 'real',
       'T view: Leiden x100 on the social graph',
       [('TIMME T-Leiden Q', E(dataset='TIMME', method='T Leiden (best of runs)', metric='modularity_Q')), ('Pokec T-Leiden Q', E(dataset='Pokec slice', method='T Leiden (best of runs)', metric='modularity_Q'))],
@@ -852,7 +853,7 @@ def build_summary():
       [('gateway infected removed pct', E(dataset='TIMME', method='gateway', metric='infected_removed_pct', setting='content-aware model=wc k=50 sims=100'))],
       'betweenness',
       [('betweenness infected removed pct', E(dataset='TIMME', method='betweenness', metric='infected_removed_pct', setting='content-aware model=wc k=50 sims=100'))],
-      'percent of infected removed', 'not supported', 'Gate failed: betweenness/PageRank win on TIMME and Pokec slice. Gateway within noise (SE about 15 points).')
+      'percent of infected removed', 'not supported', 'Gate failed: betweenness/PageRank win on TIMME and Pokec slice. Content-blind rows where disagreement_x_pr tops TIMME (41.52) are a content-blind structural result; they do not test misfit and are not a positive for our method. Gateway within noise (SE about 15 points).')
     S('E08', 'T10.8/T10.9', 'blocking (regime boundary)', 'When does mismatch-aware node targeting beat the best of PageRank/betweenness?', 'planted DC-SBM; TIMME placement', 'synthetic',
       'misfit_x_pr (cell mu=0.5 beta=6 plant=10 hub)', [('gain pts', E(method='misfit_x_pr', metric='gain_vs_best_structural_pts', setting=('in', 'mu=0.5 beta=6.0 plant=0.1 place=hub')))],
       'best of PageRank/betweenness', [('best structural removed pts', E(method='best of PageRank/betweenness', metric='cross_spread_removed_pts', setting=('in', 'mu=0.5 beta=6.0 plant=0.1 place=hub'))), ('TIMME effective beta', E(metric='effective_agreement_beta'))],
@@ -895,7 +896,7 @@ def build_summary():
     S('E17', 'T11.0', 're-homing motivation', 'Do misfits follow one community but engage with their text-predicted one?', 'TIMME', 'real',
       'argmax p_C (bio-only text, k=4, retweets)', [('hit share', E(setting=('in', 'r1.0_s0 (k=4); bio only'), method='argmax p_C (text target)', metric='cross_ties_in_target_share', source_key=('in', 'retweet')))],
       'chance (size-weighted)', [('chance', E(setting=('in', 'r1.0_s0 (k=4); bio only'), method='chance (size-weighted)', metric='cross_ties_in_target_share', source_key=('in', 'retweet')))],
-      'share of cross-community retweets landing in argmax p_C', 'supported', 'Survives bio-only text (leak control). Probe reruns (2026-11-18) reproduce the TASKS numbers; Kumari 0.53 and controls 0.69 are quoted from TASKS.md.')
+      'share of cross-community retweets landing in argmax p_C', 'supported', 'Survives bio-only text (clean, no leak); leaky-text rows are kept as role=reference, labelled leak control, not a valid result. Probe reruns (2026-11-18) reproduce the TASKS numbers; Kumari 0.53 and controls 0.69 are quoted from TASKS.md.')
     S('E18', 'T11.1', 'link recommendation', 'Are misfits under-served by the follow graph, and does a text-aware recommender beat structure-only ones?', 'TIMME', 'real',
       'aa_x_text (misfits, k=15)', [('P@10', E(setting='r2.0_s0 misfit', method='aa_x_text', metric='P@10'))],
       'Adamic-Adar (misfits, k=15)', [('P@10', E(setting='r2.0_s0 misfit', method='aa', metric='P@10'))],
@@ -907,7 +908,7 @@ def build_summary():
     S('E20', 'T11.2', 'rewiring (correction reach)', 'Does degree-preserving re-homing of misfits raise correction reach (TIMME)?', 'TIMME', 'simulation-on-real',
       'rehome_text (r1.0 k5 wc beta 6)', [('correction reach vs none pp', E(setting='r1.0_s0 k5 model=wc beta=6 sims=100', method='rehome_text', metric='correction_reach_contrast_vs_none_pp'))],
       'random_rewire (same cell)', [('random_rewire vs none pp', E(setting='r1.0_s0 k5 model=wc beta=6 sims=100', method='random_rewire', metric='correction_reach_contrast_vs_none_pp'))],
-      'correction reach (pp) vs no rewiring', 'partly supported', 'WEAKLY SUPPORTED, small and conditional: text residual over random rewire CI>0 in 4/7 beta>=3 cells shown; null at real beta 0.3. CIs exclude rewiring-draw variance.')
+      'correction reach (pp) vs no rewiring', 'partly supported', 'Headline is gain vs no rewiring (4.72 pp, CI excludes 0). In this cell the text-vs-random_rewire residual is +1.26 [-0.33, 2.22]: not distinguishable from generic rewiring (README: CI>0 in only 4/7 beta>=3 cells shown); null at real beta 0.3. CIs exclude rewiring-draw variance.')
     S('E21', 'T11.2', 'rewiring (correction reach)', 'Does degree-preserving re-homing of misfits raise correction reach (Pokec slice)?', 'Pokec slice', 'simulation-on-real',
       'rehome_text (k5 wc beta 6)', [('correction reach vs none pp', E(setting='pokec_knm k5 model=wc beta=6 sims=100', method='rehome_text', metric='correction_reach_contrast_vs_none_pp'))],
       'random_rewire (same cell)', [('random_rewire vs none pp', E(setting='pokec_knm k5 model=wc beta=6 sims=100', method='random_rewire', metric='correction_reach_contrast_vs_none_pp'))],

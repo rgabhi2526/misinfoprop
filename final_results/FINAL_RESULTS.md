@@ -43,6 +43,9 @@ Files in `final_results/`:
 
 Regenerate (about 10 s, CPU only): `cd final_results && /opt/anaconda3/bin/python build_results.py`
 
+Terms. "failed" means the pipeline or method was broken (E02: embeddings carry no community signal). "not supported" means the
+hypothesis was tested properly and rejected. The two are kept separate.
+
 Conventions. Shares, AUC, P@10, R@100 and success rates are fractions (0 to 1). Anything called gain, removed
 or `_pts` / `_pp` is in percentage points. Verdicts are one of: supported, partly supported, mixed, not supported,
 failed, descriptive. Verdict wording comes from the project READMEs and TASKS.md; for E06 and E09 the verdict
@@ -74,7 +77,7 @@ is the builder's mapping (see section 8).
 | E17 | Re-homing motivation | TIMME | argmax p_C hit share 0.599 (bio-only, k=4) | Chance 0.401 | supported |
 | E18 | Link recommendation | TIMME | aa_x_text P@10 0.122 (misfits, k=15) | Adamic-Adar P@10 0.0755 | mixed |
 | E19 | Recommendation robustness | TIMME | aa_x_text vs aa: 12 of 27 settings CI>0 | 9 settings CI<0 | not supported |
-| E20 | Rewiring, correction reach | TIMME | rehome_text +4.72 pp vs none (r1.0, k5, wc, beta 6) | random_rewire +3.46 pp | partly supported |
+| E20 | Rewiring, correction reach | TIMME | rehome_text +4.72 pp vs none [3.05, 6.91] (r1.0, k5, wc, beta 6); residual over random_rewire +1.26 [-0.33, 2.22], not distinguishable from generic rewiring | random_rewire +3.46 pp | partly supported |
 | E21 | Rewiring, correction reach | Pokec slice | rehome_text +10.9 pp vs none (k5, wc, beta 6) | random_rewire +2.92 pp | supported |
 | E22 | Deception detection | TIMME, Pokec slice | Misfit AUC 0.487 (kumari k=2, TIMME, all targets) | Participation AUC 0.541 | not supported |
 
@@ -121,7 +124,7 @@ Verdict. E01 descriptive: real communities exist. E02 failed: embedding clusters
 NMI about 0, correlation of embedding norm with log degree 0.77 to 0.85); a fair probe is no better than graph-only
 baselines. E03 descriptive: raw text clusters have no graph structure.
 
-Caveats. E02 is a single run with no interval; the old probe was biased and the study was superseded by T10 (S-23). The
+Caveats. The GNN embeddings are the phase-1 method and are an abandoned phase; they stay listed as "ours". E02 is a single run with no interval; the old probe was biased and the study was superseded by T10 (S-23). The
 Reddit GNN has modularity only and is not included (`_gaps.md` 11). Pokec full was not run through the T10 pipeline.
 
 ### 4.2 Content informativeness and misfit detection (E04, E05, E06, E12 detection part, E13)
@@ -282,9 +285,8 @@ centrality blocking" for TIMME or Pokec.
 Caveats. Gateway differences on TIMME are within noise (SE about 15 points in E07). E07 removed-percent values are
 derived from stored means (older files have no SE). E08 and E05 use 2 and 3 seeds. E16 best-selected numbers are
 selection biased; the fixed rule is the honest one. E09 budgets were inferred from calls in `edges.py`.
-Centrality-based blocking is stronger in the content-blind model, where disagreement_x_pr (41.52) is the top TIMME entry; this is
-the one real-graph row where an "ours" method has the largest value, but the content-blind model is not the project's
-gate. H2 has no pre-registration (section 7).
+In the content-blind model disagreement_x_pr (41.52) is the top TIMME entry. This is a content-blind structural result: it does not
+test misfit (misfit alone removes 1.11) and is not a positive for our method. H2 has no pre-registration (section 7).
 
 ### 4.4 Misinformation detection (E15)
 
@@ -317,8 +319,8 @@ retweets landing in the argmax p_C community, against size-weighted chance. A bi
 |---|---|
 | argmax p_C, bio-only text, retweets | 0.599 |
 | chance (size-weighted) | 0.401 |
-| argmax p_C, leaky text, retweets (first row) | 0.664 |
-| Kumari extraction target (hand-entered from TASKS.md) | 0.53 |
+| Leaky text (bio + latest tweet + GloVe), argmax p_C, retweets (first row): leak control, not a valid result, role=reference | 0.664 |
+| Leaky text, Kumari extraction target (hand-entered from TASKS.md): leak control, not a valid result, role=reference | 0.53 |
 
 For k=15 (r2.0), bio-only retweets: 0.280 vs chance 0.123. Ties staying in the node's own community: 0.173 for k=4 bio-only
 retweets.
@@ -378,7 +380,7 @@ At beta 0.3 the effect vanishes on TIMME (rehome_text vs none +0.104 [-0.365, 0.
 none but +0.394 [-0.882, 1.65] vs random_rewire. Total infected share is essentially unchanged (rehome_text vs none
 +0.068 pp TIMME, +0.110 pp Pokec at beta 6).
 
-Verdict. E21 supported at beta 3 or more. E20 partly supported: small and conditional.
+Verdict. E21 supported at beta 3 or more. E20 partly supported. Its headline is the gain versus no rewiring (+4.72 pp), reported as a headline only because its interval excludes 0. The part attributable to text targeting, rehome_text minus random_rewire (+1.26 [-0.326, 2.22]), is not distinguishable from generic rewiring in this cell.
 
 Caveats. Beta is swept, not measured; selective exposure is assumed. TIMME's measured agreement beta (0.20 to 0.29, E14) is
 in the null region (beta 0.3). The TIMME text-over-random-rewire residual in the headline cell spans 0; the README counts
@@ -402,12 +404,20 @@ TIMME, kumari k=2, AUC [95% CI]:
 | consensus_entropy | 0.505 [0.504, 0.506] | 0.648 [0.622, 0.674] |
 | degree | 0.534 [0.51, 0.558] | 0.217 [0.208, 0.225] |
 
-Misfit AUC with negatives restricted to successful targets (`negatives=succ`): 0.640; with unattacked nodes as negatives for successful targets (`negatives=succ_unatt`): 0.465.
+Misfit AUC with negatives restricted to successful targets (`negatives=succ`): 0.640; with `negatives=succ_unatt`: 0.465.
+Matched controls, misfit AUC on successful targets (`negatives=succ`), all from `h6_timme.json` / `h6_pokec.json` (rows in E22):
+
+| Attack | TIMME k=2 | TIMME k=5 | Pokec k=2 | Pokec k=5 |
+|---|---|---|---|---|
+| kumari | 0.640 | 0.655 | 0.603 | 0.598 |
+| random attack (matched control) | 0.663 | 0.679 | 0.623 | 0.660 |
+| noise attack | 0.587 | 0.452 | 0.566 | 0.462 |
+
+The random control matches or exceeds kumari in all four cells, so there is no attack-specific signal. Successful-vs-failed (`succ_vs_fail`) gives the same pattern: TIMME k=2 kumari 0.713 vs random 0.736; Pokec k=2 0.672 vs 0.686.
 Attack success rates, TIMME k=2: kumari 0.232, safeness 0.187, random 0.087, noise 0.057 (Pokec k=2: 0.373, 0.277, 0.158, 0.143).
 
 Verdict. Not supported (README, revised). The apparent success on successful targets is circular: success is a label flip, and
-misfit rises when the label changes. The matched random-rewire control gives the same misfit AUC (README: 0.66/0.68 TIMME,
-0.62/0.66 Pokec for random vs 0.64/0.66 and 0.60/0.60 for kumari; these README numbers are not in the CSVs). See
+misfit rises when the label changes. The matched random-rewire control gives the same misfit AUC (table above). See
 `results/hypotheses/h6/README.md`.
 
 Caveats. Simplified attacker, one resolution, 3 seeds sharing one t0; mean and interval over 3 seeds only.
@@ -495,10 +505,4 @@ From `_gaps.md`, with two corrections noted.
 ## 8. Open questions for the user
 
 1. E06 and E09 verdicts (partly supported) are the builder's mapping; TASKS.md has no explicit label. Should E06 be "supported" given p 0.019, or "mixed" given 11 positives?
-2. Should the E02 GNN rows (role "ours" in the long file) be reported as the project's method that failed, or as baselines?
-3. Which definition of an H2 "config" did the original H2 author use? The "1550" total is unexplained; this document uses 6900 per metric (and 2300 averaged over mu).
-4. Should E02 "failed" and "not supported" be merged into one negative category in the tally? They are separate here.
-5. For E20, the headline cell (beta 6) has a TIMME text-vs-random-rewire residual spanning 0. Should the headline be restated as "rewiring helps, text targeting adds little on TIMME"?
-6. E07 reports the content-aware gate as the test, but disagreement_x_pr tops the content-blind TIMME row (41.52 vs 36.13). Should the report mention this as a positive, or treat the content-blind model as out of scope?
-7. The README-only numbers quoted here (E22 matched-control AUCs) are not in the CSVs. Should the build script be extended to read them from `h6_*.json`?
-8. Should E17's leaky-text rows (0.664) be reported at all, given the bio-only control is the cleaner claim?
+2. Which definition of an H2 "config" did the original H2 author use? The "1550" total is unexplained and not recoverable from the files; this document uses 6900 per metric (and 2300 averaged over mu).
