@@ -1,0 +1,271 @@
+name,kind,one_line
+BGRL,method,"Self-supervised GNN embedding with bootstrapped latents, no negatives."
+C text k-means k=11,baseline,Baseline partition: k-means on text embeddings (k as named).
+C text k-means k=5,baseline,Baseline partition: k-means on text embeddings (k as named).
+C text kNN Leiden (best of runs),method,Text partition: Leiden on a text kNN graph.
+DGI,method,Self-supervised GNN embedding by local-global infomax.
+Kumari extraction target,baseline,Neighbouring community with most of the node edges.
+MVGRL,method,Self-supervised GNN embedding contrasting adjacency and PPR-diffusion views.
+P@10,metric,Share of top-10 recommended accounts that are held-out true ties.
+R@100,metric,Recall of held-out ties within the top-100 recommendations.
+T Leiden (best of runs),method,Topology partition: best of 100 Leiden runs on the social graph.
+T Leiden vs C text kNN Leiden,term,Comparison of the two partitions.
+T reg-spectral + k-means k=11,baseline,Baseline partition: regularised spectral embedding plus k-means on the graph (k as named).
+T reg-spectral + k-means k=5,baseline,Baseline partition: regularised spectral embedding plus k-means on the graph (k as named).
+TIMME placement,term,Position of TIMME on the regime map.
+T_ari_vs_planted,metric,ARI between the recovered topology partition and the planted one.
+aa,baseline,Adamic-Adar link score.
+aa+text_sim,method,Adamic-Adar plus bio similarity.
+aa_x_struct,baseline,Adamic-Adar multiplied by structural membership p_T.
+aa_x_text,method,Adamic-Adar multiplied by text community membership p_C.
+aa_x_text minus aa P@10,metric,Paired difference between aa_x_text and the named recommender on the named measure.
+aa_x_text minus aa R@100,metric,Paired difference between aa_x_text and the named recommender on the named measure.
+aa_x_text minus aa_x_struct P@10,metric,Paired difference between aa_x_text and the named recommender on the named measure.
+aa_x_text minus aa_x_struct R@100,metric,Paired difference between aa_x_text and the named recommender on the named measure.
+adaptive_degree,baseline,Iteratively remove the highest-degree node and recompute.
+adding misfit to text+structure,method,Feature-set change whose paired AUC delta is reported.
+adding structure to text,method,Feature-set change whose paired AUC delta is reported.
+age+gender+completion,baseline,Pokec profile fields as predictors.
+agreement_beta,metric,Log-odds coefficient of text agreement in a case-control logit of observed interactions.
+agreement_beta_same_T,metric,Same coefficient restricted to same-topology-community pairs.
+ambiguity_T,baseline,Normalised entropy of the structural membership p_T.
+ambiguity_T_x_pr,baseline,Structural ambiguity multiplied by PageRank.
+argmax p_C (text target),method,Community with highest text-predicted probability.
+argmax_agreement,metric,Fraction of nodes where two classifiers pick the same top community.
+ari,metric,"Adjusted Rand index between a clustering and reference labels, corrected for chance."
+ari_T_vs_C,metric,ARI between the topology and text partitions.
+ari_party,metric,ARI between clusters and party labels.
+auc,metric,Probability a random positive node outranks a random negative; 0.5 is chance.
+auc_gain_vs_best_baseline,metric,"Misfit AUC minus the best baseline AUC, paired over seeds."
+auc_overall,metric,AUC over all nodes.
+auc_within_degree,metric,Within-degree AUC.
+auc_within_degree_terciles,metric,AUC inside degree terciles so degree in disguise cannot win.
+base_harm_share,metric,Harm share (mainstream nodes reached) with no blocking.
+best misfit-based (picked per cell),method,Best-performing misfit-based strategy chosen per cell (optimistic).
+best misfit-based (selected per cell),method,Best misfit-based strategy selected per cell (optimistic).
+best misfit-based minus best other non-structural,method,Gain over the best non-structural alternative.
+best of PageRank/betweenness,baseline,Better of PageRank and betweenness.
+best_config_gain_pts,metric,Gain of the best configuration (selection-biased).
+best_epoch,metric,Training epoch selected by modularity.
+betweenness,baseline,Betweenness centrality.
+bridge_content,method,Cross-community link score using content-based receptivity.
+bridge_oracle,baseline,Bridge score with oracle receptivity.
+bridge_struct,baseline,Cross-community link score PR_u times PR_v (structure only).
+bridge_struct_x_recv,method,Structural bridge score multiplied by receptivity.
+bridge_struct_x_recv_ORACLE,baseline,Same with oracle (true) receptivity.
+btw,baseline,Betweenness centrality.
+case-control logit,method,"Logit of observed vs random interactions on text agreement, giving the agreement beta."
+chance (size-weighted),control,Hit rate expected by chance given community sizes.
+cn,baseline,Recommend by common neighbours.
+collective_influence,baseline,Collective influence heuristic summing neighbour degrees in a ball.
+community_top1_hit,metric,Share of held-out ties whose community equals the predicted target community.
+conductance_mean,metric,Mean fraction of cluster edges leaving the cluster (1 = no structure).
+consensus_entropy,baseline,Instability of a node community across Leiden runs.
+consensus_entropy_x_pr,baseline,Consensus entropy multiplied by PageRank.
+content_outlier,baseline,Text far from the own-community text centroid.
+content_outlier_x_pr,baseline,Content outlier multiplied by PageRank.
+control_mean,metric,Mean outcome of matched controls.
+corr_norm_logdeg,metric,Correlation between embedding norm and log degree.
+correction_reach_contrast_vs_none_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+correction_reach_contrast_vs_random_rewire_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+correction_reach_contrast_vs_rehome_text_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+correction_reach_pts,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+correlation,metric,Pearson correlation.
+cross_community_edge_share_pct,metric,Percent of edges whose endpoints sit in different communities.
+cross_community_infected_removed_pct,metric,Percent reduction of cross-community infected share vs no blocking (derived).
+cross_community_infected_share,metric,"Infected nodes outside every seed community, as a fraction of all nodes."
+cross_infection_removed_pct,metric,Percent of cross-community infection removed by cutting links.
+cross_spread_removed_pts,metric,Points of cross-community spread removed by the best structural baseline.
+cross_ties_in_target_share,metric,Share of held-out cross-community ties landing in the target community.
+deception_success_rate,metric,Fraction of attacked targets whose community label changed.
+degree,baseline,Node degree.
+degree_eta2,metric,Share of log-degree variance explained by cluster membership; high means clusters just sort by degree.
+degree_product,baseline,Link score: product of endpoint degrees.
+delta_auc_paired,metric,"Change in AUC from adding a feature, paired bootstrap."
+detect_auc,metric,AUC of misfit at detecting planted mismatches in the regime map.
+diff_vs_bridge_struct_pts,metric,Percentage-point difference in cross-community infection removed vs the structural bridge score.
+diff_vs_matched_controls,metric,Difference vs degree-matched controls (with permutation CI).
+dim_std_mean,metric,Mean per-dimension standard deviation of the embedding.
+disagreement,method,Jensen-Shannon divergence between structural and text community membership.
+disagreement_SHUFFLED_TEXT,control,Disagreement computed after shuffling text.
+disagreement_x_pr,method,Disagreement multiplied by PageRank.
+edge_reconstruction_auc,metric,How well embedding dot products separate real from fake edges.
+edges_into_B,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."
+effective_agreement_beta,metric,Agreement-gating strength implied by TIMME acceptance.
+effective_rank,metric,Effective number of independent embedding dimensions.
+emb_std,metric,Mean per-dimension standard deviation of an embedding (collapse check).
+f1,metric,F1 score.
+gain_vs_best_structural_pts,metric,"Percentage points removed by a method minus the best structural baseline, paired over common random numbers."
+gain_vs_best_text,metric,Delivery-scenario gain vs the named text-based competitor (points).
+gain_vs_struct_pts,metric,"Link-level gain vs the structural bridge score, in points."
+gain_vs_text_toB,metric,Delivery-scenario gain vs the named text-based competitor (points).
+gateway,method,Node score of cross-community links weighted by the receiver text membership.
+gateway_struct,control,Gateway without text: isolates what text adds.
+harm_removed_pts,metric,Percentage points of harm removed by blocking.
+held-out ties in own,metric,Share of held-out ties in the text-target or own community.
+held-out ties in text_target,metric,Share of held-out ties in the text-target or own community.
+infected,metric,Infected share in a rewiring simulation.
+infected_contrast_vs_none_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+infected_contrast_vs_random_rewire_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+infected_contrast_vs_rehome_text_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+infected_removed_pct,metric,Percent reduction of infected share vs no blocking (derived from stored means).
+infected_share,metric,Fraction of nodes reached by a simulated cascade.
+interest text,method,Pokec interest text as predictor.
+is_best_baseline,metric,Marker: this baseline had the highest mean AUC in the config.
+knn10_label_agreement,metric,Label purity of each node 10 nearest neighbours.
+knn_dup,baseline,Near-duplicate text among kNN neighbours.
+kumari,baseline,Structural extraction community target (Kumari et al. 2021) times PageRank.
+kumari attack,term,Move target toward neighbouring community by rewiring (simplified Kumari 2021).
+largest_cluster_share,metric,Share of nodes in the biggest cluster.
+largest_community_share_pct,metric,Percent of nodes in the biggest community.
+link 10k|misfit,method,H2 link-level rule: 10k|misfit (shortlist size|rule; bridge_content = content-based bridge score).
+link 10k|prod,method,H2 link-level rule: 10k|prod (shortlist size|rule; bridge_content = content-based bridge score).
+link 10k|prod_misfit,method,H2 link-level rule: 10k|prod_misfit (shortlist size|rule; bridge_content = content-based bridge score).
+link 10k|rand,method,H2 link-level rule: 10k|rand (shortlist size|rule; bridge_content = content-based bridge score).
+link 10k|rankavg,method,H2 link-level rule: 10k|rankavg (shortlist size|rule; bridge_content = content-based bridge score).
+link 10k|recv,method,H2 link-level rule: 10k|recv (shortlist size|rule; bridge_content = content-based bridge score).
+link 3k|misfit,method,H2 link-level rule: 3k|misfit (shortlist size|rule; bridge_content = content-based bridge score).
+link 3k|prod,method,H2 link-level rule: 3k|prod (shortlist size|rule; bridge_content = content-based bridge score).
+link 3k|prod_misfit,method,H2 link-level rule: 3k|prod_misfit (shortlist size|rule; bridge_content = content-based bridge score).
+link 3k|rand,method,H2 link-level rule: 3k|rand (shortlist size|rule; bridge_content = content-based bridge score).
+link 3k|rankavg,method,H2 link-level rule: 3k|rankavg (shortlist size|rule; bridge_content = content-based bridge score).
+link 3k|recv,method,H2 link-level rule: 3k|recv (shortlist size|rule; bridge_content = content-based bridge score).
+link all|misfit,method,H2 link-level rule: all|misfit (shortlist size|rule; bridge_content = content-based bridge score).
+link all|prod,method,H2 link-level rule: all|prod (shortlist size|rule; bridge_content = content-based bridge score).
+link all|prod_misfit,method,H2 link-level rule: all|prod_misfit (shortlist size|rule; bridge_content = content-based bridge score).
+link all|rand,method,H2 link-level rule: all|rand (shortlist size|rule; bridge_content = content-based bridge score).
+link all|rankavg,method,H2 link-level rule: all|rankavg (shortlist size|rule; bridge_content = content-based bridge score).
+link all|recv,method,H2 link-level rule: all|recv (shortlist size|rule; bridge_content = content-based bridge score).
+link bridge_content,method,H2 link-level rule: bridge_content (shortlist size|rule; bridge_content = content-based bridge score).
+log-degree-only probe,baseline,Probe on log degree only.
+log_size_baseline,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+low_degree,baseline,Inverse of degree.
+majority class,control,Always predict the most common class.
+matched controls,control,Low-misfit nodes matched on degree and participation decile.
+max_cell_gain_pts,metric,"Largest per-cell gain among the best-selected strategies, in points."
+mean_gain_vs_best_structural_pts,metric,"Mean gain over cells at a given beta, in points."
+median_acceptance_own_community,metric,Median GloVe acceptance of own community across TIMME nodes.
+median_degree_percentile,metric,Median degree percentile of a node set (0.5 = typical).
+median_diff_vs_matched_controls,metric,Median across robustness cells of the difference vs matched controls.
+mis_frac,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+mis_max,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+mis_mean,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+misfit,method,One minus the text-predicted probability of the node own graph community; high means the text disagrees with the placement (ours).
+misfit alone,method,PHEME classifier using only misfit features.
+misfit filter (band),method,H2 node filter: shortlist by centrality then choose by the named rule.
+misfit filter (misfit),method,H2 node filter: shortlist by centrality then choose by the named rule.
+misfit filter (mthenc),method,H2 node filter: shortlist by centrality then choose by the named rule.
+misfit filter (prod),method,H2 node filter: shortlist by centrality then choose by the named rule.
+misfit filter (rankavg),method,H2 node filter: shortlist by centrality then choose by the named rule.
+misfit filters (all rules),method,All misfit-based filter rules pooled.
+misfit scores,method,Misfit score used for detection AUC in the regime map.
+misfit_SHUFFLED_TEXT,control,Misfit computed after shuffling text across nodes.
+misfit_minus_control_diff,metric,Difference between the misfit-group diff and the control-group diff (misfit-specific gain).
+misfit_nonhub,method,Misfit restricted to non-hub accounts.
+misfit_rerank,method,PageRank shortlist reordered by misfit.
+misfit_toB,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."
+misfit_toB_x_edges,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."
+misfit_x_lowdeg,method,Misfit multiplied by an inverse-degree term.
+misfit_x_pr,method,Misfit multiplied by PageRank (influential and ambiguous).
+misfit_x_pr (fixed),method,misfit_x_pr applied unconditionally (no selection).
+misfits_reached_contrast_vs_none_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+misfits_reached_contrast_vs_random_rewire_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+misfits_reached_contrast_vs_rehome_text_pp,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+misfits_reached_pts,metric,Rewiring-simulation outcome or contrast (percentage points) for the named intervention comparison.
+misfit~btw,metric,Spearman partner for misfit: btw.
+misfit~degree,metric,Spearman partner for misfit: degree.
+misfit~disagreement,metric,Spearman partner for misfit: disagreement.
+misfit~pagerank,metric,Spearman partner for misfit: pagerank.
+misfit~participation,metric,Spearman partner for misfit: participation.
+modularity_Q,metric,Fraction of edges inside communities minus that expected at random; higher means stronger community structure.
+modularity_Q_social_graph,metric,Modularity of a text-derived partition measured on the social graph.
+n_cells,metric,"Number of (setting, budget) cells counted."
+n_cells_ci_above_0,metric,Cells whose 95 percent CI lies entirely above 0 (method beats baseline).
+n_cells_ci_below_0,metric,Cells whose 95 percent CI lies entirely below 0 (method loses).
+n_cells_holm_surviving_wins,metric,Cells still significant after Holm multiple-comparison correction.
+n_clusters,metric,Number of clusters found.
+n_communities,metric,Number of communities found.
+n_configs,metric,Number of filter configurations counted.
+n_configs_ci_above_0,metric,Configurations with 95 percent CI above 0.
+n_configs_ci_below_0,metric,Configurations with 95 percent CI below 0.
+n_defined,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+n_misfits,metric,Number of top-10 percent misfit nodes analysed.
+n_settings_ci_above_0,metric,Settings (of 27) with paired CI above 0.
+n_settings_ci_below_0,metric,Settings with paired CI below 0.
+n_settings_ci_spanning_0,metric,Settings whose CI spans 0.
+n_successful_targets_per_seed,metric,Mean number of successfully hidden targets per seed.
+neighbour-vote,baseline,Predict label by out-of-fold vote of graph neighbours.
+nmi,metric,Normalised mutual information between a clustering and reference labels.
+nmi_T_vs_C,metric,NMI between the topology partition and the text partition; low means the views differ.
+nmi_party,metric,NMI between clusters and party (R/D) labels.
+no blocking,control,No blocking (unblocked cascade).
+noise attack,control,"Random edge swap, the Leiden-instability floor."
+none,control,No intervention.
+oracle_recruiters,baseline,Blocks the true planted recruiters (upper bound).
+ours,method,p_C(u)[t_v] times PageRank recommender.
+ours+aa,method,Rank average of ours and Adamic-Adar.
+out_frac,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+out_max,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+out_mean,method,"PHEME univariate thread feature (misfit or outlier aggregate, thread-size baseline or defined-count)."
+own follow community,baseline,Node own follow-graph community.
+p_C text classifier (GloVe only),method,Cross-fitted text-only classifier predicting graph community (text source as named).
+"p_C text classifier (MiniLM bio+tweet, GloVe tweets)",method,Cross-fitted text-only classifier predicting graph community (text source as named).
+p_C text classifier (MiniLM only),method,Cross-fitted text-only classifier predicting graph community (text source as named).
+p_C text classifier (interest text),method,Cross-fitted text-only classifier predicting graph community (text source as named).
+p_C text classifier (party-check config),method,Cross-fitted text-only classifier predicting graph community (text source as named).
+p_one_sided,metric,One-sided p-value (permutation or test) for the effect being positive.
+pagerank,baseline,PageRank centrality.
+paired_diff,metric,Paired per-user difference between two recommenders.
+participation,baseline,How spread a node edges are across communities.
+participation_x_pr,baseline,Participation multiplied by PageRank.
+party_probe_acc,metric,Probe accuracy predicting party from raw text features.
+persistence_low,baseline,One minus Kumari community persistence; high means easy to move.
+pop,baseline,Recommend by PageRank.
+pr_product,baseline,Link score: product of endpoint PageRanks.
+precision_at_k,metric,Share of the top-k ranked items that are true positives.
+probe_acc,metric,Accuracy of a linear probe predicting party (or a label) from the representation.
+probe_f1_macro,metric,Macro-averaged F1 of the linear probe.
+random,control,Uniformly random nodes or edges.
+random attack,control,Matched random rewiring control.
+random-from-shortlist,control,Random pick from the centrality shortlist.
+random_rewire,control,"Same drop counts, random adds anywhere."
+real graph,term,The observed graph.
+receptivity proxy,term,p_C as a proxy for GloVe affinity.
+recruiter_detection_auc,metric,AUC at ranking planted recruiters above other accounts.
+rehome_struct,baseline,Same rewiring toward the structural (Kumari) community.
+rehome_text,method,Rewire dormant own-community follows toward the text-predicted community (degree-preserving).
+rehome_text_random_nodes,control,Same procedure on random non-misfit nodes.
+removed_pts,metric,Percentage points of spread removed.
+rewired null,control,Degree-preserving rewired graph.
+safeness attack,term,"Drop random own-community edge, add edge to a random other-community node."
+seed_stability_ari,metric,Agreement (ARI) of clusterings across random seeds.
+share_of_heldout_ties,metric,Share of held-out ties in a given community.
+silhouette_true_labels,metric,Cluster separation measured under the true labels.
+spearman,metric,Rank correlation.
+spectral probe,baseline,Linear probe on spectral embedding of the graph.
+spectral64 probe,baseline,Standardised probe on a 64-d spectral embedding.
+struct,baseline,Structural link score baseline.
+struct_comm,baseline,p_T(u)[t_v] weighting times PageRank.
+structural community (argmax p_T),baseline,Community with highest structural membership.
+synthetic placement,term,Planted-node placement in synthetic graphs.
+text + structure,baseline,PHEME classifier on text plus structural features.
+text + structure + misfit,method,PHEME classifier adding misfit features.
+text classifier p_C,method,Cross-fitted text-only classifier giving community membership.
+text k-means: GloVe avg of tweets,baseline,k-means on GloVe text.
+text k-means: MiniLM bio+latest tweet,baseline,k-means on MiniLM text.
+text k-means: both concatenated,baseline,k-means on concatenated text features.
+text only,baseline,PHEME classifier on source text only.
+text target (argmax p_C),method,Community with highest text-predicted probability.
+text+profile,method,Text and profile fields combined.
+text-only probe,baseline,Probe on text features only.
+text_iso,baseline,Text isolation score.
+text_sim,baseline,Cosine similarity of bio embeddings.
+text_toB,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."
+text_toB_x_edges,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."
+text_to_community_acc,metric,Accuracy of a text-only classifier at predicting a node graph community (vs majority-class baseline).
+ties_staying_in_own_community_share,metric,Share of held-out ties staying in the node own follow community.
+top-10% misfits,method,Nodes in the top decile of misfit with text target different from own community.
+topo_ambT,baseline,Structural ambiguity used as a detector.
+topo_participation,baseline,Participation coefficient used as a detector.
+topology partition T,term,Recovered topology community partition.
+wins_out_of_seeds,metric,Number of seeds where the best misfit-based strategy beat the best structural one.

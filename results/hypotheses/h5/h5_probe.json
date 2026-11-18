@@ -1,0 +1,146 @@
+{
+ "r1.0_s0": {
+  "leaky (bio+status+GloVe)": {
+   "n_misfits": 1753,
+   "k": 4,
+   "acc": null,
+   "retweet": {
+    "hit_argmax_pC": 0.664096348005569,
+    "chance": 0.3999732142818817,
+    "own_community_share": 0.1291692808573415,
+    "n_cross": 102711
+   },
+   "like": {
+    "hit_argmax_pC": 0.6289538168010326,
+    "chance": 0.39974021848472047,
+    "own_community_share": 0.16119871342276615,
+    "n_cross": 106922
+   },
+   "mention": {
+    "hit_argmax_pC": 0.5429116198075673,
+    "chance": 0.39310619855088774,
+    "own_community_share": 0.1643672867931479,
+    "n_cross": 90733
+   }
+  },
+  "bio only": {
+   "n_misfits": 1753,
+   "k": 4,
+   "acc": 0.4463143722652306,
+   "retweet": {
+    "hit_argmax_pC": 0.5992234288602631,
+    "chance": 0.4013598243159359,
+    "own_community_share": 0.17295938079946288,
+    "n_cross": 130574
+   },
+   "like": {
+    "hit_argmax_pC": 0.5847349289960878,
+    "chance": 0.40153254047356424,
+    "own_community_share": 0.18969110764430577,
+    "n_cross": 129852
+   },
+   "mention": {
+    "hit_argmax_pC": 0.5076714538756435,
+    "chance": 0.39918897488601124,
+    "own_community_share": 0.17843942364845014,
+    "n_cross": 120251
+   }
+  }
+ },
+ "r1.0_s1": {
+  "leaky (bio+status+GloVe)": {
+   "n_misfits": 1755,
+   "k": 5,
+   "acc": null,
+   "retweet": {
+    "hit_argmax_pC": 0.6192257892532084,
+    "chance": 0.3544411322599407,
+    "own_community_share": 0.14261225889132867,
+    "n_cross": 105036
+   },
+   "like": {
+    "hit_argmax_pC": 0.5837287558840766,
+    "chance": 0.3544169388255481,
+    "own_community_share": 0.16819461261459595,
+    "n_cross": 105794
+   },
+   "mention": {
+    "hit_argmax_pC": 0.4927235133899282,
+    "chance": 0.3459775051264699,
+    "own_community_share": 0.15399170794473085,
+    "n_cross": 100598
+   }
+  },
+  "bio only": {
+   "n_misfits": 1755,
+   "k": 5,
+   "acc": 0.4354846460666058,
+   "retweet": {
+    "hit_argmax_pC": 0.5419606700208615,
+    "chance": 0.3562181212205783,
+    "own_community_share": 0.18971860395744258,
+    "n_cross": 130384
+   },
+   "like": {
+    "hit_argmax_pC": 0.5223915032419746,
+    "chance": 0.3578477525138144,
+    "own_community_share": 0.1978826322238105,
+    "n_cross": 125695
+   },
+   "mention": {
+    "hit_argmax_pC": 0.4497877536779671,
+    "chance": 0.3526249363658328,
+    "own_community_share": 0.17769413629160064,
+    "n_cross": 120379
+   }
+  }
+ },
+ "r2.0_s0": {
+  "leaky (bio+status+GloVe)": {
+   "n_misfits": 1668,
+   "k": 15,
+   "acc": null,
+   "retweet": {
+    "hit_argmax_pC": 0.28996085655077136,
+    "chance": 0.11613022521603719,
+    "own_community_share": 0.05399812672896382,
+    "n_cross": 86860
+   },
+   "like": {
+    "hit_argmax_pC": 0.25137942069179525,
+    "chance": 0.11550478420105144,
+    "own_community_share": 0.06504256688758533,
+    "n_cross": 103123
+   },
+   "mention": {
+    "hit_argmax_pC": 0.24851303125337948,
+    "chance": 0.11577402456460756,
+    "own_community_share": 0.05493918987974245,
+    "n_cross": 83223
+   }
+  },
+  "bio only": {
+   "n_misfits": 1668,
+   "k": 15,
+   "acc": 0.24832451499118166,
+   "retweet": {
+    "hit_argmax_pC": 0.28042123090227733,
+    "chance": 0.12293570407180458,
+    "own_community_share": 0.0960481421463645,
+    "n_cross": 111008
+   },
+   "like": {
+    "hit_argmax_pC": 0.24943980281058933,
+    "chance": 0.12208072271278435,
+    "own_community_share": 0.09467262702593046,
+    "n_cross": 124956
+   },
+   "mention": {
+    "hit_argmax_pC": 0.24335704396811,
+    "chance": 0.12328892123025322,
+    "own_community_share": 0.08062675561797752,
+    "n_cross": 104735
+   }
+  }
+ }
+}

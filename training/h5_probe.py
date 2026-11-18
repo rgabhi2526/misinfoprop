@@ -25,6 +25,7 @@ _, comp = connected_components(A, directed=False); keep = np.flatnonzero(comp ==
 full = np.load(f'{D}/timme_text.npy'); bv = views.load_timme()
 print('LCC align check (max abs diff vs views text):', np.abs(full[keep, :-1] - bv['text']).max(), len(keep), bv['n'])
 xb = xb[keep]; np.save(f'{J}/timme_bio_lcc.npy', xb); has_bio = xb[:, -1] > 0; print('bio coverage', has_bio.mean())
+OUT = {}
 for f in ['r1.0_s0', 'r1.0_s1', 'r2.0_s0']:
     z = np.load(f'out/h4b_scores_{f}.npz'); t = z['t']; ok = t >= 0
     pc = ambiguity.content_probs(np.hstack([xb[:, :-1], xb[:, -1:]]), t)
@@ -34,11 +35,15 @@ for f in ['r1.0_s0', 'r1.0_s1', 'r2.0_s0']:
         sel = ok & has_bio  # same population for both
         q = np.quantile(mis_s[sel], 0.9); mis = sel & (mis_s >= q) & (tgt != t)
         sz = np.bincount(t[ok], minlength=k) / ok.sum()
-        row = []
+        row = []; rec = {'n_misfits': int(mis.sum()), 'k': int(k), 'acc': float(acc) if name == 'bio only' else None}
         for L in ['retweet', 'like', 'mention']:
             s2, d2 = it[L+'_s'], it[L+'_d']; mm = mis[s2] & (t[d2] >= 0) & (t[d2] != t[s2])
             hit = (t[d2[mm]] == tgt[s2[mm]]).mean()
             ch = np.mean(sz[tgt[s2[mm]]] / (1 - sz[t[s2[mm]]]))
             a2 = mis[s2] & (t[d2] >= 0); own = (t[d2[a2]] == t[s2[a2]]).mean()
             row.append(f'{L} {hit:.2f}/{ch:.2f} own {own:.2f}')
+            rec[L] = {'hit_argmax_pC': float(hit), 'chance': float(ch), 'own_community_share': float(own), 'n_cross': int(mm.sum())}
         print(f'{f} {name:26s} acc={"%.2f"%acc if name=="bio only" else "-   "} misfits={mis.sum():4d} | ' + ' | '.join(row))
+        OUT.setdefault(f, {})[name] = rec
+os.makedirs('../results/hypotheses/h5', exist_ok=True)
+json.dump(OUT, open('../results/hypotheses/h5/h5_probe.json', 'w'), indent=1)
