@@ -1,17 +1,17 @@
-\begin{tabular}{@{}llccc@{}}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}Xccc@{}}
 \toprule
-Data & Method & Reach & vs none & vs random\_rewire\\
+Data & Method & Reach & vs \meth{none} & vs \meth{random\_rewire}\\
 \midrule
-TIMME & none & 34.54 & -- & -- \\
-TIMME & rehome\_text (ours) & 39.25 & +4.72 [3.05, 6.91] & +1.26 [-0.33, 2.22] \\
-TIMME & rehome\_struct & 37.55 & +3.01 [1.52, 5.08] & -0.45 [-1.84, 0.33] \\
-TIMME & random\_rewire & 38.00 & +3.46 [1.59, 5.92] & -- \\
-TIMME & rehome\_text, rand.\ nodes & 33.93 & -0.61 [-2.11, 0.17] & -4.07 [-6.90, -1.96] \\
+TIMME & \meth{none} & 34.54 & -- & -- \\
+TIMME & \meth{rehome\_text} (ours) & 39.25 & +4.72 [3.05, 6.91] & +1.26 [$-$0.33, 2.22] \\
+TIMME & \meth{rehome\_struct} & 37.55 & +3.01 [1.52, 5.08] & $-$0.45 [$-$1.84, 0.33] \\
+TIMME & \meth{random\_rewire} & 38.00 & +3.46 [1.59, 5.92] & -- \\
+TIMME & \meth{rehome\_text}, rand.\ nodes & 33.93 & $-$0.61 [$-$2.11, 0.17] & $-$4.07 [$-$6.90, $-$1.96] \\
 \midrule
-Pokec & none & 50.34 & -- & -- \\
-Pokec & rehome\_text (ours) & 61.26 & +10.92 [9.76, 12.13] & +8.00 [6.87, 9.10] \\
-Pokec & rehome\_struct & 52.81 & +2.46 [1.69, 3.29] & -0.46 [-1.27, 0.40] \\
-Pokec & random\_rewire & 53.27 & +2.92 [2.36, 3.51] & -- \\
-Pokec & rehome\_text, rand.\ nodes & 50.98 & +0.63 [0.05, 1.31] & -2.29 [-3.07, -1.44] \\
+Pokec & \meth{none} & 50.34 & -- & -- \\
+Pokec & \meth{rehome\_text} (ours) & 61.26 & +10.92 [9.76, 12.13] & +8.00 [6.87, 9.10] \\
+Pokec & \meth{rehome\_struct} & 52.81 & +2.46 [1.69, 3.29] & $-$0.46 [$-$1.27, 0.40] \\
+Pokec & \meth{random\_rewire} & 53.27 & +2.92 [2.36, 3.51] & -- \\
+Pokec & \meth{rehome\_text}, rand.\ nodes & 50.98 & +0.63 [0.05, 1.31] & $-$2.29 [$-$3.07, $-$1.44] \\
 \bottomrule
-\end{tabular}
+\end{tabularx}

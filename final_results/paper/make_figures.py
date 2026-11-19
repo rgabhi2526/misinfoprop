@@ -76,7 +76,7 @@ def rew(exp, prefix):
     x["beta"] = x.setting.str.extract(r"beta=([\d.]+)").astype(float)
     return x
 fig, axs = plt.subplots(1, 2, figsize=(7.1, 2.4), sharey=False)
-for ax, (exp, pre, ttl) in zip(axs, [("E20", "r1.0_s0 ", "TIMME (E20)"), ("E21", "pokec_knm ", "Pokec slice (E21)")]):
+for ax, (exp, pre, ttl) in zip(axs, [("E20", "r1.0_s0 ", "TIMME"), ("E21", "pokec_knm ", "Pokec slice")]):
     x = rew(exp, pre)
     for j, m in enumerate(["rehome_text", "rehome_struct", "random_rewire"]):
         s = x[x.method == m].sort_values("beta"); xs = range(len(s)); off = (j - 1) * .12
@@ -89,6 +89,7 @@ axs[0].set_ylabel("correction reach vs no rewiring (pp)")
 axs[0].legend(frameon=False, loc="upper left")
 save(fig, "fig_e21.pdf")
 
+mm = lambda t: t.replace("-", "$-$")
 def tex_rew():
     out = []
     for exp, pre, nm in [("E20", "r1.0_s0 ", "TIMME"), ("E21", "pokec_knm ", "Pokec")]:
@@ -97,12 +98,12 @@ def tex_rew():
         def con(m, ref):
             r = base[(base.method == m) & (base.metric == f"correction_reach_contrast_vs_{ref}_pp")]
             if r.empty: return "--"
-            r = r.iloc[0]; return f"{r.value:+.2f} [{r.ci_low:.2f}, {r.ci_high:.2f}]"
-        for m, lab in [("none", "none"), ("rehome_text", "rehome\\_text (ours)"), ("rehome_struct", "rehome\\_struct"),
-                       ("random_rewire", "random\\_rewire"), ("rehome_text_random_nodes", "rehome\\_text, rand.\\ nodes")]:
+            r = r.iloc[0]; return mm(f"{r.value:+.2f} [{r.ci_low:.2f}, {r.ci_high:.2f}]")
+        for m, lab in [("none", "\\meth{none}"), ("rehome_text", "\\meth{rehome\\_text} (ours)"), ("rehome_struct", "\\meth{rehome\\_struct}"),
+                       ("random_rewire", "\\meth{random\\_rewire}"), ("rehome_text_random_nodes", "\\meth{rehome\\_text}, rand.\\ nodes")]:
             out.append(f"{nm} & {lab} & {reach(m):.2f} & " + ("--" if m == "none" else con(m, "none")) + " & " +
                        ("--" if m in ("none", "random_rewire") else con(m, "random_rewire")) + r" \\")
         if exp == "E20": out.append(r"\midrule")
     return "\n".join(out)
-open(os.path.join(OUT, "tab_rew.tex"), "w").write("\\begin{tabular}{@{}llccc@{}}\n\\toprule\nData & Method & Reach & vs none & vs random\\_rewire\\\\\n\\midrule\n" + tex_rew() + "\n\\bottomrule\n\\end{tabular}\n")
+open(os.path.join(OUT, "tab_rew.tex"), "w").write("\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}Xccc@{}}\n\\toprule\nData & Method & Reach & vs \\meth{none} & vs \\meth{random\\_rewire}\\\\\n\\midrule\n" + tex_rew() + "\n\\bottomrule\n\\end{tabularx}\n")
 print("ok")
