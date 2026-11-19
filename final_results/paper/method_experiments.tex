@@ -78,7 +78,7 @@ gain vs.\ best structural & Percentage-point difference in spread removed agains
 Fig.~\ref{fig:e05} and Table~\ref{tab:e05} compare misfit with five baselines over text noise $\sigma$ and nuisance, at $\mu{=}0.5$. Degree, participation and consensus entropy sit at chance (0.50--0.51) throughout. When text has no community-blind variation (nuisance 0), the text-outlier baseline is nearly as good as misfit (0.961 vs 0.964 at $\sigma{=}0.5$). The advantage appears with nuisance variation, as real text has: at nuisance 1.5 misfit reaches 0.904 at $\sigma{=}1$ against 0.607 for content outlier. Misfit and disagreement are within 0.025 of each other, and with three seeds and no stored spread we do not rank them. The result holds on synthetic data, where the planted text mismatch is what misfit measures.
 
 \begin{figure}[htbp]
-\centering\includegraphics[width=0.72\linewidth]{fig_e05.pdf}
+\centering\includegraphics[width=\linewidth]{fig_e05.pdf}
 \caption{Detection AUC for planted mismatches versus text noise $\sigma$ ($\mu{=}0.5$). Left: no nuisance text variation. Right: nuisance 1.5. Misfit and disagreement are ours. Means over 3 seeds; no spread stored.}
 \label{fig:e05}
 \end{figure}
@@ -94,7 +94,7 @@ Fig.~\ref{fig:e05} and Table~\ref{tab:e05} compare misfit with five baselines ov
 For the top-10\% misfits of TIMME follow communities, Fig.~\ref{fig:e17} and Table~\ref{tab:e17} give the share of held-out cross-community ties that land in $\arg\max \pc$, against size-weighted chance. With bio-only text the share is 0.599 for retweets at $k{=}4$ communities (chance 0.401), 0.585 for likes and 0.508 for mentions; at $k{=}15$ it is 0.280 against 0.123 for retweets. Ties staying in the node's own community are 0.173 (retweets, $k{=}4$). The bio-only classifier predicts the community with accuracy 0.446 at $k{=}4$, so the result survives weak text. The leaky text variant gives higher shares (0.664 for retweets) and is kept only as a leak-control reference. No interval was stored (single run); the tie counts (about $1.3\times10^5$) are not independent, so the gap above chance is large but not formally tested.
 
 \begin{figure}[htbp]
-\centering\includegraphics[width=0.72\linewidth]{fig_e17.pdf}
+\centering\includegraphics[width=\linewidth]{fig_e17.pdf}
 \caption{Share of held-out cross-community ties of top-10\% misfits that land in the text-predicted community (bio-only text) versus size-weighted chance, by tie type and number of follow communities $k$. Single run, no interval stored.}
 \label{fig:e17}
 \end{figure}
@@ -120,7 +120,7 @@ $k$ & Tie & bio-only $\arg\max\pc$ & chance & leaky (ref.)\\
 Fig.~\ref{fig:e21} (right) and Table~\ref{tab:rew} show correction reach under the \meth{wc} model with $k{=}5$ rewires per misfit. At $\beta{=}6$, \meth{rehome\_text} raises reach from 50.34 to 61.26, a gain of +10.92 pp [9.76, 12.13] over no rewiring and +8.00 pp [6.87, 9.10] over \meth{random\_rewire}. Rewiring toward the structural community gives only +2.46 pp, no better than random (+2.92), and applying \meth{rehome\_text} to random nodes gives +0.63 [0.05, 1.31]. The gain over random rewiring is clear from $\beta{=}1$ (+5.29 [3.98, 6.56]); at $\beta{=}0.3$ it vanishes (+0.39 [$-$0.88, 1.65]). Under the independent-cascade model (\meth{ic:2}) the same contrast is +8.68 [6.96, 10.65] at $\beta{=}6$. Total infected share is nearly unchanged (+0.110 pp). The effect holds at $\beta\ge 3$, with the caveat that $\beta$ is swept rather than measured, selective exposure is assumed, and Pokec text is only weakly informative, so the simulator rather than text accuracy drives much of this effect. Intervals exclude rewiring-draw variance.
 
 \begin{figure}[htbp]
-\centering\includegraphics[width=0.72\linewidth]{fig_e21.pdf}
+\centering\includegraphics[width=\linewidth]{fig_e21.pdf}
 \caption{Correction reach gain over no rewiring (pp, \meth{wc} model, $k{=}5$) versus content-gating $\beta$, with 95\% paired-bootstrap intervals over simulations (points offset horizontally for legibility). Left: TIMME (see Section~\ref{sec:other}). Right: Pokec slice.}
 \label{fig:e21}
 \end{figure}
