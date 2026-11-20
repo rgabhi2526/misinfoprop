@@ -17,7 +17,7 @@ Gap 1 filled: training/h5_probe.py now writes results/hypotheses/h5/h5_probe.jso
 7. E07 TIMME ic:4 participation k=50 removed pct 0.8209.
 8. E06 misfit AUC 0.682 = timme_party_check.log line 4.
 9. E20 r1.0 k5 wc b6 rehome_text vs none 4.72 pp (README 4.7).
-10. E17 bio-only retweet hit 0.599 / chance 0.401 = printed probe output 0.60/0.40.
+10. E17 bio-only retweet hit 0.601 / chance 0.401 = printed probe output 0.60/0.40.
 
 ## Decisions
 - Shares, AUC, P@10 stay fractions; gains/removed in percentage points (x100 where stored as fractions).
