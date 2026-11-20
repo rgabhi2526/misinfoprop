@@ -74,7 +74,7 @@ is the builder's mapping (see section 8).
 | E14 | Bridge validation | TIMME | Cross-community count diff -1.6 vs matched controls; real agreement beta 0.29 | misfit~pagerank Spearman -0.0231 | not supported |
 | E15 | Misinformation detection | PHEME | Adding misfit: delta AUC -0.000574 | Text + structure AUC 0.88 | not supported |
 | E16 | Extended blocking sweep | Synthetic | misfit_x_pr fixed: 0 of 120 cells CI>0, 120 CI<0 | Best structural; best-selected misfit has 25 cells CI>0 (selection biased) | not supported |
-| E17 | Re-homing motivation | TIMME | argmax p_C hit share 0.599 (bio-only, k=4) | Chance 0.401 | supported |
+| E17 | Re-homing motivation | TIMME | argmax p_C hit share 0.601 (bio-only, k=4) | Chance 0.401 | supported |
 | E18 | Link recommendation | TIMME | aa_x_text P@10 0.122 (misfits, k=15) | Adamic-Adar P@10 0.0755 | mixed |
 | E19 | Recommendation robustness | TIMME | aa_x_text vs aa: 12 of 27 settings CI>0 | 9 settings CI<0 | not supported |
 | E20 | Rewiring, correction reach | TIMME | rehome_text +4.72 pp vs none [3.05, 6.91] (r1.0, k5, wc, beta 6); residual over random_rewire +1.26 [-0.33, 2.22], not distinguishable from generic rewiring | random_rewire +3.46 pp | partly supported |
@@ -317,13 +317,33 @@ retweets landing in the argmax p_C community, against size-weighted chance. A bi
 
 | Target | Hit share |
 |---|---|
-| argmax p_C, bio-only text, retweets | 0.599 |
+| argmax p_C, bio-only text, retweets | 0.601 |
 | chance (size-weighted) | 0.401 |
 | Leaky text (bio + latest tweet + GloVe), argmax p_C, retweets (first row): leak control, not a valid result, role=reference | 0.664 |
 | Leaky text, Kumari extraction target (hand-entered from TASKS.md): leak control, not a valid result, role=reference | 0.53 |
 
-For k=15 (r2.0), bio-only retweets: 0.280 vs chance 0.123. Ties staying in the node's own community: 0.173 for k=4 bio-only
+For k=15 (r2.0), bio-only retweets: 0.278 vs chance 0.122. Ties staying in the node's own community: 0.173 for k=4 bio-only
 retweets.
+
+Graph-only targets (E17 addendum, same misfits and same held-out cross-community ties, follow layer only; engagement ties are never
+used to build a predictor). Hit share, bio-only text, retweets / likes / mentions; chance in brackets. argmax p_C restricted to
+non-own communities is identical to argmax p_C (misfits are defined by a text target different from their own community).
+
+| k (run) | argmax p_C | most-linked | label prop (1 step) | argmax p_T | Adamic-Adar | chance |
+|---|---|---|---|---|---|---|
+| 4 (r1.0_s0) | 0.601 / 0.584 / 0.510 | 0.496 / 0.515 / 0.438 | 0.576 / 0.599 / 0.508 | 0.487 / 0.506 / 0.436 | 0.403 / 0.403 / 0.367 | 0.401 / 0.402 / 0.399 |
+| 5 (r1.0_s1) | 0.543 / 0.524 / 0.451 | 0.431 / 0.448 / 0.369 | 0.509 / 0.540 / 0.443 | 0.441 / 0.455 / 0.381 | 0.345 / 0.348 / 0.301 | 0.356 / 0.357 / 0.353 |
+| 15 (r2.0_s0) | 0.278 / 0.248 / 0.242 | 0.189 / 0.186 / 0.165 | 0.258 / 0.243 / 0.216 | 0.336 / 0.320 / 0.267 | 0.304 / 0.285 / 0.245 | 0.122 / 0.122 / 0.123 |
+
+Text beats the Kumari-style most-linked target in every cell (paired user-bootstrap 95 % CI of the difference above 0: +0.062 to
++0.113). Text also beats AA and p_T at k=4 and k=5 (differences +0.07 to +0.20, CIs above 0). The text advantage is NOT universal:
+(i) one-step label propagation is statistically tied with text at k=4 and k=5 for likes and mentions (likes k=4: text minus LP
+-0.015 [-0.042, +0.011]; LP is nominally ahead on likes); text leads LP only for retweets (+0.025 [0.000, 0.053] k=4;
++0.034 [0.003, 0.064] k=5); (ii) at k=15, argmax p_T beats text for retweets (+0.336 vs 0.278; text minus p_T -0.058
+[-0.096, -0.019]) and likes (-0.072 [-0.108, -0.036]), and Adamic-Adar is close to or ahead of text (likes -0.037 [-0.074, -0.002]).
+So the claim that misfits' engagement lands in the text-predicted community is supported against structural targets at coarse
+resolution, but at fine resolution (k=15) structure matches or beats text; part of the original 0.60 vs 0.40 gap is simply that
+engagement ties follow follow-graph proximity.
 
 Setup (E18, E19). Recommend links for held-out ties on TIMME (r2.0, seed 0, k=15 shown). Misfits compared with matched controls.
 

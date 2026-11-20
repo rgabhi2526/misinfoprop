@@ -1,4 +1,5 @@
 name,kind,one_line
+Adamic-Adar community score (follow graph),baseline,Non-own community with largest summed Adamic-Adar score to non-neighbours.
 BGRL,method,"Self-supervised GNN embedding with bootstrapped latents, no negatives."
 C text k-means k=11,baseline,Baseline partition: k-means on text embeddings (k as named).
 C text k-means k=5,baseline,Baseline partition: k-means on text embeddings (k as named).
@@ -31,6 +32,13 @@ agreement_beta_same_T,metric,Same coefficient restricted to same-topology-commun
 ambiguity_T,baseline,Normalised entropy of the structural membership p_T.
 ambiguity_T_x_pr,baseline,Structural ambiguity multiplied by PageRank.
 argmax p_C (text target),method,Community with highest text-predicted probability.
+argmax p_C minus Adamic-Adar community score (follow graph),term,"Paired contrast, text target minus this predictor."
+argmax p_C minus argmax p_C restricted to non-own communities,term,"Paired contrast, text target minus this predictor."
+argmax p_C minus argmax p_T excluding own (follow graph),term,"Paired contrast, text target minus this predictor."
+"argmax p_C minus label propagation, 1 step (follow graph)",term,"Paired contrast, text target minus this predictor."
+argmax p_C minus most-linked non-own community (follow graph),term,"Paired contrast, text target minus this predictor."
+argmax p_C restricted to non-own communities,method,Text target with the own community excluded (identical to argmax p_C for misfits).
+argmax p_T excluding own (follow graph),baseline,Highest structural-membership probability among non-own communities.
 argmax_agreement,metric,Fraction of nodes where two classifiers pick the same top community.
 ari,metric,"Adjusted Rand index between a clustering and reference labels, corrected for chance."
 ari_T_vs_C,metric,ARI between the topology and text partitions.
@@ -117,6 +125,7 @@ knn10_label_agreement,metric,Label purity of each node 10 nearest neighbours.
 knn_dup,baseline,Near-duplicate text among kNN neighbours.
 kumari,baseline,Structural extraction community target (Kumari et al. 2021) times PageRank.
 kumari attack,term,Move target toward neighbouring community by rewiring (simplified Kumari 2021).
+"label propagation, 1 step (follow graph)",baseline,Non-own community with highest sum over follow neighbours of onehot(community)/degree.
 largest_cluster_share,metric,Share of nodes in the biggest cluster.
 largest_community_share_pct,metric,Percent of nodes in the biggest community.
 link 10k|misfit,method,H2 link-level rule: 10k|misfit (shortlist size|rule; bridge_content = content-based bridge score).
@@ -182,6 +191,7 @@ misfit~pagerank,metric,Spearman partner for misfit: pagerank.
 misfit~participation,metric,Spearman partner for misfit: participation.
 modularity_Q,metric,Fraction of edges inside communities minus that expected at random; higher means stronger community structure.
 modularity_Q_social_graph,metric,Modularity of a text-derived partition measured on the social graph.
+most-linked non-own community (follow graph),baseline,Non-own community holding most of the node follow edges (Kumari-style structural target).
 n_cells,metric,"Number of (setting, budget) cells counted."
 n_cells_ci_above_0,metric,Cells whose 95 percent CI lies entirely above 0 (method beats baseline).
 n_cells_ci_below_0,metric,Cells whose 95 percent CI lies entirely below 0 (method loses).
@@ -262,6 +272,7 @@ text target (argmax p_C),method,Community with highest text-predicted probabilit
 text+profile,method,Text and profile fields combined.
 text-only probe,baseline,Probe on text features only.
 text_iso,baseline,Text isolation score.
+text_minus_predictor_hit_share,metric,"Hit share of argmax p_C minus that of a graph-only predictor, paired bootstrap over misfit users."
 text_sim,baseline,Cosine similarity of bio embeddings.
 text_toB,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."
 text_toB_x_edges,baseline,"H3 delivery-scenario strategy targeting community B (edges into B, or misfit/text toward B)."

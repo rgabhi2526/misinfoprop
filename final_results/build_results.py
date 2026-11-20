@@ -669,6 +669,16 @@ def e17_probe():
                 x.add(s, 'argmax p_C (text target)', 'cross_ties_in_target_share', r[L]['hit_argmax_pC'], f, f'{st}.{var}.{L}.hit_argmax_pC', n=r[L]['n_cross'], role_='reference' if leaky else 'ours')
                 x.add(s, 'chance (size-weighted)', 'cross_ties_in_target_share', r[L]['chance'], f, f'{st}.{var}.{L}.chance', n=r[L]['n_cross'], role_='control')
                 x.add(s, 'own follow community', 'ties_staying_in_own_community_share', r[L]['own_community_share'], f, f'{st}.{var}.{L}.own_community_share', role_='reference')
+                if 'structural' in r[L]:
+                    sg = r[L]['structural']
+                    for pn, pv in sg['hit_share'].items():
+                        if pn == 'argmax_pC':
+                            continue
+                        lab = {'argmax_pC_nonown': 'argmax p_C restricted to non-own communities', 'most_linked': 'most-linked non-own community (follow graph)', 'label_prop': 'label propagation, 1 step (follow graph)',
+                               'p_T': 'argmax p_T excluding own (follow graph)', 'adamic_adar': 'Adamic-Adar community score (follow graph)'}[pn]
+                        x.add(s, lab, 'cross_ties_in_target_share', pv, f, f'{st}.{var}.{L}.structural.hit_share.{pn}', n=r[L]['n_cross'], role_='reference' if leaky else ('ours' if pn == 'argmax_pC_nonown' else 'baseline'))
+                        d_ = sg['text_minus'][pn]
+                        x.add(s, 'argmax p_C minus ' + lab, 'text_minus_predictor_hit_share', d_['diff'], f, f'{st}.{var}.{L}.structural.text_minus.{pn}.diff', lo=d_['ci95'][0], hi=d_['ci95'][1], unc='bootstrap95_users', role_='reference' if leaky else 'baseline')
     f = 'TASKS.md'
     # ponytail: the Kumari-extraction retweet share (0.53) and control own-community share (0.69) are not printed by
     # h5_probe.py; hand-entered from TASKS.md T11.0 (listed in _gaps.md)
@@ -896,7 +906,7 @@ def build_summary():
     S('E17', 'T11.0', 're-homing motivation', 'Do misfits follow one community but engage with their text-predicted one?', 'TIMME', 'real',
       'argmax p_C (bio-only text, k=4, retweets)', [('hit share', E(setting=('in', 'r1.0_s0 (k=4); bio only'), method='argmax p_C (text target)', metric='cross_ties_in_target_share', source_key=('in', 'retweet')))],
       'chance (size-weighted)', [('chance', E(setting=('in', 'r1.0_s0 (k=4); bio only'), method='chance (size-weighted)', metric='cross_ties_in_target_share', source_key=('in', 'retweet')))],
-      'share of cross-community retweets landing in argmax p_C', 'supported', 'Survives bio-only text (clean, no leak); leaky-text rows are kept as role=reference, labelled leak control, not a valid result. Probe reruns (2026-11-18) reproduce the TASKS numbers; Kumari 0.53 and controls 0.69 are quoted from TASKS.md.')
+      'share of cross-community retweets landing in argmax p_C', 'supported', 'Survives bio-only text (clean, no leak); leaky-text rows are kept as role=reference, labelled leak control, not a valid result. Probe rerun 2026-11-19 gives 0.601 (JSON of 2026-11-18 had 0.599; unmodified script now also gives 0.601, tiny run drift); graph-only predictors added; Kumari 0.53 and controls 0.69 are quoted from TASKS.md.')
     S('E18', 'T11.1', 'link recommendation', 'Are misfits under-served by the follow graph, and does a text-aware recommender beat structure-only ones?', 'TIMME', 'real',
       'aa_x_text (misfits, k=15)', [('P@10', E(setting='r2.0_s0 misfit', method='aa_x_text', metric='P@10'))],
       'Adamic-Adar (misfits, k=15)', [('P@10', E(setting='r2.0_s0 misfit', method='aa', metric='P@10'))],
@@ -1015,6 +1025,7 @@ GLOSS = {
  'rehome_text': ('method', 'Rewire dormant own-community follows toward the text-predicted community (degree-preserving).'), 'rehome_struct': ('baseline', 'Same rewiring toward the structural (Kumari) community.'),
  'random_rewire': ('control', 'Same drop counts, random adds anywhere.'), 'rehome_text_random_nodes': ('control', 'Same procedure on random non-misfit nodes.'),
  'argmax p_C (text target)': ('method', 'Community with highest text-predicted probability.'), 'text target (argmax p_C)': ('method', 'Community with highest text-predicted probability.'), 'structural community (argmax p_T)': ('baseline', 'Community with highest structural membership.'),
+ 'argmax p_C restricted to non-own communities': ('method', 'Text target with the own community excluded (identical to argmax p_C for misfits).'), 'most-linked non-own community (follow graph)': ('baseline', 'Non-own community holding most of the node follow edges (Kumari-style structural target).'), 'label propagation, 1 step (follow graph)': ('baseline', 'Non-own community with highest sum over follow neighbours of onehot(community)/degree.'), 'argmax p_T excluding own (follow graph)': ('baseline', 'Highest structural-membership probability among non-own communities.'), 'Adamic-Adar community score (follow graph)': ('baseline', 'Non-own community with largest summed Adamic-Adar score to non-neighbours.'), 'argmax p_C minus argmax p_C restricted to non-own communities': ('term', 'Paired contrast, text target minus this predictor.'), 'argmax p_C minus most-linked non-own community (follow graph)': ('term', 'Paired contrast, text target minus this predictor.'), 'argmax p_C minus label propagation, 1 step (follow graph)': ('term', 'Paired contrast, text target minus this predictor.'), 'argmax p_C minus argmax p_T excluding own (follow graph)': ('term', 'Paired contrast, text target minus this predictor.'), 'argmax p_C minus Adamic-Adar community score (follow graph)': ('term', 'Paired contrast, text target minus this predictor.'), 'text_minus_predictor_hit_share': ('metric', 'Hit share of argmax p_C minus that of a graph-only predictor, paired bootstrap over misfit users.'),
  'own follow community': ('baseline', 'Node own follow-graph community.'), 'chance (size-weighted)': ('control', 'Hit rate expected by chance given community sizes.'), 'Kumari extraction target': ('baseline', 'Neighbouring community with most of the node edges.'),
  'matched controls': ('control', 'Low-misfit nodes matched on degree and participation decile.'), 'top-10% misfits': ('method', 'Nodes in the top decile of misfit with text target different from own community.'),
  'text classifier p_C': ('method', 'Cross-fitted text-only classifier giving community membership.'), 'held-out ties in text_target': ('term', ''), 'held-out ties in own': ('term', ''),

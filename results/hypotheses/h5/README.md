@@ -111,3 +111,22 @@ Correction reach in percentage points (95% CI, paired over 100 sims; contrast de
 **Verdict: SUPPORTED on Pokec at beta >= 3 (and at beta = 1 for wc only; selective exposure assumed), null at low beta.** (1) The targeting effect is large and not a generic-rewiring artefact: rehome_text beats random_rewire (CI > 0) in every one of the 8 cells with beta >= 3 (+4.0 to +8.7 pp for k1/k5 across wc and ic:2) and in both wc beta=1 cells (k1, k5), while random_rewire alone adds only +0.1 to +2.9 pp at beta >= 3 (it can be negative at beta < 3, e.g. k5 ic:2 b1 -1.3 pp). Unlike TIMME, where the residual over random was small and sign-unstable, here it is the bulk of the gain. (2) Which target and which node matter: rehome_text beats rehome_struct (CI > 0 in every beta >= 3 cell) and rehome_text_random_nodes (CI > 0 in every beta >= 3 cell, despite the latter moving ~7-12% more edges). (3) At low beta the effect vanishes or is ambiguous: k5 wc b0.3 text-rand +0.4 [-0.9, 1.7]; k1 ic:2 b0.3 and k1 ic:2 b1 CIs include 0 for all contrasts vs none/random (k1 wc b0.3 is positive but wide, text-rand +1.9 [0.5, 4.1]); k5 ic:2 b0.3 is positive vs random (+2.2 [1.0, 3.3]) mainly because random rewiring slightly hurts there. Since Pokec has no measured beta, the headline holds only conditional on strong content-selective exposure.
 
 Caveats: ONE rewiring draw per k and 100 sims (CIs do not cover rewiring-draw variance); Pokec drops are random own-community edges (no dormancy), so the drop side is cruder than TIMME's; correction-reach baselines are high (50-59% at beta >= 3) because the slice is small and dense (mean degree ~16), which leaves headroom-limited but still sizeable gains; p_C accuracy on Pokec text is imperfect, so "misfit" is partly classifier error, and the sim takes tc at face value; AA from the original graph; friendships treated as bidirectional transmission.
+
+
+## E17 addendum: graph-only target predictors (2026-11-20)
+
+`training/h5_probe.py` now also scores three follow-graph-only predictors on exactly the same misfits and held-out cross-community
+engagement ties as argmax p_C: `most_linked` (non-own community with most follow edges), `label_prop` (one-step spreading,
+sum over follow neighbours of onehot(t_v)/deg(v)), `adamic_adar` (community-summed Adamic-Adar to non-neighbours), plus `p_T`
+(argmax of stored p_T excluding own) and `argmax_pC_nonown` (identical to argmax p_C for misfits). The follow layer (`follow_s/d`,
+symmetrised) is the only input; engagement layers are used only for scoring. Results are under `structural` in `h5_probe.json`
+with paired user-bootstrap CIs (1000 resamples, seed 0) of text minus predictor.
+
+Result (bio-only, retweet / like / mention hit share): k=4 text 0.601/0.584/0.510 vs most-linked 0.496/0.515/0.438, label-prop
+0.576/0.599/0.508, p_T 0.487/0.506/0.436, AA 0.403/0.403/0.367 (chance ~0.40). Text beats most-linked everywhere and AA/p_T at
+k=4,5, but label propagation is tied with (nominally ahead on likes) text, and at k=15 p_T beats text on retweets and likes
+(0.336 vs 0.278; CI of text minus p_T [-0.096, -0.019]) and AA is on par. The motivation holds against the Kumari-style target but
+not as a clean text-over-structure win at fine resolution.
+
+Note: rerunning gives retweet k=4 hit 0.601 (earlier JSON 0.599); the unmodified script now also gives 0.601 (small run drift in
+the cross-fitted text classifier), so all E17 numbers were refreshed.
