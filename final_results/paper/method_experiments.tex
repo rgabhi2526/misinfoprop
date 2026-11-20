@@ -19,7 +19,7 @@ In a social network, accounts cluster into follow-graph communities. Most accoun
   \node[box] (leiden) at (3.25,0) {Leiden\\communities $t$};
   \node[box] (clf) at (3.25,-2.1) {MiniLM $\to$ cross-fitted classifier $p_C$};
   \node[box] (misfit) at (6.5,-1.05) {Misfit score\\$1-p_C[i,t_i]$};
-  \node[box] (target) at (9.75,-1.05) {Target $\tau_i$\\$\arg\max_c p_C[i,c]$};
+  \node[box, text width=2.6cm] (target) at (9.75,-1.05) {Target $\tau_i$\\$\arg\max_c\,p_C[i,c]$};
   \node[box] (eng) at (13.0,0) {Engagement\\check};
   \node[box] (rew) at (13.0,-2.1) {Rewiring\\and cascade};
 
