@@ -1,0 +1,125 @@
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Dataset requirements}
+\label{sec:setup-requirements}
+Before choosing datasets, we agreed on the following requirements:
+\begin{description}
+  \item[R1] A real social network with human-like structure: groups form through
+            reachability and shared interests. The topic does not matter, because the
+            message we propagate is synthetic.
+  \item[R2] A node is any identity that can pass a message on.
+  \item[R3] Every node has metadata that reflects its thoughts or interests (text,
+            interests, topics). This metadata is used only as features.
+  \item[R4] Nodes without metadata are kept (zero features plus a flag), because
+            dropping them would delete edges.
+  \item[R5] Any social tie counts as an edge, and direction is not required.
+  \item[R6, R7] Neither labels nor timestamps are required. Success means spread is
+            contained in simulation, and spread probabilities come from a model.
+  \item[R8] The data is available offline, with no API hydration needed.
+  \item[R9] Start small (up to about 100k nodes) and scale up later.
+  \item[R10] At least two datasets.
+\end{description}
+We checked eight candidate datasets against these requirements using the data files
+themselves, not their documentation: TIMME, Pokec, Gab, Reddit hyperlinks,
+VoterFraud2020, Orkut, SNAP Facebook-ego and SNAP Twitter-ego. TIMME and Pokec are
+used. VoterFraud2020 failed: its retweet table points
+to tweets, not users, so no user-to-user graph can be built, and it has no per-user
+text. Orkut failed because its only metadata is group membership, which is also its
+ground truth. SNAP Facebook-ego failed on size and on its metadata being demographic.
+SNAP Twitter-ego passed but is a union of ego networks, so its bridges would mostly be
+the egos themselves; it is kept only as a backup. Gab and Reddit hyperlinks are held in
+reserve.
+
+\subsection{Datasets}
+\label{sec:setup-data}
+\input{tables/datasets}
+
+\paragraph{TIMME (\texttt{P\_all})~\citep{xiao2020timme}.}
+A 2019 crawl of US political Twitter, centred on politicians: it contains all
+politicians, their followers and followees with at least 20 links, and 3,000 randomly
+chosen users who discuss political issues. It has five directed relation types (follow
+915,438; like 1,794,111; mention 1,571,937; retweet 1,684,023; reply 530,598). These
+are raw directed rows, 6,496,107 in total. Pooling them, making every edge two-way,
+removing duplicates and keeping the largest connected component gives one undirected
+graph with 4,106,446 edges (\cref{tab:datasets}). Text: the user's bio (84.4\% non-empty) and
+latest tweet (93.4\%) from the shipped user-info file, plus the shipped 300-d GloVe
+average over each user's tweets~\citep{pennington2014glove}. Party labels come from
+two files. The politician file lists 585 politicians (313 R, 270 D, 2 independents);
+581 of the 583 R/D politicians are in \texttt{P\_all}. The additional-label file has
+633 users in \texttt{P\_all}, of whom 628 are R/D and 5 independent. The two files do
+not overlap, so $581+628=1{,}209$ users have an R/D label. Three of them fall outside
+the largest connected component, which leaves 1,206 labelled users (644 D, 562 R).
+Independents are treated as unlabelled. The labels are used
+\emph{only} for the party-misfit check (\cref{sec:method-detect}) and never for model
+selection. Caveat: the crawl is centred on seed accounts, so some apparent bridges may
+be artefacts of how the data was collected (\cref{sec:method-limits}).
+
+\paragraph{Pokec~\citep{takac2012pokec,leskovec2014snap}.}
+A Slovak social network from 2012, with 1,632,803 users and 30,622,564 directed
+friendship links, distributed through SNAP. It has no timestamps. Profiles contain
+Slovak free text: hobbies, music, movies, books, sports and so on. 60.7\% of users fill
+in at least one interest field. Development and all current experiments use a
+district-level slice (Kysuck\'e Nov\'e Mesto, \v{Z}ilina region). The content view uses
+only the interest text. Region is not used as content, because it is constant inside
+the slice and would otherwise mostly encode geography. Pokec has no labels, so it is
+evaluated only through spread simulation.
+
+\subsection{Text features}
+\label{sec:setup-features}
+All text is encoded with one multilingual sentence encoder,
+\texttt{paraphrase-\allowbreak multilingual-\allowbreak MiniLM-\allowbreak L12-\allowbreak v2}~\citep{reimers2020multilingual}, which
+gives 384-d vectors. This covers both English (TIMME) and Slovak (Pokec), and it keeps
+features comparable across datasets. Empty text maps to a zero vector, and
+\texttt{has\_metadata} records whether text was present. On TIMME, the scores use
+MiniLM and GloVe vectors concatenated. For content-aware spread, the scores use MiniLM
+only and the receiver affinity uses GloVe only, so the spread model and the scorer
+draw on different text sources (\cref{sec:method-block}).
+
+\subsection{Parameters}
+\Cref{tab:params} lists the pipeline parameters and \cref{tab:synthetic} the synthetic
+grids.
+
+\input{tables/parameters}
+\input{tables/synthetic_grid}
+
+\subsection{Baselines}
+\begin{itemize}
+  \item \textbf{Detection}: consensus entropy, participation coefficient, content
+        outlier and degree (\cref{sec:method-scores}). On TIMME there is also a
+        shuffled-text version of each content score.
+  \item \textbf{Node blocking}: no blocking, random, degree, adaptive degree,
+        PageRank, sampled betweenness, Collective Influence, participation (alone and
+        $\times$ PageRank), consensus entropy $\times$ PageRank, structural ambiguity
+        $\times$ PageRank, content outlier $\times$ PageRank, and the structural gateway.
+  \item \textbf{Link blocking}: random, degree product, PageRank product and the
+        structural bridge score.
+\end{itemize}
+
+\subsection{Evaluation measures}
+\begin{itemize}
+  \item \textbf{Detection}: ROC AUC for recovering planted mismatches (synthetic) or
+        party misfits (TIMME), overall and averaged within degree terciles. On TIMME
+        we also report a one-sided Mann--Whitney $p$-value.
+  \item \textbf{View quality}: modularity of each partition on the social graph,
+        run-to-run stability (mean ARI between pairs of runs), and $\eta^2$ of log-degree
+        across communities (does the partition just sort nodes by degree?). On TIMME
+        we also report party NMI/ARI, but only as information.
+  \item \textbf{Content informativeness}: accuracy of the cross-fitted text classifier
+        in predicting the topology community, compared with always predicting the
+        majority class.
+  \item \textbf{Containment}: percentage reduction in infected share and in
+        cross-community infected share compared with no blocking, at a fixed budget,
+        with standard errors over simulations. Strategies are compared as paired
+        differences under common random numbers.
+\end{itemize}
+
+\subsection{Implementation}
+The pipeline is written in Python. It uses python-igraph (Leiden, PageRank,
+betweenness), SciPy (sparse matrices, breadth-first reachability for live-edge
+cascades), scikit-learn (classifiers, AUC, ARI/NMI) and sentence-transformers (text
+encoding). The earlier GNN stage used PyTorch Geometric and ran on a rented CUDA GPU.
+The current pipeline runs on CPU. Every module includes a self-check on a small planted
+case with a known answer (for example, blocking the bridges of a two-community
+barbell graph must cut cross-community spread more than blocking random nodes). Raw
+outputs of every run are kept in the project's \texttt{results/} directory.

@@ -1,0 +1,25 @@
+\begin{table}[t]
+\centering
+\caption{Development diagnostic of the discarded GNN design on TIMME (20,811 nodes,
+1,206 with party labels). Clusters are $k$-means on L2-normalised embeddings. Shown
+only to justify the redesign (\cref{sec:method-evolution}); these are not results of
+the current pipeline.}
+\label{tab:gnn-diag}
+\small
+\begin{tabular}{@{}l r r r@{}}
+\toprule
+Diagnostic & BGRL & DGI & MVGRL \\
+\midrule
+$|r|$, $k=2$ split vs.\ log-degree           & 0.58   & 0.60   & 0.67   \\
+$|r|$, first principal component vs.\ log-degree & 0.66 & 0.70  & 0.78   \\
+Modularity of the $k=6$ partition            & $-0.050$ & $-0.152$ & $-0.104$ \\
+Party NMI of the $k=6$ partition             & 0.060  & 0.018  & 0.002  \\
+Linear party probe accuracy (5-fold)$^{*}$   & 0.943  & 0.934  & 0.780  \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\footnotesize
+$^{*}$Logistic regression on the embedding, labelled users only; always predicting
+the majority party gives 0.534.
+\end{table}

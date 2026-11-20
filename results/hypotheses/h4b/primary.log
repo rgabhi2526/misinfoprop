@@ -1,0 +1,1 @@
+OMP_NUM_THREADS=1 /opt/anaconda3/bin/python h4b_analyze.py primary  724.31s user 26.45s system 41% cpu 30:24.67 total

@@ -1,0 +1,33 @@
+[    0.0s] timme: 21014 users in /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all
+[    0.5s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all/timme_text.npy
+[    2.3s] timme: favorite_list.csv: 1794111 edges
+[    3.7s] timme: friend_list.csv: 915438 edges
+[    5.2s] timme: mention_list.csv: 1571937 edges
+[    5.9s] timme: reply_list.csv: 530598 edges
+[    9.1s] timme: retweet_list.csv: 1684023 edges
+[    9.4s] timme: 1209 users labeled R/D
+[    9.4s] make_data: 6496107 raw edges, 21014 nodes -> symmetrize + LCC
+[   14.5s] make_data: largest connected component 20811/21014 nodes kept, 8212892 directed edges
+labeled 1206  R share 0.47  (majority baseline 0.534)
+deg of labeled median 574 vs all 187; has_text labeled 0.13 all 0.00
+probe text-only        0.702
+probe spectral(graph)  0.534
+probe logdeg only      0.532
+
+bgrl: probe 0.943 | probe[emb+text] 0.716
+  k=2 split vs logdeg |r|=0.58  vs has_text |r|=0.18  vs party NMI=0.000
+  k=2 mean logdeg per cluster [4.04, 5.65], has_text [-0.27, 0.12]
+  k=6: sizes [2047, 3724, 4521, 4090, 3608, 2821] Q=-0.050 party NMI=0.060
+  top-3 PCs |r| with logdeg: [0.66, 0.03, 0.13]
+
+dgi: probe 0.934 | probe[emb+text] 0.719
+  k=2 split vs logdeg |r|=0.60  vs has_text |r|=0.17  vs party NMI=0.001
+  k=2 mean logdeg per cluster [4.09, 5.7], has_text [-0.24, 0.12]
+  k=6: sizes [2366, 5225, 4379, 4604, 2781, 1456] Q=-0.152 party NMI=0.018
+  top-3 PCs |r| with logdeg: [0.7, 0.04, 0.02]
+
+mvgrl: probe 0.780 | probe[emb+text] 0.705
+  k=2 split vs logdeg |r|=0.67  vs has_text |r|=0.16  vs party NMI=0.002
+  k=2 mean logdeg per cluster [4.13, 5.86], has_text [-0.19, 0.13]
+  k=6: sizes [5511, 4936, 2856, 3915, 3222, 371] Q=-0.104 party NMI=0.002
+  top-3 PCs |r| with logdeg: [0.78, 0.28, 0.2]

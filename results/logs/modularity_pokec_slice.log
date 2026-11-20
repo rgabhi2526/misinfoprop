@@ -1,0 +1,9 @@
+[    0.0s] pokec: reading profiles (zilinsky kraj, kysucke nove mesto)
+[   48.3s] pokec: 6392 users; reading friendships (30.6M rows for full Pokec)
+[   53.4s] pokec: 66935 friendships kept; building interest texts
+[   53.4s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data/pokec_text_zilinsky_kraj_kysucke_nove_mesto.npy
+[   53.5s] make_data: 66935 raw edges, 6392 nodes -> symmetrize + LCC
+[   53.5s] make_data: largest connected component 5599/6392 nodes kept, 90086 directed edges
+pokec[zilinsky kraj, kysucke nove mesto]: 5599 nodes, 45043 edges, mean degree 16.1
+  real          Q = 0.490 ± 0.004   communities 16   largest 20.4%   cross-community edges 39.7%
+  rewired null  Q = 0.206 ± 0.000   communities 13   largest 15.6%   cross-community edges 67.3%

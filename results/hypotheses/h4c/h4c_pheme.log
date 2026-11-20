@@ -1,0 +1,30 @@
+[  61.5s] threads 6425 users 50593 rumour frac 0.373852140077821
+[  61.5s]   event charliehebdo 2079 rumour frac 0.22
+[  61.5s]   event ebola-essien 14 rumour frac 1.00
+[  61.5s]   event ferguson 1143 rumour frac 0.25
+[  61.5s]   event germanwings-crash 469 rumour frac 0.51
+[  61.5s]   event gurlitt 138 rumour frac 0.44
+[  61.5s]   event ottawashooting 890 rumour frac 0.53
+[  61.5s]   event prince-toronto 233 rumour frac 0.98
+[  61.5s]   event putinmissing 238 rumour frac 0.53
+[  61.5s]   event sydneysiege 1221 rumour frac 0.43
+[  62.7s] user graph 50593 63820 components 934 largest 47832 users with deg>0 50040
+[  65.2s] leiden communities 1031 sizes>=5: 252
+[  87.0s] user text SVD (50593, 64)
+[  87.2s] classes 180 users in classes 49007
+[  89.1s] misfit defined for 49007 users; mean 0.982
+[  93.7s] cascade feature matrices (6425, 12) (6425, 7)
+[ 135.2s] stratified5 text AUC 0.879 [0.870,0.887] F1 0.717
+[ 159.8s] stratified5 struct AUC 0.880 [0.871,0.888] F1 0.723
+[ 185.3s] stratified5 struct+misfit AUC 0.879 [0.871,0.888] F1 0.722
+[ 204.6s] stratified5 misfit AUC 0.604 [0.591,0.618] F1 0.213
+[ 243.4s] stratified5 delta AUC text->struct: +0.0011 [-0.0006,+0.0027]
+[ 275.6s] stratified5 delta AUC struct->struct+misfit: -0.0006 [-0.0013,+0.0001]
+[ 328.7s] leave_event_out text AUC 0.693 [0.680,0.707] F1 0.450
+[ 357.7s] leave_event_out struct AUC 0.708 [0.694,0.721] F1 0.469
+[ 387.4s] leave_event_out struct+misfit AUC 0.706 [0.693,0.720] F1 0.465
+[ 408.7s] leave_event_out misfit AUC 0.456 [0.441,0.470] F1 0.189
+[ 440.1s] leave_event_out delta AUC text->struct: +0.0144 [+0.0116,+0.0174]
+[ 477.4s] leave_event_out delta AUC struct->struct+misfit: -0.0010 [-0.0022,+0.0002]
+[ 477.6s] univariate AUC {'mis_mean': 0.4591968371704498, 'mis_max': 0.4689515303656763, 'mis_frac': 0.4624827930490437, 'n_defined': 0.4299010912068264, 'out_mean': 0.5096023634294314, 'out_max': 0.48040798092069686, 'out_frac': 0.5049391788225198, 'log_size_baseline': 0.4265921099390412} corr(n_defined, log size) 0.72
+[ 477.6s] done

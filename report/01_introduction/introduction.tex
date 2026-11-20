@@ -1,0 +1,70 @@
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Motivation}
+Online social networks are organised into communities: groups of users who can reach
+one another easily and who tend to share views and interests. A false message usually
+starts inside one such group. Its reach depends largely on whether it crosses into
+other groups, and that crossing happens through comparatively few accounts and links
+that connect otherwise separate parts of the network~\citep{shah2024telegram}.
+Intervening at those crossings, by removing, throttling or labelling the content that
+passes through them, is the premise behind community-aware misinformation
+containment~\citep{ghoshal2021community}.
+
+The standard way to choose where to intervene is structural. Influence blocking
+methods rank nodes by degree, PageRank, betweenness or bridging scores computed from
+the graph alone~\citep{budak2011limiting,xie2025blocking}. Structure, however, only
+says who is connected to whom. It does not say who is likely to \emph{accept} a
+message. A user whose friends are all in one community but who writes like members of
+another is structurally ordinary and invisible to these scores, yet may be exactly the
+point where a message from that other community gets in.
+
+\subsection{Idea}
+The project builds two separate views of the same users:
+\begin{itemize}
+  \item a \textbf{topology view}, in which communities are found from the social graph
+        alone; and
+  \item a \textbf{content view}, in which a classifier that reads only each user's own
+        text predicts which of those communities the user belongs to.
+\end{itemize}
+The content view receives no edges or graph-derived features as input; the topology
+communities are used only as its training targets. Where the two views agree, the two
+sources of evidence about the user are consistent, although both could still be wrong.
+Where they disagree, the user's edges say one thing and their words say another. We call this
+\emph{structure--content disagreement} and score it per node.
+
+The idea follows the Ambiguity-Aware Sampling (AAS) framework of
+\citet{sani2026aas}, which runs two complementary clustering methods on the same data
+and treats the regions where they disagree as the most informative places to spend
+an annotation budget. We carry that principle from image embeddings to social
+networks. Our two views are structure and content, not two clustering algorithms on
+one embedding. The question is whether the disagreement points to useful intervention
+targets.
+
+\subsection{Objectives}
+\begin{enumerate}
+  \item Build a topology view and a content view, where the content view takes no
+        edges or graph-derived features as input and uses the topology communities
+        only as cross-fitted training targets, and a per-node disagreement score
+        between them.
+  \item Test whether the score detects nodes whose content and structure genuinely
+        conflict, on synthetic networks with planted conflicts and on a real network
+        with party labels (TIMME).
+  \item Test, by simulating spread with an unknown source, whether targeting nodes
+        or links with high disagreement contains spread better than strong
+        structural baselines, and map the conditions under which it does.
+  \item (Planned extension) Use the disagreement to choose queries in an active
+        learning loop, as in AAS.
+\end{enumerate}
+
+\subsection{Scope of this report}
+This is a mid-term report. It covers the problem, prior work, the methodology as
+implemented, the experimental setup, and the status and plan of the work.
+Experimental results are deliberately left out and will be reported in the final
+report.
+
+\subsection{Organisation}
+\Cref{sec:related} reviews related work and explains how it led to the current idea.
+\Cref{sec:method} describes the methodology and its limitations. \Cref{sec:setup}
+describes the datasets, parameters, baselines and evaluation measures.
+\Cref{sec:status} summarises what has been built and what remains.

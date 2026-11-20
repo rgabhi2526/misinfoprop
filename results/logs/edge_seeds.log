@@ -1,0 +1,10 @@
+beta=0.0 seed=0: content - struct = -15.0 +- 6.5 points
+beta=0.0 seed=1: content - struct = -10.1 +- 6.0 points
+beta=0.0 seed=2: content - struct = -9.0 +- 3.7 points
+beta=0.0 seed=3: content - struct = -7.7 +- 7.5 points
+== beta=0.0 pooled over 4 seeds: -10.4 +- 3.0 points
+beta=4.0 seed=0: content - struct = +6.4 +- 3.9 points
+beta=4.0 seed=1: content - struct = +2.7 +- 4.0 points
+beta=4.0 seed=2: content - struct = +8.6 +- 3.1 points
+beta=4.0 seed=3: content - struct = +6.7 +- 4.0 points
+== beta=4.0 pooled over 4 seeds: +6.1 +- 1.9 points

@@ -1,0 +1,846 @@
+13:04:09 graph built 0.4375119209289551
+[    1.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    2.2s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.126)
+13:04:11 setup done 2.2442617416381836
+13:04:18 ctl_realistic_hub_b1.4 seed 0 misfit_x_pr=0.654 pagerank=0.690 betweenness=0.688
+13:04:18 graph built 0.1896820068359375
+[   10.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   10.9s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+13:04:19 setup done 1.726344108581543
+13:04:28 ctl_realistic_hub_b1.4 seed 1 misfit_x_pr=0.669 pagerank=0.678 betweenness=0.668
+13:04:28 graph built 0.10535287857055664
+[   20.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   21.8s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.127)
+13:04:30 setup done 2.5854127407073975
+13:04:42 ctl_realistic_hub_b1.4 seed 2 misfit_x_pr=0.681 pagerank=0.696 betweenness=0.697
+13:04:42 graph built 0.10624098777770996
+[   34.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   35.4s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:04:44 setup done 2.4104721546173096
+13:04:54 ctl_realistic_hub_b1.4 seed 3 misfit_x_pr=0.650 pagerank=0.675 betweenness=0.670
+13:04:54 graph built 0.09818816184997559
+[   46.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   48.1s] ambiguity: text predicts graph community with acc 0.636 (majority-class baseline 0.126)
+13:04:57 setup done 2.70796799659729
+13:05:08 ctl_realistic_hub_b1.4 seed 4 misfit_x_pr=0.650 pagerank=0.659 betweenness=0.667
+13:05:08 graph built 0.11392688751220703
+[   60.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   62.1s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:05:11 setup done 2.3334147930145264
+13:05:20 ctl_realistic_hub_b1.4 seed 5 misfit_x_pr=0.660 pagerank=0.658 betweenness=0.654
+13:05:21 graph built 0.09612321853637695
+[   73.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   74.2s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.127)
+13:05:23 setup done 2.2643020153045654
+13:05:32 ctl_realistic_hub_b1.4 seed 6 misfit_x_pr=0.636 pagerank=0.668 betweenness=0.669
+13:05:33 graph built 0.12235403060913086
+[   85.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   86.0s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:05:35 setup done 2.167156934738159
+13:05:43 ctl_realistic_hub_b1.4 seed 7 misfit_x_pr=0.671 pagerank=0.695 betweenness=0.685
+13:05:43 DONE ctl_realistic_hub_b1.4 in 95s
+13:05:54 ctl_regime_hub_b6 seed 0 misfit_x_pr=0.421 pagerank=0.374 betweenness=0.368
+13:06:03 ctl_regime_hub_b6 seed 1 misfit_x_pr=0.376 pagerank=0.342 betweenness=0.332
+13:06:13 ctl_regime_hub_b6 seed 2 misfit_x_pr=0.411 pagerank=0.351 betweenness=0.342
+13:06:22 ctl_regime_hub_b6 seed 3 misfit_x_pr=0.392 pagerank=0.368 betweenness=0.355
+13:06:31 ctl_regime_hub_b6 seed 4 misfit_x_pr=0.416 pagerank=0.393 betweenness=0.378
+13:06:42 ctl_regime_hub_b6 seed 5 misfit_x_pr=0.275 pagerank=0.249 betweenness=0.242
+13:06:51 ctl_regime_hub_b6 seed 6 misfit_x_pr=0.334 pagerank=0.305 betweenness=0.291
+13:07:01 ctl_regime_hub_b6 seed 7 misfit_x_pr=0.387 pagerank=0.332 betweenness=0.350
+13:07:01 DONE ctl_regime_hub_b6 in 78s
+13:07:01 graph built 0.1027672290802002
+[  173.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  174.4s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.126)
+13:07:03 setup done 2.06791615486145
+13:07:11 a_gated_random_b10 seed 0 misfit_x_pr=0.182 pagerank=0.171 betweenness=0.182
+13:07:11 graph built 0.09167003631591797
+[  183.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  184.8s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.126)
+13:07:13 setup done 2.219383955001831
+13:07:21 a_gated_random_b10 seed 1 misfit_x_pr=0.298 pagerank=0.280 betweenness=0.268
+13:07:21 graph built 0.12525010108947754
+[  194.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  195.2s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.127)
+13:07:24 setup done 2.3714191913604736
+13:07:34 a_gated_random_b10 seed 2 misfit_x_pr=0.238 pagerank=0.229 betweenness=0.216
+13:07:34 graph built 0.09592914581298828
+[  206.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  208.1s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.126)
+13:07:37 setup done 2.5262882709503174
+13:07:46 a_gated_random_b10 seed 3 misfit_x_pr=0.160 pagerank=0.142 betweenness=0.154
+13:07:46 graph built 0.14051604270935059
+[  218.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  220.0s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:07:49 setup done 2.4224491119384766
+13:07:58 a_gated_random_b10 seed 4 misfit_x_pr=0.132 pagerank=0.167 betweenness=0.135
+13:07:58 graph built 0.12554502487182617
+[  230.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  232.3s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:08:01 setup done 2.6372029781341553
+13:08:10 a_gated_random_b10 seed 5 misfit_x_pr=0.133 pagerank=0.127 betweenness=0.130
+13:08:10 graph built 0.10708904266357422
+[  242.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  244.1s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.127)
+13:08:13 setup done 2.5506389141082764
+13:08:22 a_gated_random_b10 seed 6 misfit_x_pr=0.229 pagerank=0.152 betweenness=0.171
+13:08:22 graph built 0.10650205612182617
+[  254.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  255.2s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:08:24 setup done 2.004936933517456
+13:08:32 a_gated_random_b10 seed 7 misfit_x_pr=0.268 pagerank=0.272 betweenness=0.265
+13:08:32 DONE a_gated_random_b10 in 91s
+13:08:32 graph built 0.10579681396484375
+[  264.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  265.8s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.126)
+13:08:34 setup done 2.1946749687194824
+13:08:45 a_gated_hub_b10 seed 0 misfit_x_pr=0.431 pagerank=0.377 betweenness=0.373
+13:08:45 graph built 0.11152195930480957
+[  277.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  279.2s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+13:08:48 setup done 3.014192819595337
+13:08:57 a_gated_hub_b10 seed 1 misfit_x_pr=0.389 pagerank=0.348 betweenness=0.339
+13:08:57 graph built 0.11152005195617676
+[  289.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  291.1s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.127)
+13:09:00 setup done 2.401790142059326
+13:09:10 a_gated_hub_b10 seed 2 misfit_x_pr=0.429 pagerank=0.343 betweenness=0.333
+13:09:10 graph built 0.13719606399536133
+[  302.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  304.1s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:09:13 setup done 2.9830222129821777
+13:09:21 a_gated_hub_b10 seed 3 misfit_x_pr=0.388 pagerank=0.356 betweenness=0.339
+13:09:21 graph built 0.08391594886779785
+[  313.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  315.1s] ambiguity: text predicts graph community with acc 0.636 (majority-class baseline 0.126)
+13:09:24 setup done 2.4921998977661133
+13:09:33 a_gated_hub_b10 seed 4 misfit_x_pr=0.421 pagerank=0.391 betweenness=0.374
+13:09:33 graph built 0.09091496467590332
+[  325.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  326.7s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:09:35 setup done 1.8285181522369385
+13:09:44 a_gated_hub_b10 seed 5 misfit_x_pr=0.273 pagerank=0.234 betweenness=0.229
+13:09:44 graph built 0.07753872871398926
+[  336.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  337.3s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.127)
+13:09:46 setup done 1.94614577293396
+13:09:56 a_gated_hub_b10 seed 6 misfit_x_pr=0.332 pagerank=0.304 betweenness=0.288
+13:09:56 graph built 0.11902427673339844
+[  348.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  349.4s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:09:58 setup done 2.295718193054199
+13:10:07 a_gated_hub_b10 seed 7 misfit_x_pr=0.387 pagerank=0.331 betweenness=0.350
+13:10:07 DONE a_gated_hub_b10 in 95s
+13:10:08 graph built 0.10858607292175293
+[  360.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  361.3s] ambiguity: text predicts graph community with acc 0.587 (majority-class baseline 0.126)
+13:10:10 setup done 2.426704168319702
+13:10:21 c_niche_harm_random_b10 seed 0 misfit_x_pr=0.051 pagerank=0.051 betweenness=0.051
+13:10:21 graph built 0.08214187622070312
+[  373.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  374.1s] ambiguity: text predicts graph community with acc 0.585 (majority-class baseline 0.126)
+13:10:23 setup done 2.0824968814849854
+13:10:33 c_niche_harm_random_b10 seed 1 misfit_x_pr=0.049 pagerank=0.084 betweenness=0.066
+13:10:33 graph built 0.10548114776611328
+[  385.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  386.3s] ambiguity: text predicts graph community with acc 0.594 (majority-class baseline 0.127)
+13:10:35 setup done 2.0609428882598877
+13:10:43 c_niche_harm_random_b10 seed 2 misfit_x_pr=0.056 pagerank=0.064 betweenness=0.064
+13:10:43 graph built 0.08096480369567871
+[  395.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  396.6s] ambiguity: text predicts graph community with acc 0.614 (majority-class baseline 0.126)
+13:10:45 setup done 2.1896419525146484
+13:10:53 c_niche_harm_random_b10 seed 3 misfit_x_pr=0.060 pagerank=0.055 betweenness=0.055
+13:10:53 graph built 0.10506606101989746
+[  405.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  406.8s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.126)
+13:10:55 setup done 1.973741054534912
+13:11:04 c_niche_harm_random_b10 seed 4 misfit_x_pr=0.036 pagerank=0.044 betweenness=0.044
+13:11:04 graph built 0.08461904525756836
+[  416.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  417.1s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.126)
+13:11:06 setup done 1.8210761547088623
+13:11:14 c_niche_harm_random_b10 seed 5 misfit_x_pr=0.031 pagerank=0.032 betweenness=0.031
+13:11:14 graph built 0.10382294654846191
+[  427.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  428.4s] ambiguity: text predicts graph community with acc 0.602 (majority-class baseline 0.127)
+13:11:17 setup done 2.6249289512634277
+13:11:26 c_niche_harm_random_b10 seed 6 misfit_x_pr=0.071 pagerank=0.063 betweenness=0.063
+13:11:26 graph built 0.08036613464355469
+[  439.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  440.1s] ambiguity: text predicts graph community with acc 0.608 (majority-class baseline 0.126)
+13:11:29 setup done 2.265810966491699
+13:11:37 c_niche_harm_random_b10 seed 7 misfit_x_pr=0.055 pagerank=0.082 betweenness=0.082
+13:11:37 DONE c_niche_harm_random_b10 in 89s
+13:11:37 graph built 0.09881210327148438
+[  449.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  450.5s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.126)
+13:11:39 setup done 2.3722422122955322
+13:11:50 c_niche_harm_hub_b10 seed 0 misfit_x_pr=0.025 pagerank=0.020 betweenness=0.020
+13:11:50 graph built 0.1934049129486084
+[  463.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  464.8s] ambiguity: text predicts graph community with acc 0.601 (majority-class baseline 0.126)
+13:11:53 setup done 3.408358335494995
+13:12:03 c_niche_harm_hub_b10 seed 1 misfit_x_pr=0.013 pagerank=0.013 betweenness=0.013
+13:12:03 graph built 0.11931204795837402
+[  475.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  476.8s] ambiguity: text predicts graph community with acc 0.610 (majority-class baseline 0.127)
+13:12:05 setup done 2.025804042816162
+13:12:14 c_niche_harm_hub_b10 seed 2 misfit_x_pr=0.015 pagerank=0.015 betweenness=0.015
+13:12:14 graph built 0.07511210441589355
+[  485.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  486.9s] ambiguity: text predicts graph community with acc 0.606 (majority-class baseline 0.126)
+13:12:15 setup done 1.936840295791626
+13:12:24 c_niche_harm_hub_b10 seed 3 misfit_x_pr=0.044 pagerank=0.044 betweenness=0.044
+13:12:24 graph built 0.10479307174682617
+[  495.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  496.9s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.126)
+13:12:25 setup done 1.9306402206420898
+13:12:34 c_niche_harm_hub_b10 seed 4 misfit_x_pr=0.017 pagerank=0.024 betweenness=0.027
+13:12:34 graph built 0.12137103080749512
+[  505.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  506.8s] ambiguity: text predicts graph community with acc 0.590 (majority-class baseline 0.126)
+13:12:35 setup done 1.8861818313598633
+13:12:43 c_niche_harm_hub_b10 seed 5 misfit_x_pr=0.008 pagerank=0.017 betweenness=0.013
+13:12:43 graph built 0.07445192337036133
+[  515.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  516.8s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.127)
+13:12:45 setup done 1.9550440311431885
+13:12:51 c_niche_harm_hub_b10 seed 6 misfit_x_pr=0.059 pagerank=0.048 betweenness=0.048
+13:12:51 graph built 0.05637979507446289
+[  523.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  523.6s] ambiguity: text predicts graph community with acc 0.612 (majority-class baseline 0.126)
+13:12:52 setup done 1.2602970600128174
+13:12:57 c_niche_harm_hub_b10 seed 7 misfit_x_pr=0.035 pagerank=0.062 betweenness=0.061
+13:12:57 DONE c_niche_harm_hub_b10 in 81s
+13:12:57 graph built 0.052252769470214844
+[  529.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  530.0s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.126)
+13:12:59 setup done 1.2909066677093506
+Traceback (most recent call last):
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 281, in <module>
+    if cfg["kind"] == "block": r = run_block(nm, cfg, a.seeds, a.sims, budgets)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 156, in run_block
+    res = sim_block(b, ranked, comm, tc, budgets, cfg["beta"], sims, sd,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 143, in sim_block
+    tot[nm][k] += out(o[:k])
+                  ^^^^^^^^^^
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 136, in out
+    hit = blocking.reach(live, seeds, blocked); hit[seeds] = False
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/blocking.py", line 120, in reach
+    keep[blocked] = False
+    ~~~~^^^^^^^^^
+IndexError: arrays used as indices must be of integer (or boolean) type
+13:13:32 graph built 0.37059712409973145
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    1.6s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.126)
+13:13:34 setup done 1.581686019897461
+13:13:39 d_protected_hub_b1.4 seed 0 misfit_x_pr=0.197 pagerank=0.216 betweenness=0.209
+13:13:39 graph built 0.05764007568359375
+[    7.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    8.1s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+13:13:40 setup done 1.339292049407959
+13:13:46 d_protected_hub_b1.4 seed 1 misfit_x_pr=0.177 pagerank=0.197 betweenness=0.196
+13:13:46 graph built 0.06815791130065918
+[   15.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   15.7s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.127)
+13:13:48 setup done 1.3268299102783203
+13:13:54 d_protected_hub_b1.4 seed 2 misfit_x_pr=0.157 pagerank=0.177 betweenness=0.168
+13:13:54 graph built 0.08515095710754395
+[   22.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   23.0s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:13:55 setup done 1.4291419982910156
+13:14:01 d_protected_hub_b1.4 seed 3 misfit_x_pr=0.172 pagerank=0.192 betweenness=0.176
+13:14:01 graph built 0.06185507774353027
+[   29.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   30.5s] ambiguity: text predicts graph community with acc 0.636 (majority-class baseline 0.126)
+13:14:03 setup done 1.299799919128418
+13:14:08 d_protected_hub_b1.4 seed 4 misfit_x_pr=0.179 pagerank=0.204 betweenness=0.192
+13:14:08 graph built 0.06046605110168457
+[   36.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   37.4s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:14:09 setup done 1.2088220119476318
+13:14:14 d_protected_hub_b1.4 seed 5 misfit_x_pr=0.176 pagerank=0.194 betweenness=0.184
+13:14:15 graph built 0.05089902877807617
+[   43.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   43.7s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.127)
+13:14:16 setup done 1.2001028060913086
+13:14:21 d_protected_hub_b1.4 seed 6 misfit_x_pr=0.160 pagerank=0.181 betweenness=0.169
+13:14:21 graph built 0.05363202095031738
+[   49.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   49.9s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:14:22 setup done 1.2251038551330566
+13:14:27 d_protected_hub_b1.4 seed 7 misfit_x_pr=0.198 pagerank=0.193 betweenness=0.182
+13:14:27 DONE d_protected_hub_b1.4 in 55s
+13:14:32 d_protected_hub_b6 seed 0 misfit_x_pr=0.181 pagerank=0.136 betweenness=0.115
+13:14:37 d_protected_hub_b6 seed 1 misfit_x_pr=0.160 pagerank=0.058 betweenness=0.083
+13:14:42 d_protected_hub_b6 seed 2 misfit_x_pr=0.129 pagerank=0.090 betweenness=0.067
+13:14:48 d_protected_hub_b6 seed 3 misfit_x_pr=0.126 pagerank=0.101 betweenness=0.094
+13:14:53 d_protected_hub_b6 seed 4 misfit_x_pr=0.183 pagerank=0.113 betweenness=0.109
+13:14:59 d_protected_hub_b6 seed 5 misfit_x_pr=0.147 pagerank=0.111 betweenness=0.071
+13:15:05 d_protected_hub_b6 seed 6 misfit_x_pr=0.203 pagerank=0.078 betweenness=0.112
+13:15:10 d_protected_hub_b6 seed 7 misfit_x_pr=0.193 pagerank=0.151 betweenness=0.124
+13:15:10 DONE d_protected_hub_b6 in 43s
+13:15:10 graph built 0.05547809600830078
+[   98.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   99.2s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.126)
+13:15:11 setup done 1.2471981048583984
+13:15:17 d_protected_random_b3 seed 0 misfit_x_pr=0.152 pagerank=0.146 betweenness=0.147
+13:15:17 graph built 0.0672602653503418
+[  105.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  105.8s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.126)
+13:15:18 setup done 1.3086261749267578
+13:15:23 d_protected_random_b3 seed 1 misfit_x_pr=0.102 pagerank=0.147 betweenness=0.153
+13:15:23 graph built 0.051883697509765625
+[  111.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  112.2s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.127)
+13:15:24 setup done 1.224719762802124
+13:15:32 d_protected_random_b3 seed 2 misfit_x_pr=0.108 pagerank=0.111 betweenness=0.121
+13:15:32 graph built 0.05101490020751953
+[  120.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  120.8s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.126)
+13:15:33 setup done 1.2287647724151611
+13:15:38 d_protected_random_b3 seed 3 misfit_x_pr=0.142 pagerank=0.156 betweenness=0.155
+13:15:38 graph built 0.053578853607177734
+[  126.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  127.2s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:15:39 setup done 1.258587121963501
+13:15:44 d_protected_random_b3 seed 4 misfit_x_pr=0.190 pagerank=0.194 betweenness=0.179
+13:15:44 graph built 0.051084041595458984
+[  132.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  133.3s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:15:45 setup done 1.1880388259887695
+13:15:50 d_protected_random_b3 seed 5 misfit_x_pr=0.139 pagerank=0.134 betweenness=0.127
+13:15:50 graph built 0.05954933166503906
+[  138.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  139.5s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.127)
+13:15:52 setup done 1.229811191558838
+13:15:58 d_protected_random_b3 seed 6 misfit_x_pr=0.115 pagerank=0.139 betweenness=0.140
+13:15:58 graph built 0.09022998809814453
+[  146.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  147.4s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:15:59 setup done 1.332916021347046
+13:16:04 d_protected_random_b3 seed 7 misfit_x_pr=0.140 pagerank=0.159 betweenness=0.153
+13:16:05 DONE d_protected_random_b3 in 54s
+13:16:05 graph built 0.058650970458984375
+[  153.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  154.2s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.125)
+13:16:06 setup done 1.7433838844299316
+13:16:13 f_regular_random_b1.4 seed 0 misfit_x_pr=0.040 pagerank=0.044 betweenness=0.040
+13:16:13 graph built 0.0729520320892334
+[  161.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  162.2s] ambiguity: text predicts graph community with acc 0.643 (majority-class baseline 0.126)
+13:16:14 setup done 1.3702561855316162
+13:16:21 f_regular_random_b1.4 seed 1 misfit_x_pr=0.041 pagerank=0.047 betweenness=0.041
+13:16:21 graph built 0.061753034591674805
+[  169.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  170.2s] ambiguity: text predicts graph community with acc 0.648 (majority-class baseline 0.125)
+13:16:22 setup done 1.3078608512878418
+13:16:29 f_regular_random_b1.4 seed 2 misfit_x_pr=0.038 pagerank=0.044 betweenness=0.039
+13:16:29 graph built 0.05379509925842285
+[  177.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  178.2s] ambiguity: text predicts graph community with acc 0.626 (majority-class baseline 0.125)
+13:16:30 setup done 1.2591779232025146
+13:16:37 f_regular_random_b1.4 seed 3 misfit_x_pr=0.038 pagerank=0.040 betweenness=0.039
+13:16:37 graph built 0.0611882209777832
+[  185.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  186.0s] ambiguity: text predicts graph community with acc 0.644 (majority-class baseline 0.125)
+13:16:38 setup done 1.4328341484069824
+13:16:45 f_regular_random_b1.4 seed 4 misfit_x_pr=0.038 pagerank=0.041 betweenness=0.039
+13:16:45 graph built 0.05883526802062988
+[  193.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  194.3s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.125)
+13:16:46 setup done 1.3362329006195068
+13:16:53 f_regular_random_b1.4 seed 5 misfit_x_pr=0.038 pagerank=0.044 betweenness=0.041
+13:16:53 graph built 0.06913518905639648
+[  201.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  202.3s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.125)
+13:16:54 setup done 1.3956611156463623
+13:17:01 f_regular_random_b1.4 seed 6 misfit_x_pr=0.039 pagerank=0.042 betweenness=0.040
+13:17:01 graph built 0.06115913391113281
+[  209.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  210.4s] ambiguity: text predicts graph community with acc 0.627 (majority-class baseline 0.125)
+13:17:02 setup done 1.3294470310211182
+13:17:12 f_regular_random_b1.4 seed 7 misfit_x_pr=0.042 pagerank=0.044 betweenness=0.040
+13:17:12 DONE f_regular_random_b1.4 in 67s
+13:17:19 f_regular_random_b6 seed 0 misfit_x_pr=0.100 pagerank=0.016 betweenness=0.024
+13:17:26 f_regular_random_b6 seed 1 misfit_x_pr=0.105 pagerank=0.046 betweenness=0.021
+13:17:32 f_regular_random_b6 seed 2 misfit_x_pr=0.078 pagerank=0.012 betweenness=0.038
+13:17:39 f_regular_random_b6 seed 3 misfit_x_pr=0.078 pagerank=0.021 betweenness=0.047
+13:17:46 f_regular_random_b6 seed 4 misfit_x_pr=0.070 pagerank=0.020 betweenness=0.025
+13:17:52 f_regular_random_b6 seed 5 misfit_x_pr=0.073 pagerank=0.036 betweenness=0.035
+13:17:59 f_regular_random_b6 seed 6 misfit_x_pr=0.107 pagerank=0.035 betweenness=0.054
+13:18:06 f_regular_random_b6 seed 7 misfit_x_pr=0.087 pagerank=0.032 betweenness=0.039
+13:18:06 DONE f_regular_random_b6 in 55s
+13:18:06 graph built 0.0697317123413086
+[  275.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  275.9s] ambiguity: text predicts graph community with acc 0.648 (majority-class baseline 0.125)
+13:18:08 setup done 1.5402367115020752
+13:18:15 f_regular_hub_b6 seed 0 misfit_x_pr=0.070 pagerank=0.028 betweenness=0.036
+13:18:15 graph built 0.06396985054016113
+[  283.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  284.3s] ambiguity: text predicts graph community with acc 0.636 (majority-class baseline 0.126)
+13:18:16 setup done 1.4203159809112549
+13:18:24 f_regular_hub_b6 seed 1 misfit_x_pr=0.069 pagerank=0.035 betweenness=0.015
+13:18:24 graph built 0.06811022758483887
+[  292.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  292.9s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.125)
+13:18:25 setup done 1.3386743068695068
+13:18:32 f_regular_hub_b6 seed 2 misfit_x_pr=0.108 pagerank=0.040 betweenness=0.028
+13:18:32 graph built 0.06994891166687012
+[  300.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  301.2s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.125)
+13:18:33 setup done 1.4138598442077637
+13:18:40 f_regular_hub_b6 seed 3 misfit_x_pr=0.124 pagerank=0.055 betweenness=0.041
+13:18:40 graph built 0.06838297843933105
+[  309.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  309.9s] ambiguity: text predicts graph community with acc 0.631 (majority-class baseline 0.125)
+13:18:42 setup done 1.446225881576538
+13:18:48 f_regular_hub_b6 seed 4 misfit_x_pr=0.064 pagerank=0.019 betweenness=0.024
+13:18:49 graph built 0.06030917167663574
+[  317.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  317.7s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.125)
+13:18:50 setup done 1.3156969547271729
+13:18:56 f_regular_hub_b6 seed 5 misfit_x_pr=0.092 pagerank=0.034 betweenness=0.025
+13:18:56 graph built 0.06919097900390625
+[  324.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  325.5s] ambiguity: text predicts graph community with acc 0.641 (majority-class baseline 0.125)
+13:18:57 setup done 1.2875442504882812
+13:19:04 f_regular_hub_b6 seed 6 misfit_x_pr=0.100 pagerank=0.038 betweenness=0.043
+13:19:04 graph built 0.06072592735290527
+[  332.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  333.4s] ambiguity: text predicts graph community with acc 0.648 (majority-class baseline 0.125)
+13:19:05 setup done 1.3942499160766602
+13:19:12 f_regular_hub_b6 seed 7 misfit_x_pr=0.094 pagerank=0.051 betweenness=0.035
+13:19:12 DONE f_regular_hub_b6 in 66s
+13:19:12 graph built 0.05390572547912598
+[  340.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  341.2s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.126)
+13:19:13 setup done 1.3376691341400146
+13:19:28 g_multi3_random_b3 seed 0 misfit_x_pr=0.452 pagerank=0.478 betweenness=0.470
+13:19:28 graph built 0.06039237976074219
+[  356.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  357.6s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.126)
+13:19:30 setup done 1.2701523303985596
+13:19:44 g_multi3_random_b3 seed 1 misfit_x_pr=0.469 pagerank=0.488 betweenness=0.485
+13:19:44 graph built 0.0755929946899414
+[  373.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  374.3s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.127)
+13:19:46 setup done 1.921018123626709
+13:20:03 g_multi3_random_b3 seed 2 misfit_x_pr=0.471 pagerank=0.478 betweenness=0.478
+13:20:03 graph built 0.06479215621948242
+[  391.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  392.2s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.126)
+13:20:04 setup done 1.4118621349334717
+13:20:20 g_multi3_random_b3 seed 3 misfit_x_pr=0.452 pagerank=0.470 betweenness=0.468
+13:20:20 graph built 0.06765389442443848
+[  408.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  409.4s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:20:21 setup done 1.477423906326294
+13:20:37 g_multi3_random_b3 seed 4 misfit_x_pr=0.437 pagerank=0.473 betweenness=0.466
+13:20:37 graph built 0.06284713745117188
+[  425.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  426.4s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:20:38 setup done 1.2106640338897705
+13:20:53 g_multi3_random_b3 seed 5 misfit_x_pr=0.427 pagerank=0.446 betweenness=0.444
+13:20:53 graph built 0.04821300506591797
+[  441.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  442.6s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.127)
+13:20:55 setup done 1.3733289241790771
+13:21:10 g_multi3_random_b3 seed 6 misfit_x_pr=0.462 pagerank=0.457 betweenness=0.455
+13:21:10 graph built 0.0685739517211914
+[  458.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  459.3s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:21:11 setup done 1.3297920227050781
+13:21:26 g_multi3_random_b3 seed 7 misfit_x_pr=0.470 pagerank=0.481 betweenness=0.479
+13:21:26 DONE g_multi3_random_b3 in 134s
+13:21:26 graph built 0.05948305130004883
+[  474.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  475.5s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.126)
+13:21:28 setup done 1.4368629455566406
+13:21:42 g_multi3_hub_b6 seed 0 misfit_x_pr=0.378 pagerank=0.333 betweenness=0.323
+13:21:42 graph built 0.07045602798461914
+[  490.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  491.6s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+13:21:44 setup done 1.317215919494629
+13:22:00 g_multi3_hub_b6 seed 1 misfit_x_pr=0.376 pagerank=0.352 betweenness=0.345
+13:22:00 graph built 0.10652589797973633
+[  508.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  509.5s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.127)
+13:22:02 setup done 1.5624070167541504
+13:22:17 g_multi3_hub_b6 seed 2 misfit_x_pr=0.453 pagerank=0.377 betweenness=0.371
+13:22:17 graph built 0.06526994705200195
+[  525.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  525.9s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:22:18 setup done 1.3560371398925781
+13:22:33 g_multi3_hub_b6 seed 3 misfit_x_pr=0.380 pagerank=0.358 betweenness=0.337
+13:22:34 graph built 0.07148075103759766
+[  542.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  543.0s] ambiguity: text predicts graph community with acc 0.636 (majority-class baseline 0.126)
+13:22:35 setup done 1.5112619400024414
+13:22:52 g_multi3_hub_b6 seed 4 misfit_x_pr=0.380 pagerank=0.335 betweenness=0.338
+13:22:52 graph built 0.0751948356628418
+[  560.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  561.6s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:22:54 setup done 1.461555004119873
+13:23:10 g_multi3_hub_b6 seed 5 misfit_x_pr=0.309 pagerank=0.276 betweenness=0.290
+13:23:10 graph built 0.07399988174438477
+[  578.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  579.5s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.127)
+13:23:12 setup done 1.5384681224822998
+13:23:29 g_multi3_hub_b6 seed 6 misfit_x_pr=0.345 pagerank=0.295 betweenness=0.286
+13:23:29 graph built 0.07118630409240723
+[  597.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  598.0s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:23:30 setup done 1.3618481159210205
+13:23:45 g_multi3_hub_b6 seed 7 misfit_x_pr=0.382 pagerank=0.348 betweenness=0.356
+13:23:45 DONE g_multi3_hub_b6 in 138s
+13:23:45 graph built 0.05754804611206055
+[  613.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  613.9s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.126)
+13:23:46 setup done 1.3384959697723389
+13:23:49 b_delivery_b6 seed 0 misfit_toB_x_edges=0.900 edges_into_B=0.907 pagerank=0.910 text_toB=0.901
+13:23:49 graph built 0.04722785949707031
+[  617.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  618.5s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.126)
+13:23:51 setup done 1.2387278079986572
+13:23:54 b_delivery_b6 seed 1 misfit_toB_x_edges=0.909 edges_into_B=0.918 pagerank=0.917 text_toB=0.910
+13:23:54 graph built 0.055169105529785156
+[  622.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  623.2s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.127)
+13:23:55 setup done 1.3469951152801514
+13:24:00 b_delivery_b6 seed 2 misfit_toB_x_edges=0.925 edges_into_B=0.932 pagerank=0.933 text_toB=0.928
+13:24:00 graph built 0.06833577156066895
+[  628.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  629.1s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.126)
+13:24:01 setup done 1.4147257804870605
+13:24:05 b_delivery_b6 seed 3 misfit_toB_x_edges=0.931 edges_into_B=0.939 pagerank=0.937 text_toB=0.932
+13:24:05 graph built 0.05675387382507324
+[  633.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  634.0s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:24:06 setup done 1.3384149074554443
+13:24:09 b_delivery_b6 seed 4 misfit_toB_x_edges=0.903 edges_into_B=0.919 pagerank=0.919 text_toB=0.897
+13:24:09 graph built 0.06870889663696289
+[  637.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  638.6s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:24:11 setup done 1.226639986038208
+13:24:14 b_delivery_b6 seed 5 misfit_toB_x_edges=0.935 edges_into_B=0.939 pagerank=0.941 text_toB=0.928
+13:24:14 graph built 0.050585031509399414
+[  642.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  643.3s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.127)
+13:24:15 setup done 1.3334777355194092
+13:24:19 b_delivery_b6 seed 6 misfit_toB_x_edges=0.940 edges_into_B=0.944 pagerank=0.945 text_toB=0.937
+13:24:19 graph built 0.060584068298339844
+[  647.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  648.0s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:24:20 setup done 1.3466432094573975
+13:24:24 b_delivery_b6 seed 7 misfit_toB_x_edges=0.909 edges_into_B=0.914 pagerank=0.916 text_toB=0.914
+13:24:24 DONE b_delivery_b6 in 40s
+13:24:24 graph built 0.058812856674194336
+[  653.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  653.7s] ambiguity: text predicts graph community with acc 0.587 (majority-class baseline 0.126)
+13:24:26 setup done 1.3625848293304443
+13:24:29 b_delivery_b10 seed 0 misfit_toB_x_edges=0.875 edges_into_B=0.882 pagerank=0.887 text_toB=0.886
+13:24:29 graph built 0.05668020248413086
+[  657.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  658.5s] ambiguity: text predicts graph community with acc 0.585 (majority-class baseline 0.126)
+13:24:30 setup done 1.344407081604004
+13:24:34 b_delivery_b10 seed 1 misfit_toB_x_edges=0.903 edges_into_B=0.910 pagerank=0.910 text_toB=0.909
+13:24:34 graph built 0.05568194389343262
+[  662.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  663.1s] ambiguity: text predicts graph community with acc 0.594 (majority-class baseline 0.127)
+13:24:35 setup done 1.268582820892334
+13:24:38 b_delivery_b10 seed 2 misfit_toB_x_edges=0.898 edges_into_B=0.907 pagerank=0.908 text_toB=0.903
+13:24:39 graph built 0.056817054748535156
+[  667.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  667.8s] ambiguity: text predicts graph community with acc 0.614 (majority-class baseline 0.126)
+13:24:40 setup done 1.3895280361175537
+13:24:43 b_delivery_b10 seed 3 misfit_toB_x_edges=0.894 edges_into_B=0.908 pagerank=0.910 text_toB=0.892
+13:24:43 graph built 0.07476186752319336
+[  672.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  672.6s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.126)
+13:24:45 setup done 1.4421050548553467
+13:24:48 b_delivery_b10 seed 4 misfit_toB_x_edges=0.889 edges_into_B=0.905 pagerank=0.906 text_toB=0.886
+13:24:48 graph built 0.0554959774017334
+[  676.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  677.2s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.126)
+13:24:49 setup done 1.1586930751800537
+13:24:53 b_delivery_b10 seed 5 misfit_toB_x_edges=0.890 edges_into_B=0.904 pagerank=0.909 text_toB=0.891
+13:24:53 graph built 0.054003000259399414
+[  681.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  681.9s] ambiguity: text predicts graph community with acc 0.602 (majority-class baseline 0.127)
+13:24:54 setup done 1.302839756011963
+13:24:57 b_delivery_b10 seed 6 misfit_toB_x_edges=0.917 edges_into_B=0.926 pagerank=0.929 text_toB=0.921
+13:24:57 graph built 0.05425286293029785
+[  686.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  686.7s] ambiguity: text predicts graph community with acc 0.608 (majority-class baseline 0.126)
+13:24:59 setup done 1.33101487159729
+13:25:02 b_delivery_b10 seed 7 misfit_toB_x_edges=0.892 edges_into_B=0.900 pagerank=0.900 text_toB=0.883
+13:25:02 DONE b_delivery_b10 in 38s
+13:25:02 graph built 0.0737159252166748
+[  691.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  691.8s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.126)
+13:25:04 setup done 1.6057279109954834
+13:25:05 e_detect_random seed 0 prec@40 misfit=0.78
+13:25:05 graph built 0.06348800659179688
+[  693.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  694.0s] ambiguity: text predicts graph community with acc 0.664 (majority-class baseline 0.126)
+13:25:06 setup done 1.4257657527923584
+13:25:07 e_detect_random seed 1 prec@40 misfit=0.75
+13:25:07 graph built 0.04473614692687988
+[  695.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  695.6s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.127)
+13:25:08 setup done 1.0769052505493164
+13:25:08 e_detect_random seed 2 prec@40 misfit=0.68
+13:25:08 graph built 0.04678511619567871
+[  696.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  697.0s] ambiguity: text predicts graph community with acc 0.652 (majority-class baseline 0.126)
+13:25:09 setup done 0.903144121170044
+13:25:09 e_detect_random seed 3 prec@40 misfit=0.78
+13:25:09 graph built 0.03367304801940918
+[  697.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  698.0s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.126)
+13:25:10 setup done 0.7065541744232178
+13:25:10 e_detect_random seed 4 prec@40 misfit=0.68
+13:25:10 graph built 0.028683900833129883
+[  698.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  698.9s] ambiguity: text predicts graph community with acc 0.620 (majority-class baseline 0.126)
+13:25:11 setup done 0.6289968490600586
+13:25:11 e_detect_random seed 5 prec@40 misfit=0.75
+13:25:11 graph built 0.026727914810180664
+[  699.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  700.2s] ambiguity: text predicts graph community with acc 0.647 (majority-class baseline 0.127)
+13:25:12 setup done 0.9631428718566895
+13:25:13 e_detect_random seed 6 prec@40 misfit=0.70
+13:25:13 graph built 0.026259899139404297
+[  700.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  701.2s] ambiguity: text predicts graph community with acc 0.659 (majority-class baseline 0.126)
+13:25:13 setup done 0.6461527347564697
+13:25:13 e_detect_random seed 7 prec@40 misfit=0.72
+Traceback (most recent call last):
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 283, in <module>
+    else: r = run_detect(nm, cfg, a.seeds, budgets)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 237, in run_detect
+    o = summarize(d, ("misfit", "disagreement"), ("pagerank", "betweenness", "degree"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/abhyudayavasisht/Desktop/college/Major project /training/h3_scenarios.py", line 102, in summarize
+    g2 = np.asarray(per_seed["misfit_x_pr"]) - np.asarray(per_seed[bs])
+                    ~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'misfit_x_pr'
+13:26:06 graph built 0.19954299926757812
+[    0.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.8s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.126)
+13:26:07 setup done 0.8229000568389893
+13:26:07 e_detect_random seed 0 prec@40 misfit=0.78
+13:26:07 graph built 0.026629209518432617
+[    1.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    1.7s] ambiguity: text predicts graph community with acc 0.664 (majority-class baseline 0.126)
+13:26:08 setup done 0.5942661762237549
+13:26:08 e_detect_random seed 1 prec@40 misfit=0.75
+13:26:08 graph built 0.025038957595825195
+[    2.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    2.6s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.127)
+13:26:09 setup done 0.6422922611236572
+13:26:09 e_detect_random seed 2 prec@40 misfit=0.68
+13:26:09 graph built 0.02613520622253418
+[    3.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    3.5s] ambiguity: text predicts graph community with acc 0.652 (majority-class baseline 0.126)
+13:26:09 setup done 0.6245472431182861
+13:26:10 e_detect_random seed 3 prec@40 misfit=0.78
+13:26:10 graph built 0.025809049606323242
+[    4.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    4.4s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.126)
+13:26:10 setup done 0.6324141025543213
+13:26:11 e_detect_random seed 4 prec@40 misfit=0.68
+13:26:11 graph built 0.0249788761138916
+[    5.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    5.3s] ambiguity: text predicts graph community with acc 0.620 (majority-class baseline 0.126)
+13:26:11 setup done 0.5844306945800781
+13:26:12 e_detect_random seed 5 prec@40 misfit=0.75
+13:26:12 graph built 0.025404930114746094
+[    5.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    6.2s] ambiguity: text predicts graph community with acc 0.647 (majority-class baseline 0.127)
+13:26:12 setup done 0.6083729267120361
+13:26:12 e_detect_random seed 6 prec@40 misfit=0.70
+13:26:12 graph built 0.025009870529174805
+[    6.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    7.1s] ambiguity: text predicts graph community with acc 0.659 (majority-class baseline 0.126)
+13:26:13 setup done 0.6093008518218994
+13:26:13 e_detect_random seed 7 prec@40 misfit=0.72
+13:26:13 DONE e_detect_random in 7s
+13:26:13 graph built 0.02603602409362793
+[    7.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    8.0s] ambiguity: text predicts graph community with acc 0.658 (majority-class baseline 0.126)
+13:26:14 setup done 0.593494176864624
+13:26:14 e_detect_hub seed 0 prec@40 misfit=0.60
+13:26:14 graph built 0.026739835739135742
+[    8.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    8.9s] ambiguity: text predicts graph community with acc 0.653 (majority-class baseline 0.126)
+13:26:15 setup done 0.6059520244598389
+13:26:15 e_detect_hub seed 1 prec@40 misfit=0.68
+13:26:15 graph built 0.024012088775634766
+[    9.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    9.7s] ambiguity: text predicts graph community with acc 0.663 (majority-class baseline 0.127)
+13:26:16 setup done 0.6097719669342041
+13:26:16 e_detect_hub seed 2 prec@40 misfit=0.50
+13:26:16 graph built 0.02663707733154297
+[   10.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   10.6s] ambiguity: text predicts graph community with acc 0.646 (majority-class baseline 0.126)
+13:26:17 setup done 0.6057999134063721
+13:26:17 e_detect_hub seed 3 prec@40 misfit=0.70
+13:26:17 graph built 0.027027130126953125
+[   11.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   11.5s] ambiguity: text predicts graph community with acc 0.656 (majority-class baseline 0.126)
+13:26:17 setup done 0.6329832077026367
+13:26:18 e_detect_hub seed 4 prec@40 misfit=0.50
+13:26:18 graph built 0.024096965789794922
+[   12.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   12.4s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+13:26:18 setup done 0.5993850231170654
+13:26:19 e_detect_hub seed 5 prec@40 misfit=0.47
+13:26:19 graph built 0.025604248046875
+[   13.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   13.3s] ambiguity: text predicts graph community with acc 0.675 (majority-class baseline 0.127)
+13:26:19 setup done 0.6063292026519775
+13:26:20 e_detect_hub seed 6 prec@40 misfit=0.53
+13:26:20 graph built 0.025571107864379883
+[   13.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   14.2s] ambiguity: text predicts graph community with acc 0.649 (majority-class baseline 0.126)
+13:26:20 setup done 0.6129703521728516
+13:26:20 e_detect_hub seed 7 prec@40 misfit=0.62
+13:26:20 DONE e_detect_hub in 7s
+13:26:20 graph built 0.02787613868713379
+[   14.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   15.1s] ambiguity: text predicts graph community with acc 0.657 (majority-class baseline 0.125)
+13:26:21 setup done 0.6117832660675049
+13:26:21 e_detect_regular seed 0 prec@40 misfit=0.75
+13:26:21 graph built 0.028512001037597656
+[   15.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   16.1s] ambiguity: text predicts graph community with acc 0.646 (majority-class baseline 0.126)
+13:26:22 setup done 0.6260368824005127
+13:26:22 e_detect_regular seed 1 prec@40 misfit=0.80
+13:26:22 graph built 0.028355836868286133
+[   16.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   17.0s] ambiguity: text predicts graph community with acc 0.664 (majority-class baseline 0.125)
+13:26:23 setup done 0.6187520027160645
+13:26:23 e_detect_regular seed 2 prec@40 misfit=0.80
+13:26:23 graph built 0.028753042221069336
+[   17.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   17.9s] ambiguity: text predicts graph community with acc 0.656 (majority-class baseline 0.125)
+13:26:24 setup done 0.5730440616607666
+13:26:24 e_detect_regular seed 3 prec@40 misfit=0.75
+13:26:24 graph built 0.026636838912963867
+[   18.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   18.8s] ambiguity: text predicts graph community with acc 0.644 (majority-class baseline 0.125)
+13:26:25 setup done 0.6035878658294678
+13:26:25 e_detect_regular seed 4 prec@40 misfit=0.70
+13:26:25 graph built 0.027440786361694336
+[   19.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   19.8s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.125)
+13:26:26 setup done 0.6048798561096191
+13:26:26 e_detect_regular seed 5 prec@40 misfit=0.85
+13:26:26 graph built 0.03260612487792969
+[   20.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   21.0s] ambiguity: text predicts graph community with acc 0.657 (majority-class baseline 0.125)
+13:26:27 setup done 0.9419798851013184
+13:26:27 e_detect_regular seed 6 prec@40 misfit=0.85
+13:26:27 graph built 0.027358055114746094
+[   21.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   22.0s] ambiguity: text predicts graph community with acc 0.648 (majority-class baseline 0.125)
+13:26:28 setup done 0.6374201774597168
+13:26:28 e_detect_regular seed 7 prec@40 misfit=0.75
+13:26:28 DONE e_detect_regular in 8s
+13:29:23 graph built 0.1432478427886963
+[    0.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.8s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.126)
+13:29:24 setup done 0.7637250423431396
+13:29:25 b_delivery_lowT0.2_b6 seed 0 misfit_toB_x_edges=0.064 edges_into_B=0.071 pagerank=0.065 text_toB=0.036
+13:29:25 graph built 0.028009891510009766
+[    2.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    2.6s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.126)
+13:29:26 setup done 0.596545934677124
+13:29:27 b_delivery_lowT0.2_b6 seed 1 misfit_toB_x_edges=0.081 edges_into_B=0.100 pagerank=0.096 text_toB=0.033
+13:29:27 graph built 0.02564406394958496
+[    4.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    4.5s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.127)
+13:29:27 setup done 0.6158709526062012
+13:29:29 b_delivery_lowT0.2_b6 seed 2 misfit_toB_x_edges=0.094 edges_into_B=0.104 pagerank=0.105 text_toB=0.035
+13:29:29 graph built 0.025801897048950195
+[    6.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    6.4s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.126)
+13:29:29 setup done 0.6263270378112793
+13:29:31 b_delivery_lowT0.2_b6 seed 3 misfit_toB_x_edges=0.078 edges_into_B=0.107 pagerank=0.100 text_toB=0.026
+13:29:31 graph built 0.026280879974365234
+[    8.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    8.3s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+13:29:31 setup done 0.6157510280609131
+13:29:32 b_delivery_lowT0.2_b6 seed 4 misfit_toB_x_edges=0.060 edges_into_B=0.080 pagerank=0.073 text_toB=0.020
+13:29:32 graph built 0.024974822998046875
+[    9.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   10.1s] ambiguity: text predicts graph community with acc 0.624 (majority-class baseline 0.126)
+13:29:33 setup done 0.5530591011047363
+13:29:34 b_delivery_lowT0.2_b6 seed 5 misfit_toB_x_edges=0.085 edges_into_B=0.094 pagerank=0.087 text_toB=0.028
+13:29:34 graph built 0.02663588523864746
+[   11.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   12.1s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.127)
+13:29:35 setup done 0.6085379123687744
+13:29:36 b_delivery_lowT0.2_b6 seed 6 misfit_toB_x_edges=0.105 edges_into_B=0.129 pagerank=0.121 text_toB=0.024
+13:29:36 graph built 0.026128053665161133
+[   13.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   13.9s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+13:29:37 setup done 0.6152698993682861
+13:29:38 b_delivery_lowT0.2_b6 seed 7 misfit_toB_x_edges=0.089 edges_into_B=0.103 pagerank=0.097 text_toB=0.028
+13:29:38 DONE b_delivery_lowT0.2_b6 in 15s
+13:29:39 b_delivery_lowT0.1_b6 seed 0 misfit_toB_x_edges=0.024 edges_into_B=0.019 pagerank=0.016 text_toB=0.030
+13:29:41 b_delivery_lowT0.1_b6 seed 1 misfit_toB_x_edges=0.020 edges_into_B=0.024 pagerank=0.021 text_toB=0.022
+13:29:42 b_delivery_lowT0.1_b6 seed 2 misfit_toB_x_edges=0.028 edges_into_B=0.026 pagerank=0.026 text_toB=0.028
+13:29:43 b_delivery_lowT0.1_b6 seed 3 misfit_toB_x_edges=0.026 edges_into_B=0.028 pagerank=0.025 text_toB=0.019
+13:29:44 b_delivery_lowT0.1_b6 seed 4 misfit_toB_x_edges=0.019 edges_into_B=0.022 pagerank=0.020 text_toB=0.016
+13:29:46 b_delivery_lowT0.1_b6 seed 5 misfit_toB_x_edges=0.025 edges_into_B=0.022 pagerank=0.021 text_toB=0.020
+13:29:47 b_delivery_lowT0.1_b6 seed 6 misfit_toB_x_edges=0.023 edges_into_B=0.027 pagerank=0.026 text_toB=0.012
+13:29:48 b_delivery_lowT0.1_b6 seed 7 misfit_toB_x_edges=0.027 edges_into_B=0.029 pagerank=0.027 text_toB=0.023
+13:29:48 DONE b_delivery_lowT0.1_b6 in 10s
+13:29:48 graph built 0.036108970642089844
+[   25.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   25.7s] ambiguity: text predicts graph community with acc 0.587 (majority-class baseline 0.126)
+13:29:49 setup done 0.6369421482086182
+13:29:50 b_delivery_lowT0.2_b10_plant10 seed 0 misfit_toB_x_edges=0.070 edges_into_B=0.075 pagerank=0.067 text_toB=0.046
+13:29:50 graph built 0.027014970779418945
+[   27.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   27.6s] ambiguity: text predicts graph community with acc 0.585 (majority-class baseline 0.126)
+13:29:51 setup done 0.6011137962341309
+13:29:52 b_delivery_lowT0.2_b10_plant10 seed 1 misfit_toB_x_edges=0.130 edges_into_B=0.135 pagerank=0.129 text_toB=0.060
+13:29:52 graph built 0.027209043502807617
+[   29.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   29.4s] ambiguity: text predicts graph community with acc 0.594 (majority-class baseline 0.127)
+13:29:52 setup done 0.5930211544036865
+13:29:54 b_delivery_lowT0.2_b10_plant10 seed 2 misfit_toB_x_edges=0.077 edges_into_B=0.088 pagerank=0.086 text_toB=0.035
+13:29:54 graph built 0.024950027465820312
+[   30.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   31.3s] ambiguity: text predicts graph community with acc 0.614 (majority-class baseline 0.126)
+13:29:54 setup done 0.6231398582458496
+13:29:56 b_delivery_lowT0.2_b10_plant10 seed 3 misfit_toB_x_edges=0.087 edges_into_B=0.101 pagerank=0.092 text_toB=0.039
+13:29:56 graph built 0.03538203239440918
+[   33.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   33.3s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.126)
+13:29:56 setup done 0.7333500385284424
+13:29:58 b_delivery_lowT0.2_b10_plant10 seed 4 misfit_toB_x_edges=0.059 edges_into_B=0.075 pagerank=0.069 text_toB=0.038
+13:29:58 graph built 0.026243925094604492
+[   35.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   35.3s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.126)
+13:29:58 setup done 0.5950062274932861
+13:30:00 b_delivery_lowT0.2_b10_plant10 seed 5 misfit_toB_x_edges=0.075 edges_into_B=0.093 pagerank=0.087 text_toB=0.042
+13:30:00 graph built 0.026702880859375
+[   37.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   37.8s] ambiguity: text predicts graph community with acc 0.602 (majority-class baseline 0.127)
+13:30:01 setup done 0.5999319553375244
+13:30:02 b_delivery_lowT0.2_b10_plant10 seed 6 misfit_toB_x_edges=0.106 edges_into_B=0.127 pagerank=0.121 text_toB=0.044
+13:30:02 graph built 0.027472972869873047
+[   39.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   39.6s] ambiguity: text predicts graph community with acc 0.608 (majority-class baseline 0.126)
+13:30:03 setup done 0.6147561073303223
+13:30:04 b_delivery_lowT0.2_b10_plant10 seed 7 misfit_toB_x_edges=0.087 edges_into_B=0.101 pagerank=0.101 text_toB=0.045
+13:30:04 DONE b_delivery_lowT0.2_b10_plant10 in 16s

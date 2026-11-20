@@ -1,0 +1,45 @@
+response surface (infected, fixed misfit_x_pr minus best structural, points; seed-clustered SE), R2=0.81, n=1440
+  const                -0.08 +-  0.02
+  log(beta/4)          +0.06 +-  0.00
+  hub                  -0.01 +-  0.03
+  hub*log(beta/4)      -0.01 +-  0.00
+  plant5%              -0.06 +-  0.03
+  mu0.5                -0.12 +-  0.02
+  bud2%                -0.09 +-  0.01
+  bud5%                -0.40 +-  0.04
+  hub*plant5%          +0.03 +-  0.05
+  pred hub    beta= 1.44 plant5% mu0.3 bud1%: -0.18
+  pred hub    beta= 4.00 plant5% mu0.3 bud1%: -0.13
+  pred hub    beta= 6.00 plant5% mu0.3 bud1%: -0.11
+  pred hub    beta= 8.00 plant5% mu0.3 bud1%: -0.09
+  pred hub    beta=12.00 plant5% mu0.3 bud1%: -0.08
+  pred hub    beta=20.00 plant5% mu0.3 bud1%: -0.05
+  pred random beta= 1.44 plant5% mu0.3 bud1%: -0.21
+  pred random beta= 4.00 plant5% mu0.3 bud1%: -0.15
+  pred random beta= 6.00 plant5% mu0.3 bud1%: -0.12
+  pred random beta= 8.00 plant5% mu0.3 bud1%: -0.11
+  pred random beta=12.00 plant5% mu0.3 bud1%: -0.08
+  pred random beta=20.00 plant5% mu0.3 bud1%: -0.05
+
+response surface (cross, fixed misfit_x_pr minus best structural, points; seed-clustered SE), R2=0.53, n=1440
+  const                -0.03 +-  0.00
+  log(beta/4)          +0.03 +-  0.00
+  hub                  +0.01 +-  0.00
+  hub*log(beta/4)      -0.01 +-  0.00
+  plant5%              +0.00 +-  0.00
+  mu0.5                -0.00 +-  0.00
+  bud2%                -0.00 +-  0.00
+  bud5%                -0.01 +-  0.00
+  hub*plant5%          +0.02 +-  0.00
+  pred hub    beta= 1.44 plant5% mu0.3 bud1%: -0.02
+  pred hub    beta= 4.00 plant5% mu0.3 bud1%: -0.00
+  pred hub    beta= 6.00 plant5% mu0.3 bud1%: +0.01
+  pred hub    beta= 8.00 plant5% mu0.3 bud1%: +0.01
+  pred hub    beta=12.00 plant5% mu0.3 bud1%: +0.02
+  pred hub    beta=20.00 plant5% mu0.3 bud1%: +0.03
+  pred random beta= 1.44 plant5% mu0.3 bud1%: -0.06
+  pred random beta= 4.00 plant5% mu0.3 bud1%: -0.03
+  pred random beta= 6.00 plant5% mu0.3 bud1%: -0.02
+  pred random beta= 8.00 plant5% mu0.3 bud1%: -0.01
+  pred random beta=12.00 plant5% mu0.3 bud1%: +0.00
+  pred random beta=20.00 plant5% mu0.3 bud1%: +0.02

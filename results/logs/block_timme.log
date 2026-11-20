@@ -1,0 +1,110 @@
+[   51.0s] simulate[wc]: 25/100
+[   63.6s] simulate[wc]: 50/100
+[   74.9s] simulate[wc]: 75/100
+[   86.6s] simulate[wc]: 100/100
+
+== wc ==
+strategy                 k=20     k=50     k=100    k=200      (no blocking: infected 0.0086, cross 0.0007; cells = % of infected removed)
+collective_influence       13.9%   36.1%   62.4%   80.9%
+ambiguity_T_x_pr           15.2%   27.8%   59.6%   79.6%
+participation_x_pr         15.2%   27.5%   56.3%   79.4%
+degree                     15.8%   35.5%   62.6%   76.8%
+adaptive_degree            15.8%   35.5%   62.6%   76.8%
+betweenness                14.6%   33.0%   52.4%   74.9%
+pagerank                   15.4%   29.5%   61.3%   74.4%
+misfit_x_pr                18.0%   34.4%   52.1%   72.2%
+content_outlier_x_pr       11.5%   29.8%   42.6%   72.1%
+disagreement_x_pr          16.5%   41.5%   54.0%   67.8%
+consensus_entropy_x_pr     10.4%   17.7%   39.6%   52.2%
+participation               0.2%    0.5%    6.5%   21.5%
+random                      2.2%    2.5%    3.7%    7.0%
+misfit                      0.8%    1.1%    1.5%    3.1%
+disagreement                0.1%    0.2%    0.5%    0.9%
+[   95.4s] simulate[ic:0.5]: 25/100
+[  103.0s] simulate[ic:0.5]: 50/100
+[  111.8s] simulate[ic:0.5]: 75/100
+[  121.0s] simulate[ic:0.5]: 100/100
+
+== ic:0.5 ==
+strategy                 k=20     k=50     k=100    k=200      (no blocking: infected 0.0001, cross 0.0000; cells = % of infected removed)
+collective_influence       10.4%   12.7%   26.9%   39.6%
+participation_x_pr         10.4%   11.2%   21.6%   34.3%
+degree                     10.4%   12.7%   23.1%   32.8%
+adaptive_degree            10.4%   12.7%   23.1%   32.8%
+ambiguity_T_x_pr           10.4%   11.2%   22.4%   30.6%
+pagerank                   10.4%   11.2%   18.7%   27.6%
+betweenness                10.4%   10.4%   11.9%   25.4%
+content_outlier_x_pr       10.4%   11.9%   11.9%   25.4%
+disagreement_x_pr          12.7%   12.7%   20.1%   25.4%
+misfit_x_pr                11.9%   12.7%   19.4%   22.4%
+consensus_entropy_x_pr      4.5%   10.4%   11.9%   17.9%
+participation               0.0%    0.0%    0.0%    6.0%
+random                      0.7%    0.7%    0.7%    1.5%
+disagreement                0.0%    0.0%    0.0%    0.0%
+misfit                      0.0%    0.0%    0.0%    0.0%
+[  130.5s] simulate[ic:1]: 25/100
+[  140.6s] simulate[ic:1]: 50/100
+[  150.9s] simulate[ic:1]: 75/100
+[  163.5s] simulate[ic:1]: 100/100
+
+== ic:1 ==
+strategy                 k=20     k=50     k=100    k=200      (no blocking: infected 0.0003, cross 0.0000; cells = % of infected removed)
+collective_influence        9.3%   19.9%   39.4%   58.0%
+degree                      9.7%   20.7%   37.1%   55.5%
+adaptive_degree             9.7%   20.7%   37.1%   55.5%
+ambiguity_T_x_pr            6.8%   19.0%   38.3%   55.5%
+pagerank                    8.7%   19.0%   34.0%   53.6%
+participation_x_pr          6.8%   19.0%   35.4%   53.6%
+misfit_x_pr                 8.7%   22.3%   29.2%   45.6%
+content_outlier_x_pr        8.2%   16.8%   28.9%   44.0%
+betweenness                 6.8%   10.7%   29.5%   41.9%
+disagreement_x_pr           8.2%   11.3%   22.7%   36.2%
+consensus_entropy_x_pr     11.4%   17.6%   23.5%   26.6%
+participation               0.0%    0.9%    3.9%    8.5%
+misfit                      0.0%    0.2%    3.4%    3.6%
+random                      0.6%    0.9%    0.9%    1.5%
+disagreement                0.0%    0.0%    0.0%    0.0%
+[  176.9s] simulate[ic:2]: 25/100
+[  188.9s] simulate[ic:2]: 50/100
+[  201.7s] simulate[ic:2]: 75/100
+[  213.6s] simulate[ic:2]: 100/100
+
+== ic:2 ==
+strategy                 k=20     k=50     k=100    k=200      (no blocking: infected 0.0844, cross 0.0140; cells = % of infected removed)
+degree                     26.0%   56.9%   84.2%   97.7%
+adaptive_degree            26.0%   56.9%   84.2%   97.7%
+collective_influence       25.0%   59.2%   86.4%   97.5%
+ambiguity_T_x_pr           23.2%   55.8%   83.3%   96.5%
+participation_x_pr         23.2%   54.6%   81.6%   95.4%
+pagerank                   24.4%   56.5%   80.3%   94.0%
+content_outlier_x_pr       24.9%   44.6%   69.2%   91.9%
+misfit_x_pr                19.4%   41.6%   70.4%   91.2%
+betweenness                22.6%   47.0%   70.2%   88.7%
+disagreement_x_pr          19.9%   35.0%   59.3%   85.3%
+consensus_entropy_x_pr     11.3%   24.8%   50.4%   67.2%
+participation               2.5%    5.1%    7.8%   18.1%
+random                      0.6%    2.0%    2.6%    4.1%
+misfit                      0.3%    0.4%    1.2%    2.2%
+disagreement                0.0%    0.0%    0.0%    0.3%
+[  227.9s] simulate[ic:4]: 25/100
+[  240.7s] simulate[ic:4]: 50/100
+[  253.5s] simulate[ic:4]: 75/100
+[  266.7s] simulate[ic:4]: 100/100
+
+== ic:4 ==
+strategy                 k=20     k=50     k=100    k=200      (no blocking: infected 0.3517, cross 0.0568; cells = % of infected removed)
+adaptive_degree             4.0%    8.4%   16.0%   28.9%
+degree                      4.0%    8.4%   16.0%   28.9%
+collective_influence        4.0%    8.2%   15.0%   28.6%
+ambiguity_T_x_pr            4.0%    8.3%   16.0%   28.4%
+pagerank                    4.0%    8.4%   16.7%   28.2%
+participation_x_pr          4.0%    8.4%   15.7%   27.5%
+content_outlier_x_pr        3.9%    8.7%   15.8%   26.2%
+betweenness                 3.9%    7.8%   14.9%   24.9%
+misfit_x_pr                 3.4%    6.9%   11.9%   24.8%
+disagreement_x_pr           3.9%    7.1%   11.5%   19.2%
+consensus_entropy_x_pr      2.3%    5.3%    9.9%   15.3%
+participation               0.3%    0.8%    2.1%    4.6%
+random                      0.3%    0.7%    1.0%    1.8%
+misfit                      0.1%    0.3%    0.6%    1.1%
+disagreement                0.0%    0.0%    0.1%    0.2%

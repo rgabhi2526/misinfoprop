@@ -1,0 +1,19 @@
+[    8.1s] timme: 21014 users in /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all
+[    8.4s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all/timme_text.npy
+[    9.6s] timme: favorite_list.csv: 1794111 edges
+[   10.3s] timme: friend_list.csv: 915438 edges
+[   11.4s] timme: mention_list.csv: 1571937 edges
+[   11.7s] timme: reply_list.csv: 530598 edges
+[   12.8s] timme: retweet_list.csv: 1684023 edges
+[   12.9s] timme: 1209 users labeled R/D
+[   12.9s] make_data: 6496107 raw edges, 21014 nodes -> symmetrize + LCC
+[   15.4s] make_data: largest connected component 20811/21014 nodes kept, 8212892 directed edges
+[   25.7s] T view: Leiden x100 on social graph (4106446 edges)
+T  Leiden (best of runs)               k=  5 (>=1%:  5) largest=0.32 Q=+0.264 NMI=0.288 ARI=0.229 eta2=0.28 stab=0.77
+[  556.8s] T view: regularized spectral embedding
+T  reg-spectral + k-means k=5          k=  5 (>=1%:  5) largest=0.69 Q=+0.059 NMI=0.069 ARI=0.065 eta2=0.14 stab=0.82
+[  584.5s] C view: text-only kNN graph + Leiden x100 (20401 nodes with text)
+C  text kNN Leiden (best of runs)      k= 19 (>=1%: 15) largest=0.16 Q=+0.005 NMI=0.008 ARI=-0.001 eta2=0.16 stab=0.62
+C  text k-means k=5                    k=  5 (>=1%:  5) largest=0.22 Q=-0.002 NMI=0.001 ARI=-0.002 eta2=0.16 stab=0.97
+
+T vs C: NMI=0.066 ARI=0.036  (low = the views genuinely differ)

@@ -1,0 +1,17 @@
+n 5599 misfit-pr corr -0.03943006484570915
+pokec_knm wc blind 0
+pokec_knm wc blind 1
+pokec_knm wc blind 2
+pokec_knm wc blind 4
+pokec_knm wc blind 3
+pokec_knm wc blind 5
+pokec_knm wc blind 7
+pokec_knm wc blind 6
+pokec_knm ic:2 blind 0
+pokec_knm ic:2 blind 1
+pokec_knm ic:2 blind 2
+pokec_knm ic:2 blind 3
+pokec_knm ic:2 blind 4
+pokec_knm ic:2 blind 7
+pokec_knm ic:2 blind 6
+pokec_knm ic:2 blind 5

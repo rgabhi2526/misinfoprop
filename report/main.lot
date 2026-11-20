@@ -1,0 +1,5 @@
+\contentsline {table}{\numberline {3.1}{\ignorespaces Development diagnostic of the discarded GNN design on TIMME (20,811 nodes, 1,206 with party labels). Clusters are $k$-means on L2-normalised embeddings. Shown only to justify the redesign (\cref {sec:method-evolution}); these are not results of the current pipeline.}}{6}{table.3.1}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Datasets after preprocessing (largest connected component). Edge counts are undirected unless marked $^{\dagger }$. Counts come from the project's loader logs.}}{11}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Pipeline parameters. They were fixed before any blocking experiment was run.}}{12}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Synthetic experiment grids.}}{13}{table.4.3}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Plan up to the final report.}}{15}{table.5.1}%

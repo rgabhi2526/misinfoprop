@@ -1,0 +1,68 @@
+\section{Status and Plan}
+\label{sec:status}
+
+\subsection{Work completed}
+The pipeline of \cref{sec:method} has been built end to end, on TIMME, on the Pokec
+district slice and on the synthetic generator. Each stage is a separate Python module
+with its own self-check on a small planted case with a known answer:
+\begin{itemize}
+  \item \textbf{Topology view}: repeated Leiden runs, the reference partition $t$ and
+        the set-aside small communities (\cref{sec:method-views}).
+  \item \textbf{Content view and scores}: structural soft membership by label
+        spreading, the cross-fitted text classifier, and the misfit, disagreement and
+        baseline scores (\cref{sec:method-scores}). Diagnostics that check whether a
+        partition or an embedding just sorts nodes by degree were added at the same
+        time.
+  \item \textbf{Detection checks}: the synthetic benchmark with planted conflicts and
+        the TIMME party-misfit check with its shuffled-text null
+        (\cref{sec:method-detect}).
+  \item \textbf{Node blocking}: content-blind and content-aware Independent Cascade,
+        all node-blocking strategies including the gateway score
+        (\cref{sec:method-block}).
+  \item \textbf{Regime map}: the node-level sweep over the synthetic grid
+        (\cref{tab:synthetic}), and the placement of TIMME on that map using its
+        estimated agreement effect and the degree position of its mismatched users.
+  \item \textbf{Link-level intervention}: link friction with the structural and
+        content-aware link scores.
+\end{itemize}
+The earlier GNN stage (\cref{sec:method-evolution}) was built and trained, and then
+replaced; it is not part of the current pipeline.
+
+\subsection{Work remaining}
+\begin{itemize}
+  \item \textbf{Edge-level regime map.} The regime map currently covers node blocking
+        only. The same sweep is to be run for link-level intervention, followed by a
+        write-up of the overall argument in the light of both maps.
+  \item \textbf{Full results for the final report.} All detection, blocking and regime
+        outputs will be reported, with their baselines and uncertainty, in the final
+        report.
+  \item \textbf{Full Pokec.} The project plan develops on the Pokec district slice and
+        keeps the full Pokec graph for the final run. The final run will use the
+        largest strongly connected component of the directed Pokec friendship graph.
+  \item \textbf{Supervisor check-in.} The narrowed claim (\cref{sec:related-gap}) is to
+        be discussed with the supervisor.
+  \item \textbf{Active-learning extension} (\cref{sec:method-al}). Whether this is
+        done depends on the supervisor's decision.
+\end{itemize}
+
+\subsection{Schedule}
+\Cref{tab:schedule} lists the remaining steps in order. All work is planned to finish by 30 November 2026.
+
+\begin{table}[ht]
+\centering
+\caption{Plan up to the final report.}
+\label{tab:schedule}
+\small
+\begin{tabularx}{\linewidth}{@{}l X l@{}}
+\toprule
+Step & Work & Target date \\
+\midrule
+1 & Supervisor check-in on the narrowed claim and the active-learning extension & 21 Oct 2026 \\
+2 & Edge-level regime map & 31 Oct 2026 \\
+3 & Write-up of the overall argument from the node- and link-level maps & 7 Nov 2026 \\
+4 & Full-Pokec run (largest strongly connected component) & 14 Nov 2026 \\
+5 & Active-learning extension, if approved & 23 Nov 2026 \\
+6 & Final report & 30 Nov 2026 \\
+\bottomrule
+\end{tabularx}
+\end{table}

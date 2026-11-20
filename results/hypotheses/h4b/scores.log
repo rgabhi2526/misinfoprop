@@ -1,0 +1,28 @@
+[   33.4s] ambiguity: 2 communities, 8 nodes in tiny ones
+[   33.7s] ambiguity: 2 communities, 2 nodes in tiny ones
+[   33.6s] ambiguity: 4 communities, 14 nodes in tiny ones
+[   34.2s] ambiguity: 2 communities, 8 nodes in tiny ones
+[   52.4s] ambiguity: text predicts graph community with acc 0.784 (majority-class baseline 0.793)
+done (0.5, 1) k 2
+[   54.3s] ambiguity: text predicts graph community with acc 0.791 (majority-class baseline 0.800)
+done (0.5, 2) k 2
+[   56.7s] ambiguity: text predicts graph community with acc 0.647 (majority-class baseline 0.539)
+done (0.5, 0) k 2
+[   69.8s] ambiguity: 5 communities, 2 nodes in tiny ones
+[   70.5s] ambiguity: 4 communities, 8 nodes in tiny ones
+[   72.8s] ambiguity: 15 communities, 966 nodes in tiny ones
+[   98.9s] ambiguity: text predicts graph community with acc 0.480 (majority-class baseline 0.341)
+done (1.0, 0) k 4
+[  118.7s] ambiguity: 14 communities, 1111 nodes in tiny ones
+[  165.2s] ambiguity: text predicts graph community with acc 0.467 (majority-class baseline 0.325)
+done (1.0, 2) k 4
+[  210.7s] ambiguity: 13 communities, 1442 nodes in tiny ones
+[  248.2s] ambiguity: text predicts graph community with acc 0.472 (majority-class baseline 0.337)
+done (1.0, 1) k 5
+[  414.9s] ambiguity: text predicts graph community with acc 0.280 (majority-class baseline 0.161)
+done (2.0, 0) k 15
+[  439.6s] ambiguity: text predicts graph community with acc 0.279 (majority-class baseline 0.164)
+done (2.0, 1) k 14
+[  493.6s] ambiguity: text predicts graph community with acc 0.293 (majority-class baseline 0.167)
+done (2.0, 2) k 13
+btw done

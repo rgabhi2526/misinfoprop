@@ -1,0 +1,216 @@
+[    0.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    1.4s] ambiguity: text predicts graph community with acc 0.625 (majority-class baseline 0.126)
+[    1.4s] ambiguity: text predicts graph community with acc 0.632 (majority-class baseline 0.126)
+[    1.4s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+[    1.4s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+[    1.5s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+[    1.5s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.127)
+[    2.2s] simulate_edges[ic:2]: 20/40
+[    2.2s] simulate_edges[ic:2]: 20/40
+[    2.2s] simulate_edges[ic:2]: 20/40
+[    2.3s] simulate_edges[ic:2]: 20/40
+[    2.3s] simulate_edges[ic:2]: 20/40
+[    2.3s] simulate_edges[ic:2]: 20/40
+[    2.9s] simulate_edges[ic:2]: 40/40
+[    2.9s] simulate_edges[ic:2]: 40/40
+[    2.9s] simulate_edges[ic:2]: 40/40
+[    2.9s] simulate_edges[ic:2]: 40/40
+[    2.9s] simulate_edges[ic:2]: 40/40
+[    2.9s] simulate_edges[ic:2]: 40/40
+[    3.6s] simulate_edges[ic:2]: 20/40
+[    3.6s] simulate_edges[ic:2]: 20/40
+[    3.6s] simulate_edges[ic:2]: 20/40
+[    3.7s] simulate_edges[ic:2]: 20/40
+[    3.6s] simulate_edges[ic:2]: 20/40
+[    3.7s] simulate_edges[ic:2]: 20/40
+[    4.2s] simulate_edges[ic:2]: 40/40
+[    4.3s] simulate_edges[ic:2]: 40/40
+[    4.3s] simulate_edges[ic:2]: 40/40
+[    4.3s] simulate_edges[ic:2]: 40/40
+[    4.3s] simulate_edges[ic:2]: 40/40
+[    4.3s] simulate_edges[ic:2]: 40/40
+[    4.9s] simulate_edges[ic:2]: 20/40
+[    5.0s] simulate_edges[ic:2]: 20/40
+[    5.0s] simulate_edges[ic:2]: 20/40
+[    5.0s] simulate_edges[ic:2]: 20/40
+[    5.0s] simulate_edges[ic:2]: 20/40
+[    5.0s] simulate_edges[ic:2]: 20/40
+[    5.6s] simulate_edges[ic:2]: 40/40
+[    5.6s] simulate_edges[ic:2]: 40/40
+[    5.6s] simulate_edges[ic:2]: 40/40
+[    5.7s] simulate_edges[ic:2]: 40/40
+[    5.7s] simulate_edges[ic:2]: 40/40
+[    5.7s] simulate_edges[ic:2]: 40/40
+[    6.2s] simulate_edges[ic:2]: 20/40
+[    6.3s] simulate_edges[ic:2]: 20/40
+[    6.3s] simulate_edges[ic:2]: 20/40
+[    6.3s] simulate_edges[ic:2]: 20/40
+[    6.3s] simulate_edges[ic:2]: 20/40
+[    6.3s] simulate_edges[ic:2]: 20/40
+[    6.9s] simulate_edges[ic:2]: 40/40
+[    7.0s] simulate_edges[ic:2]: 40/40
+[    7.0s] simulate_edges[ic:2]: 40/40
+[    7.0s] simulate_edges[ic:2]: 40/40
+[    7.0s] simulate_edges[ic:2]: 40/40
+[    7.0s] simulate_edges[ic:2]: 40/40
+[    7.6s] simulate_edges[ic:2]: 20/40
+[    7.7s] simulate_edges[ic:2]: 20/40
+[    7.7s] simulate_edges[ic:2]: 20/40
+[    7.7s] simulate_edges[ic:2]: 20/40
+[    7.7s] simulate_edges[ic:2]: 20/40
+[    7.7s] simulate_edges[ic:2]: 20/40
+[    8.3s] simulate_edges[ic:2]: 40/40
+[    8.4s] simulate_edges[ic:2]: 40/40
+[    8.4s] simulate_edges[ic:2]: 40/40
+[    8.4s] simulate_edges[ic:2]: 40/40
+[    8.4s] simulate_edges[ic:2]: 40/40
+[    8.5s] simulate_edges[ic:2]: 40/40
+[    9.0s] simulate_edges[ic:2]: 20/40
+[    9.1s] simulate_edges[ic:2]: 20/40
+[    9.1s] simulate_edges[ic:2]: 20/40
+[    9.1s] simulate_edges[ic:2]: 20/40
+[    9.1s] simulate_edges[ic:2]: 20/40
+[    9.1s] simulate_edges[ic:2]: 20/40
+[    9.6s] simulate_edges[ic:2]: 40/40
+[    9.7s] simulate_edges[ic:2]: 40/40
+[    9.8s] simulate_edges[ic:2]: 40/40
+[    9.8s] simulate_edges[ic:2]: 40/40
+[    9.8s] simulate_edges[ic:2]: 40/40
+[    9.8s] simulate_edges[ic:2]: 40/40
+[   10.3s] simulate_edges[ic:2]: 20/40
+[   10.4s] simulate_edges[ic:2]: 20/40
+[   10.4s] simulate_edges[ic:2]: 20/40
+[   10.5s] simulate_edges[ic:2]: 20/40
+[   10.5s] simulate_edges[ic:2]: 20/40
+[   10.5s] simulate_edges[ic:2]: 20/40
+[   11.0s] simulate_edges[ic:2]: 40/40
+[   11.1s] simulate_edges[ic:2]: 40/40
+[   11.1s] simulate_edges[ic:2]: 40/40
+[   11.2s] simulate_edges[ic:2]: 40/40
+[   11.2s] simulate_edges[ic:2]: 40/40
+[   11.2s] simulate_edges[ic:2]: 40/40
+[   11.7s] simulate_edges[ic:2]: 20/40
+[   11.8s] simulate_edges[ic:2]: 20/40
+[   11.8s] simulate_edges[ic:2]: 20/40
+[   11.9s] simulate_edges[ic:2]: 20/40
+[   11.9s] simulate_edges[ic:2]: 20/40
+[   11.9s] simulate_edges[ic:2]: 20/40
+[   12.3s] simulate_edges[ic:2]: 40/40
+[   12.5s] simulate_edges[ic:2]: 40/40
+[   12.5s] simulate_edges[ic:2]: 40/40
+[   12.5s] simulate_edges[ic:2]: 40/40
+[   12.6s] simulate_edges[ic:2]: 40/40
+[   12.6s] simulate_edges[ic:2]: 40/40
+[   13.1s] simulate_edges[ic:2]: 20/40
+[   13.2s] simulate_edges[ic:2]: 20/40
+[   13.3s] simulate_edges[ic:2]: 20/40
+[   13.2s] simulate_edges[ic:2]: 20/40
+[   13.3s] simulate_edges[ic:2]: 20/40
+[   13.3s] simulate_edges[ic:2]: 20/40
+[   13.8s] simulate_edges[ic:2]: 40/40
+[   13.9s] simulate_edges[ic:2]: 40/40
+[   14.0s] simulate_edges[ic:2]: 40/40
+[   14.0s] simulate_edges[ic:2]: 40/40
+[   14.1s] simulate_edges[ic:2]: 40/40
+[   14.1s] simulate_edges[ic:2]: 40/40
+[   14.5s] simulate_edges[ic:2]: 20/40
+[   14.6s] simulate_edges[ic:2]: 20/40
+[   14.7s] simulate_edges[ic:2]: 20/40
+[   14.7s] simulate_edges[ic:2]: 20/40
+[   14.7s] simulate_edges[ic:2]: 20/40
+[   14.7s] simulate_edges[ic:2]: 20/40
+[   15.1s] simulate_edges[ic:2]: 40/40
+[   15.3s] simulate_edges[ic:2]: 40/40
+[   15.4s] simulate_edges[ic:2]: 40/40
+[   15.4s] simulate_edges[ic:2]: 40/40
+[   15.4s] simulate_edges[ic:2]: 40/40
+[   15.4s] simulate_edges[ic:2]: 40/40
+[   15.8s] simulate_edges[ic:2]: 20/40
+[   15.9s] simulate_edges[ic:2]: 20/40
+[   16.0s] simulate_edges[ic:2]: 20/40
+[   16.0s] simulate_edges[ic:2]: 20/40
+[   16.1s] simulate_edges[ic:2]: 20/40
+[   16.1s] simulate_edges[ic:2]: 20/40
+[   16.5s] simulate_edges[ic:2]: 40/40
+[   16.6s] simulate_edges[ic:2]: 40/40
+[   16.7s] simulate_edges[ic:2]: 40/40
+[   16.7s] simulate_edges[ic:2]: 40/40
+[   16.8s] simulate_edges[ic:2]: 40/40
+[   16.8s] simulate_edges[ic:2]: 40/40
+[   17.2s] simulate_edges[ic:2]: 20/40
+[   17.3s] simulate_edges[ic:2]: 20/40
+[   17.4s] simulate_edges[ic:2]: 20/40
+[   17.4s] simulate_edges[ic:2]: 20/40
+[   17.5s] simulate_edges[ic:2]: 20/40
+[   17.5s] simulate_edges[ic:2]: 20/40
+[   17.8s] simulate_edges[ic:2]: 40/40
+seed 0 done
+[   18.0s] simulate_edges[ic:2]: 40/40
+seed 3 done
+[   18.1s] simulate_edges[ic:2]: 40/40
+seed 1 done
+[   18.1s] simulate_edges[ic:2]: 40/40
+seed 5 done
+[   18.2s] simulate_edges[ic:2]: 40/40
+seed 2 done
+[   18.2s] simulate_edges[ic:2]: 40/40
+seed 4 done
+[   18.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   18.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   18.6s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.127)
+[   18.7s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.126)
+[   19.1s] simulate_edges[ic:2]: 20/40
+[   19.2s] simulate_edges[ic:2]: 20/40
+[   19.4s] simulate_edges[ic:2]: 40/40
+[   19.5s] simulate_edges[ic:2]: 40/40
+[   19.8s] simulate_edges[ic:2]: 20/40
+[   19.9s] simulate_edges[ic:2]: 20/40
+[   20.2s] simulate_edges[ic:2]: 40/40
+[   20.3s] simulate_edges[ic:2]: 40/40
+[   20.6s] simulate_edges[ic:2]: 20/40
+[   20.7s] simulate_edges[ic:2]: 20/40
+[   21.0s] simulate_edges[ic:2]: 40/40
+[   21.0s] simulate_edges[ic:2]: 40/40
+[   21.3s] simulate_edges[ic:2]: 20/40
+[   21.4s] simulate_edges[ic:2]: 20/40
+[   21.7s] simulate_edges[ic:2]: 40/40
+[   21.8s] simulate_edges[ic:2]: 40/40
+[   22.1s] simulate_edges[ic:2]: 20/40
+[   22.2s] simulate_edges[ic:2]: 20/40
+[   22.5s] simulate_edges[ic:2]: 40/40
+[   22.5s] simulate_edges[ic:2]: 40/40
+[   22.9s] simulate_edges[ic:2]: 20/40
+[   22.9s] simulate_edges[ic:2]: 20/40
+[   23.3s] simulate_edges[ic:2]: 40/40
+[   23.3s] simulate_edges[ic:2]: 40/40
+[   23.7s] simulate_edges[ic:2]: 20/40
+[   23.7s] simulate_edges[ic:2]: 20/40
+[   24.0s] simulate_edges[ic:2]: 40/40
+[   24.0s] simulate_edges[ic:2]: 40/40
+[   24.4s] simulate_edges[ic:2]: 20/40
+[   24.4s] simulate_edges[ic:2]: 20/40
+[   24.8s] simulate_edges[ic:2]: 40/40
+[   24.8s] simulate_edges[ic:2]: 40/40
+[   25.2s] simulate_edges[ic:2]: 20/40
+[   25.2s] simulate_edges[ic:2]: 20/40
+[   25.6s] simulate_edges[ic:2]: 40/40
+[   25.6s] simulate_edges[ic:2]: 40/40
+[   26.0s] simulate_edges[ic:2]: 20/40
+[   26.0s] simulate_edges[ic:2]: 20/40
+[   26.3s] simulate_edges[ic:2]: 40/40
+[   26.4s] simulate_edges[ic:2]: 40/40
+[   26.7s] simulate_edges[ic:2]: 20/40
+[   26.8s] simulate_edges[ic:2]: 20/40
+[   27.1s] simulate_edges[ic:2]: 40/40
+[   27.2s] simulate_edges[ic:2]: 40/40
+[   28.1s] simulate_edges[ic:2]: 20/40
+[   28.2s] simulate_edges[ic:2]: 20/40
+[   28.5s] simulate_edges[ic:2]: 40/40
+seed 7 done
+[   28.6s] simulate_edges[ic:2]: 40/40
+seed 6 done

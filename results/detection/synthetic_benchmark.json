@@ -1,0 +1,578 @@
+[
+ {
+  "nuisance": 0.0,
+  "mu": 0.1,
+  "sigma": 0.5,
+  "T_ari": 1.0,
+  "auc": {
+   "misfit": [
+    0.999,
+    0.999
+   ],
+   "disagreement": [
+    0.999,
+    0.999
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.492,
+    0.497
+   ],
+   "content_outlier": [
+    0.997,
+    0.997
+   ],
+   "degree": [
+    0.489,
+    0.494
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.1,
+  "sigma": 1.0,
+  "T_ari": 1.0,
+  "auc": {
+   "misfit": [
+    0.939,
+    0.939
+   ],
+   "disagreement": [
+    0.934,
+    0.934
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.492,
+    0.497
+   ],
+   "content_outlier": [
+    0.917,
+    0.917
+   ],
+   "degree": [
+    0.489,
+    0.494
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.1,
+  "sigma": 2.0,
+  "T_ari": 1.0,
+  "auc": {
+   "misfit": [
+    0.766,
+    0.766
+   ],
+   "disagreement": [
+    0.753,
+    0.755
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.492,
+    0.497
+   ],
+   "content_outlier": [
+    0.752,
+    0.751
+   ],
+   "degree": [
+    0.489,
+    0.494
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.3,
+  "sigma": 0.5,
+  "T_ari": 0.994,
+  "auc": {
+   "misfit": [
+    0.996,
+    0.995
+   ],
+   "disagreement": [
+    0.997,
+    0.995
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.501,
+    0.5
+   ],
+   "content_outlier": [
+    0.992,
+    0.991
+   ],
+   "degree": [
+    0.483,
+    0.488
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.3,
+  "sigma": 1.0,
+  "T_ari": 0.994,
+  "auc": {
+   "misfit": [
+    0.926,
+    0.922
+   ],
+   "disagreement": [
+    0.92,
+    0.916
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.501,
+    0.5
+   ],
+   "content_outlier": [
+    0.884,
+    0.882
+   ],
+   "degree": [
+    0.483,
+    0.488
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.3,
+  "sigma": 2.0,
+  "T_ari": 0.994,
+  "auc": {
+   "misfit": [
+    0.73,
+    0.722
+   ],
+   "disagreement": [
+    0.715,
+    0.709
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.501,
+    0.5
+   ],
+   "content_outlier": [
+    0.7,
+    0.694
+   ],
+   "degree": [
+    0.483,
+    0.488
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.5,
+  "sigma": 0.5,
+  "T_ari": 0.88,
+  "auc": {
+   "misfit": [
+    0.964,
+    0.96
+   ],
+   "disagreement": [
+    0.973,
+    0.974
+   ],
+   "consensus_entropy": [
+    0.503,
+    0.505
+   ],
+   "participation": [
+    0.505,
+    0.498
+   ],
+   "content_outlier": [
+    0.961,
+    0.955
+   ],
+   "degree": [
+    0.508,
+    0.522
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.5,
+  "sigma": 1.0,
+  "T_ari": 0.88,
+  "auc": {
+   "misfit": [
+    0.909,
+    0.906
+   ],
+   "disagreement": [
+    0.905,
+    0.906
+   ],
+   "consensus_entropy": [
+    0.503,
+    0.505
+   ],
+   "participation": [
+    0.505,
+    0.498
+   ],
+   "content_outlier": [
+    0.886,
+    0.879
+   ],
+   "degree": [
+    0.508,
+    0.522
+   ]
+  }
+ },
+ {
+  "nuisance": 0.0,
+  "mu": 0.5,
+  "sigma": 2.0,
+  "T_ari": 0.88,
+  "auc": {
+   "misfit": [
+    0.745,
+    0.743
+   ],
+   "disagreement": [
+    0.725,
+    0.732
+   ],
+   "consensus_entropy": [
+    0.503,
+    0.505
+   ],
+   "participation": [
+    0.505,
+    0.498
+   ],
+   "content_outlier": [
+    0.73,
+    0.722
+   ],
+   "degree": [
+    0.508,
+    0.522
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.1,
+  "sigma": 0.5,
+  "T_ari": 1.0,
+  "auc": {
+   "misfit": [
+    0.999,
+    0.999
+   ],
+   "disagreement": [
+    0.999,
+    0.999
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.492,
+    0.497
+   ],
+   "content_outlier": [
+    0.847,
+    0.87
+   ],
+   "degree": [
+    0.489,
+    0.494
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.1,
+  "sigma": 1.0,
+  "T_ari": 1.0,
+  "auc": {
+   "misfit": [
+    0.936,
+    0.936
+   ],
+   "disagreement": [
+    0.929,
+    0.93
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.492,
+    0.497
+   ],
+   "content_outlier": [
+    0.624,
+    0.641
+   ],
+   "degree": [
+    0.489,
+    0.494
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.1,
+  "sigma": 2.0,
+  "T_ari": 1.0,
+  "auc": {
+   "misfit": [
+    0.761,
+    0.761
+   ],
+   "disagreement": [
+    0.746,
+    0.748
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.492,
+    0.497
+   ],
+   "content_outlier": [
+    0.527,
+    0.536
+   ],
+   "degree": [
+    0.489,
+    0.494
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.3,
+  "sigma": 0.5,
+  "T_ari": 0.994,
+  "auc": {
+   "misfit": [
+    0.996,
+    0.995
+   ],
+   "disagreement": [
+    0.996,
+    0.995
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.501,
+    0.5
+   ],
+   "content_outlier": [
+    0.817,
+    0.84
+   ],
+   "degree": [
+    0.483,
+    0.488
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.3,
+  "sigma": 1.0,
+  "T_ari": 0.994,
+  "auc": {
+   "misfit": [
+    0.924,
+    0.921
+   ],
+   "disagreement": [
+    0.913,
+    0.91
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.501,
+    0.5
+   ],
+   "content_outlier": [
+    0.614,
+    0.628
+   ],
+   "degree": [
+    0.483,
+    0.488
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.3,
+  "sigma": 2.0,
+  "T_ari": 0.994,
+  "auc": {
+   "misfit": [
+    0.73,
+    0.721
+   ],
+   "disagreement": [
+    0.715,
+    0.707
+   ],
+   "consensus_entropy": [
+    0.5,
+    0.5
+   ],
+   "participation": [
+    0.501,
+    0.5
+   ],
+   "content_outlier": [
+    0.529,
+    0.534
+   ],
+   "degree": [
+    0.483,
+    0.488
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.5,
+  "sigma": 0.5,
+  "T_ari": 0.88,
+  "auc": {
+   "misfit": [
+    0.961,
+    0.958
+   ],
+   "disagreement": [
+    0.972,
+    0.974
+   ],
+   "consensus_entropy": [
+    0.503,
+    0.505
+   ],
+   "participation": [
+    0.505,
+    0.498
+   ],
+   "content_outlier": [
+    0.798,
+    0.825
+   ],
+   "degree": [
+    0.508,
+    0.522
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.5,
+  "sigma": 1.0,
+  "T_ari": 0.88,
+  "auc": {
+   "misfit": [
+    0.904,
+    0.9
+   ],
+   "disagreement": [
+    0.895,
+    0.897
+   ],
+   "consensus_entropy": [
+    0.503,
+    0.505
+   ],
+   "participation": [
+    0.505,
+    0.498
+   ],
+   "content_outlier": [
+    0.607,
+    0.623
+   ],
+   "degree": [
+    0.508,
+    0.522
+   ]
+  }
+ },
+ {
+  "nuisance": 1.5,
+  "mu": 0.5,
+  "sigma": 2.0,
+  "T_ari": 0.88,
+  "auc": {
+   "misfit": [
+    0.74,
+    0.738
+   ],
+   "disagreement": [
+    0.716,
+    0.725
+   ],
+   "consensus_entropy": [
+    0.503,
+    0.505
+   ],
+   "participation": [
+    0.505,
+    0.498
+   ],
+   "content_outlier": [
+    0.529,
+    0.535
+   ],
+   "degree": [
+    0.508,
+    0.522
+   ]
+  }
+ }
+]

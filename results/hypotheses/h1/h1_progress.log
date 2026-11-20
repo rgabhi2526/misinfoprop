@@ -1,0 +1,240 @@
+[13:04:42] base seed 0 done 12s
+[13:04:42] base seed 1 done 12s
+[13:04:42] base seed 2 done 12s
+[13:04:42] base seed 3 done 12s
+[13:04:42] base seed 4 done 12s
+[13:04:53] base seed 5 done 11s
+[13:04:53] base seed 6 done 11s
+[13:04:53] base seed 7 done 11s
+[13:04:53] variant=hub beta=0 seed 0 done 11s
+[13:04:53] variant=hub beta=0 seed 1 done 11s
+[13:05:04] variant=hub beta=0 seed 2 done 11s
+[13:05:04] variant=hub beta=0 seed 3 done 11s
+[13:05:04] variant=hub beta=0 seed 4 done 11s
+[13:05:04] variant=hub beta=0 seed 5 done 11s
+[13:05:04] variant=hub beta=0 seed 6 done 11s
+[13:05:16] variant=hub beta=0 seed 7 done 12s
+[13:05:16] variant=nonhub beta=0 seed 0 done 12s
+[13:05:16] variant=nonhub beta=0 seed 1 done 12s
+[13:05:16] variant=nonhub beta=0 seed 2 done 12s
+[13:05:16] variant=nonhub beta=0 seed 3 done 11s
+[13:05:25] variant=nonhub beta=0 seed 4 done 10s
+[13:05:26] variant=nonhub beta=0 seed 5 done 10s
+[13:05:26] variant=nonhub beta=0 seed 6 done 10s
+[13:05:26] variant=nonhub beta=0 seed 7 done 10s
+[13:05:27] variant=decoy beta=0 seed 0 done 11s
+[13:05:36] variant=decoy beta=0 seed 1 done 10s
+[13:05:36] variant=decoy beta=0 seed 2 done 11s
+[13:05:36] variant=decoy beta=0 seed 3 done 10s
+[13:05:36] variant=decoy beta=0 seed 4 done 10s
+[13:05:37] variant=decoy beta=0 seed 5 done 10s
+[13:05:46] variant=decoy beta=0 seed 6 done 10s
+[13:05:47] variant=decoy beta=0 seed 7 done 11s
+[13:05:47] variant=hub beta=1.5 seed 0 done 11s
+[13:05:47] variant=hub beta=1.5 seed 1 done 11s
+[13:05:48] variant=hub beta=1.5 seed 2 done 11s
+[13:05:57] variant=hub beta=1.5 seed 3 done 11s
+[13:05:57] variant=hub beta=1.5 seed 4 done 10s
+[13:05:57] variant=hub beta=1.5 seed 5 done 10s
+[13:05:58] variant=hub beta=1.5 seed 6 done 11s
+[13:05:59] variant=hub beta=1.5 seed 7 done 11s
+[13:06:07] variant=nonhub beta=1.5 seed 0 done 10s
+[13:06:08] variant=nonhub beta=1.5 seed 1 done 10s
+[13:06:08] variant=nonhub beta=1.5 seed 2 done 10s
+[13:06:08] variant=nonhub beta=1.5 seed 3 done 10s
+[13:06:08] variant=nonhub beta=1.5 seed 4 done 10s
+[13:06:18] variant=nonhub beta=1.5 seed 5 done 11s
+[13:06:19] variant=nonhub beta=1.5 seed 6 done 11s
+[13:06:19] variant=nonhub beta=1.5 seed 7 done 11s
+[13:06:20] variant=decoy beta=1.5 seed 0 done 12s
+[13:06:20] variant=decoy beta=1.5 seed 1 done 12s
+[13:06:28] variant=decoy beta=1.5 seed 2 done 10s
+[13:06:29] variant=decoy beta=1.5 seed 3 done 10s
+[13:06:29] variant=decoy beta=1.5 seed 4 done 10s
+[13:06:30] variant=decoy beta=1.5 seed 5 done 10s
+[13:06:30] variant=decoy beta=1.5 seed 6 done 10s
+[13:06:40] variant=decoy beta=1.5 seed 7 done 12s
+[13:06:40] variant=hub beta=3 seed 0 done 12s
+[13:06:40] variant=hub beta=3 seed 1 done 11s
+[13:06:41] variant=hub beta=3 seed 2 done 11s
+[13:06:41] variant=hub beta=3 seed 3 done 11s
+[13:06:51] variant=hub beta=3 seed 4 done 10s
+[13:06:51] variant=hub beta=3 seed 5 done 10s
+[13:06:51] variant=hub beta=3 seed 6 done 10s
+[13:06:52] variant=hub beta=3 seed 7 done 10s
+[13:06:52] variant=nonhub beta=3 seed 0 done 10s
+[13:07:01] variant=nonhub beta=3 seed 1 done 10s
+[13:07:01] variant=nonhub beta=3 seed 2 done 10s
+[13:07:01] variant=nonhub beta=3 seed 3 done 10s
+[13:07:01] variant=nonhub beta=3 seed 4 done 10s
+[13:07:02] variant=nonhub beta=3 seed 5 done 10s
+[13:07:09] variant=nonhub beta=3 seed 6 done 9s
+[13:07:09] variant=nonhub beta=3 seed 7 done 9s
+[13:07:10] variant=decoy beta=3 seed 0 done 9s
+[13:07:10] variant=decoy beta=3 seed 1 done 9s
+[13:07:11] variant=decoy beta=3 seed 2 done 9s
+[13:07:19] variant=decoy beta=3 seed 3 done 9s
+[13:07:19] variant=decoy beta=3 seed 4 done 9s
+[13:07:19] variant=decoy beta=3 seed 5 done 9s
+[13:07:20] variant=decoy beta=3 seed 6 done 9s
+[13:07:20] variant=decoy beta=3 seed 7 done 9s
+[13:07:31] variant=hub+decoy3x beta=3 seed 0 done 12s
+[13:07:31] variant=hub+decoy3x beta=3 seed 1 done 12s
+[13:07:32] variant=hub+decoy3x beta=3 seed 2 done 12s
+[13:07:32] variant=hub+decoy3x beta=3 seed 3 done 12s
+[13:07:33] variant=hub+decoy3x beta=3 seed 4 done 12s
+[13:07:41] variant=hub+decoy3x beta=3 seed 5 done 11s
+[13:07:41] variant=hub+decoy3x beta=3 seed 6 done 11s
+[13:07:42] variant=hub+decoy3x beta=3 seed 7 done 10s
+[13:07:42] variant=hub beta=6 seed 0 done 9s
+[13:07:42] variant=hub beta=6 seed 1 done 9s
+[13:07:51] variant=hub beta=6 seed 2 done 10s
+[13:07:51] variant=hub beta=6 seed 3 done 10s
+[13:07:51] variant=hub beta=6 seed 4 done 10s
+[13:07:52] variant=hub beta=6 seed 5 done 10s
+[13:07:53] variant=hub beta=6 seed 6 done 10s
+[13:08:02] variant=hub beta=6 seed 7 done 11s
+[13:08:02] variant=nonhub beta=6 seed 0 done 11s
+[13:08:02] variant=nonhub beta=6 seed 1 done 11s
+[13:08:02] variant=nonhub beta=6 seed 2 done 11s
+[13:08:03] variant=nonhub beta=6 seed 3 done 10s
+[13:08:11] variant=nonhub beta=6 seed 4 done 10s
+[13:08:12] variant=nonhub beta=6 seed 5 done 10s
+[13:08:12] variant=nonhub beta=6 seed 6 done 10s
+[13:08:12] variant=nonhub beta=6 seed 7 done 10s
+[13:08:13] variant=decoy beta=6 seed 0 done 10s
+[13:08:21] variant=decoy beta=6 seed 1 done 10s
+[13:08:22] variant=decoy beta=6 seed 2 done 10s
+[13:08:22] variant=decoy beta=6 seed 3 done 10s
+[13:08:22] variant=decoy beta=6 seed 4 done 10s
+[13:08:23] variant=decoy beta=6 seed 5 done 10s
+[13:08:30] variant=decoy beta=6 seed 6 done 9s
+[13:08:31] variant=decoy beta=6 seed 7 done 9s
+[13:08:32] variant=hub+decoy3x beta=6 seed 0 done 10s
+[13:08:32] variant=hub+decoy3x beta=6 seed 1 done 10s
+[13:08:33] variant=hub+decoy3x beta=6 seed 2 done 10s
+[13:08:42] variant=hub+decoy3x beta=6 seed 3 done 11s
+[13:08:42] variant=hub+decoy3x beta=6 seed 4 done 11s
+[13:08:43] variant=hub+decoy3x beta=6 seed 5 done 12s
+[13:08:43] variant=hub+decoy3x beta=6 seed 6 done 12s
+[13:08:44] variant=hub+decoy3x beta=6 seed 7 done 12s
+[13:08:53] vuln=0.05 seed 0 done 12s
+[13:08:54] vuln=0.05 seed 1 done 11s
+[13:08:55] vuln=0.05 seed 2 done 11s
+[13:08:55] vuln=0.05 seed 3 done 11s
+[13:08:55] vuln=0.05 seed 4 done 11s
+[13:09:04] vuln=0.05 seed 5 done 10s
+[13:09:04] vuln=0.05 seed 6 done 10s
+[13:09:05] vuln=0.05 seed 7 done 10s
+[13:09:06] vuln=0.3 seed 0 done 11s
+[13:09:06] vuln=0.3 seed 1 done 11s
+[13:09:15] vuln=0.3 seed 2 done 11s
+[13:09:15] vuln=0.3 seed 3 done 11s
+[13:09:16] vuln=0.3 seed 4 done 10s
+[13:09:16] vuln=0.3 seed 5 done 11s
+[13:09:17] vuln=0.3 seed 6 done 11s
+[13:09:25] vuln=0.3 seed 7 done 10s
+[13:09:25] rec=0.003 seed 0 done 10s
+[13:09:26] rec=0.003 seed 1 done 10s
+[13:09:26] rec=0.003 seed 2 done 10s
+[13:09:26] rec=0.003 seed 3 done 10s
+[13:09:34] rec=0.003 seed 4 done 10s
+[13:09:35] rec=0.003 seed 5 done 10s
+[13:09:35] rec=0.003 seed 6 done 9s
+[13:09:36] rec=0.003 seed 7 done 10s
+[13:09:37] rec=0.02 seed 0 done 10s
+[13:09:44] rec=0.02 seed 1 done 10s
+[13:09:44] rec=0.02 seed 2 done 9s
+[13:09:45] rec=0.02 seed 3 done 10s
+[13:09:45] rec=0.02 seed 4 done 9s
+[13:09:46] rec=0.02 seed 5 done 10s
+[13:09:55] rec=0.02 seed 6 done 11s
+[13:09:55] rec=0.02 seed 7 done 11s
+[13:09:55] rec_hub=3.0 seed 0 done 10s
+[13:09:56] rec_hub=3.0 seed 1 done 10s
+[13:09:56] rec_hub=3.0 seed 2 done 10s
+[13:10:05] rec_hub=3.0 seed 3 done 10s
+[13:10:05] rec_hub=3.0 seed 4 done 10s
+[13:10:05] rec_hub=3.0 seed 5 done 10s
+[13:10:06] rec_hub=3.0 seed 6 done 10s
+[13:10:06] rec_hub=3.0 seed 7 done 10s
+[13:10:15] rec_hub=30.0 seed 0 done 10s
+[13:10:15] rec_hub=30.0 seed 1 done 10s
+[13:10:16] rec_hub=30.0 seed 2 done 11s
+[13:10:16] rec_hub=30.0 seed 3 done 11s
+[13:10:17] rec_hub=30.0 seed 4 done 11s
+[13:10:28] rec_hub=30.0 seed 5 done 13s
+[13:10:28] rec_hub=30.0 seed 6 done 13s
+[13:10:28] rec_hub=30.0 seed 7 done 12s
+[13:10:28] rec_core=0.1 seed 0 done 12s
+[13:10:28] rec_core=0.1 seed 1 done 11s
+[13:10:37] rec_core=0.1 seed 2 done 9s
+[13:10:37] rec_core=0.1 seed 3 done 9s
+[13:10:37] rec_core=0.1 seed 4 done 9s
+[13:10:37] rec_core=0.1 seed 5 done 9s
+[13:10:38] rec_core=0.1 seed 6 done 9s
+[13:10:46] rec_core=0.1 seed 7 done 9s
+[13:10:46] rec_core=0.8 seed 0 done 9s
+[13:10:46] rec_core=0.8 seed 1 done 9s
+[13:10:47] rec_core=0.8 seed 2 done 9s
+[13:10:47] rec_core=0.8 seed 3 done 9s
+[13:10:55] rec_core=0.8 seed 4 done 9s
+[13:10:55] rec_core=0.8 seed 5 done 9s
+[13:10:55] rec_core=0.8 seed 6 done 9s
+[13:10:55] rec_core=0.8 seed 7 done 9s
+[13:10:56] rec_txt=0.0 seed 0 done 9s
+[13:11:04] rec_txt=0.0 seed 1 done 9s
+[13:11:04] rec_txt=0.0 seed 2 done 10s
+[13:11:05] rec_txt=0.0 seed 3 done 9s
+[13:11:05] rec_txt=0.0 seed 4 done 9s
+[13:11:05] rec_txt=0.0 seed 5 done 9s
+[13:11:13] rec_txt=0.0 seed 6 done 9s
+[13:11:14] rec_txt=0.0 seed 7 done 9s
+[13:11:14] rec_txt=0.6 seed 0 done 9s
+[13:11:14] rec_txt=0.6 seed 1 done 9s
+[13:11:14] rec_txt=0.6 seed 2 done 9s
+[13:11:24] rec_txt=0.6 seed 3 done 11s
+[13:11:24] rec_txt=0.6 seed 4 done 11s
+[13:11:24] rec_txt=0.6 seed 5 done 11s
+[13:11:25] rec_txt=0.6 seed 6 done 11s
+[13:11:25] rec_txt=0.6 seed 7 done 11s
+[13:11:33] rec_txt=1.0 seed 0 done 9s
+[13:11:34] rec_txt=1.0 seed 1 done 9s
+[13:11:34] rec_txt=1.0 seed 2 done 9s
+[13:11:34] rec_txt=1.0 seed 3 done 9s
+[13:11:34] rec_txt=1.0 seed 4 done 9s
+[13:11:42] rec_txt=1.0 seed 5 done 9s
+[13:11:43] rec_txt=1.0 seed 6 done 9s
+[13:11:43] rec_txt=1.0 seed 7 done 9s
+[13:11:43] rec_acc=0.3 seed 0 done 9s
+[13:11:43] rec_acc=0.3 seed 1 done 9s
+[13:11:56] rec_acc=0.3 seed 2 done 13s
+[13:11:56] rec_acc=0.3 seed 3 done 14s
+[13:11:56] rec_acc=0.3 seed 4 done 14s
+[13:11:57] rec_acc=0.3 seed 5 done 14s
+[13:11:57] rec_acc=0.3 seed 6 done 14s
+[13:12:06] rec_acc=0.3 seed 7 done 10s
+[13:12:07] fr_out=0.15 seed 0 done 10s
+[13:12:07] fr_out=0.15 seed 1 done 10s
+[13:12:07] fr_out=0.15 seed 2 done 11s
+[13:12:07] fr_out=0.15 seed 3 done 10s
+[13:12:15] fr_out=0.15 seed 4 done 9s
+[13:12:15] fr_out=0.15 seed 5 done 9s
+[13:12:16] fr_out=0.15 seed 6 done 9s
+[13:12:16] fr_out=0.15 seed 7 done 9s
+[13:12:16] fr_out=0.3 seed 0 done 9s
+[13:12:24] fr_out=0.3 seed 1 done 9s
+[13:12:24] fr_out=0.3 seed 2 done 9s
+[13:12:25] fr_out=0.3 seed 3 done 9s
+[13:12:25] fr_out=0.3 seed 4 done 9s
+[13:12:25] fr_out=0.3 seed 5 done 9s
+[13:12:33] fr_out=0.3 seed 6 done 9s
+[13:12:33] fr_out=0.3 seed 7 done 9s
+[13:12:35] model=ic:4 seed 0 done 10s
+[13:12:35] model=ic:4 seed 1 done 10s
+[13:12:35] model=ic:4 seed 2 done 10s
+[13:12:42] model=ic:4 seed 3 done 10s
+[13:12:43] model=ic:4 seed 4 done 10s
+[13:12:44] model=ic:4 seed 5 done 10s
+[13:12:44] model=ic:4 seed 6 done 10s
+[13:12:44] model=ic:4 seed 7 done 9s

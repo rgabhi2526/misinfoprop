@@ -1,0 +1,149 @@
+{
+  "bgrl": {
+    "modularity": -0.006808335620841266,
+    "nmi": 2.5636980934100993e-05,
+    "emb_std": 0.3732,
+    "best_epoch": 50,
+    "seconds": 65.6,
+    "report": {
+      "health": {
+        "dim_std_min": 0.024201313136652393,
+        "dim_std_mean": 0.26157837489640445,
+        "effective_rank": 12.293150576866472,
+        "dims": 256,
+        "corr_norm_logdeg": 0.8335413597684072,
+        "cluster_sizes": [
+          6473,
+          14338
+        ]
+      },
+      "unlabeled": {
+        "k": 2,
+        "modularity": -0.006808335620841266,
+        "conductance_mean": 0.9960889018047963,
+        "conductance_max": 0.9960889018047963,
+        "edge_reconstruction_auc": 0.603789324,
+        "seed_stability_ari": 1.0,
+        "silhouette_diag": 0.6859274034140064,
+        "davies_bouldin_diag": 0.7501962839005054
+      },
+      "labeled": {
+        "n_labeled": 1206,
+        "n_classes": 2,
+        "probe_acc": 0.7437810945273632,
+        "probe_f1_macro": 0.7423780603726888,
+        "nmi": 2.5636980934100993e-05,
+        "ari": 0.00010055846490594228,
+        "knn10_label_agreement": 0.8270315091210614,
+        "silhouette_true_labels": 0.03774536058625094,
+        "warning": "near-ceiling / few classes: label metrics cannot separate models on their own"
+      },
+      "task": {
+        "graph_partition_k": 6,
+        "graph_partition_modularity": 0.2633088324535726,
+        "ari_vs_graph_partition": 0.1354003594118184,
+        "graph_partition_nmi": 0.2848263457108294,
+        "spearman_boundary_vs_betweenness": -0.08129327755015453,
+        "jaccard_top208_boundary_vs_betweenness": 0.0
+      }
+    }
+  },
+  "dgi": {
+    "modularity": -0.009340712907022874,
+    "nmi": 0.001059175166313307,
+    "emb_std": 0.1932,
+    "best_epoch": 125,
+    "seconds": 72.6,
+    "report": {
+      "health": {
+        "dim_std_min": 0.010622002492867213,
+        "dim_std_mean": 0.1155464975135253,
+        "effective_rank": 20.340359221605453,
+        "dims": 256,
+        "corr_norm_logdeg": 0.8535565348278117,
+        "cluster_sizes": [
+          7122,
+          13689
+        ]
+      },
+      "unlabeled": {
+        "k": 2,
+        "modularity": -0.009340712907022874,
+        "conductance_mean": 0.9948524806753546,
+        "conductance_max": 0.9948524806753546,
+        "edge_reconstruction_auc": 0.6422400534,
+        "seed_stability_ari": 1.0,
+        "silhouette_diag": 0.7508024899316381,
+        "davies_bouldin_diag": 0.6439552105574847
+      },
+      "labeled": {
+        "n_labeled": 1206,
+        "n_classes": 2,
+        "probe_acc": 0.8018242122719734,
+        "probe_f1_macro": 0.7995305311257863,
+        "nmi": 0.001059175166313307,
+        "ari": 0.001871795235035945,
+        "knn10_label_agreement": 0.8524875621890547,
+        "silhouette_true_labels": 0.054133164521097926,
+        "warning": "near-ceiling / few classes: label metrics cannot separate models on their own"
+      },
+      "task": {
+        "graph_partition_k": 6,
+        "graph_partition_modularity": 0.2633088324535726,
+        "ari_vs_graph_partition": 0.15827949389367835,
+        "graph_partition_nmi": 0.2848263457108294,
+        "spearman_boundary_vs_betweenness": -0.1049475819802682,
+        "jaccard_top208_boundary_vs_betweenness": 0.0
+      }
+    }
+  },
+  "mvgrl": {
+    "modularity": -0.014992388551835822,
+    "nmi": 0.0021965862463530625,
+    "emb_std": 0.5099,
+    "best_epoch": 75,
+    "seconds": 107.1,
+    "report": {
+      "health": {
+        "dim_std_min": 0.16931291550909447,
+        "dim_std_mean": 0.3838427825060865,
+        "effective_rank": 187.85427728547572,
+        "dims": 256,
+        "corr_norm_logdeg": 0.7671905076103185,
+        "cluster_sizes": [
+          8560,
+          12251
+        ]
+      },
+      "unlabeled": {
+        "k": 2,
+        "modularity": -0.014992388551835822,
+        "conductance_mean": 0.9942483076856105,
+        "conductance_max": 0.9942483076856105,
+        "edge_reconstruction_auc": 0.827823065,
+        "seed_stability_ari": 1.0,
+        "silhouette_diag": 0.2648859827951496,
+        "davies_bouldin_diag": 2.4926699143876165
+      },
+      "labeled": {
+        "n_labeled": 1206,
+        "n_classes": 2,
+        "probe_acc": 0.7479270315091211,
+        "probe_f1_macro": 0.7448706065085051,
+        "nmi": 0.0021965862463530625,
+        "ari": 0.0037935200799126545,
+        "knn10_label_agreement": 0.5884742951907131,
+        "silhouette_true_labels": 0.009896749392806773,
+        "warning": "near-ceiling / few classes: label metrics cannot separate models on their own"
+      },
+      "task": {
+        "graph_partition_k": 6,
+        "graph_partition_modularity": 0.2633088324535726,
+        "ari_vs_graph_partition": 0.17336017025133924,
+        "graph_partition_nmi": 0.2848263457108294,
+        "spearman_boundary_vs_betweenness": -0.32699605660328335,
+        "jaccard_top208_boundary_vs_betweenness": 0.0
+      }
+    }
+  }
+}

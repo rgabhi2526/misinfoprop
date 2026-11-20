@@ -1,0 +1,10 @@
+[    5.9s] pokec: reading profiles (zilinsky kraj, kysucke nove mesto)
+[   32.2s] pokec: 6392 users; reading friendships (30.6M rows for full Pokec)
+[   37.1s] pokec: 66935 friendships kept; building interest texts
+[   37.1s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data/pokec_text_zilinsky_kraj_kysucke_nove_mesto.npy
+[   37.2s] make_data: 66935 raw edges, 6392 nodes -> symmetrize + LCC
+[   37.2s] make_data: largest connected component 5599/6392 nodes kept, 90086 directed edges
+age+gender+completion    acc 0.314  (majority 0.249)
+interest text            acc 0.289  (majority 0.249)
+text+profile             acc 0.356  (majority 0.249)
+age known: 0.722  median age by community: [19, 20, 25, 20, 20, 20, 20, 16, 23, 16, 28]

@@ -1,0 +1,3 @@
+TIMME acceptance of own community: median 0.513 -> effective agreement effect beta ~ 1.44 (map tested 0,1,3,6)
+top-5% misfit nodes: median degree percentile 0.56 (0.5 = typical; 'hub' placement in the map ~ 0+)
+synthetic hub placement: planted median degree percentile 0.85; random placement ~0.50

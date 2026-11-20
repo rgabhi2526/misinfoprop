@@ -1,0 +1,1 @@
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Pipeline. The topology view uses edges only. The content view receives no edges or graph-derived features as input; the topology labels $t$ are used only as its training targets, with cross-fitting so that no node's own label informs its prediction.}}{5}{figure.3.1}%

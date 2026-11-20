@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Synthetic experiment grids.}
+\label{tab:synthetic}
+\small
+\begin{tabularx}{\linewidth}{@{}l X X@{}}
+\toprule
+ & Detection benchmark & Regime map \\
+\midrule
+Nodes, communities & $n=4000$, $K=8$ & $n=4000$, $K=8$ \\
+Degrees & power law (exponent 2.5), min.\ 8, cap 300 & same \\
+Mixing $\mu$ & $\{0.1, 0.3, 0.5\}$ & $\{0.1, 0.3, 0.5\}$ \\
+Text noise $\sigma$ & $\{0.5, 1, 2\}$ & 1 \\
+Nuisance block & $\{0, 1.5\}$ & 1.5 \\
+Mismatched share & 3\%, uniform & $\{1\%, 5\%, 10\%\}$, uniform or $\propto$ degree \\
+Agreement effect $\beta$ & --- & $\{0, 1, 3, 6\}$ \\
+Spread & --- & uniform IC, $c=2$; budget $n/100$; 60 simulations \\
+Seeds per setting & 3 & 2 \\
+Settings & 18 & 72 \\
+Outcome & AUC, overall and within degree terciles & paired gain over best of PageRank / betweenness, 95\% CI \\
+\bottomrule
+\end{tabularx}
+\end{table}

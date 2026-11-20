@@ -1,0 +1,95 @@
+% Mid-term report. Build: latexmk -pdf main.tex   (run inside report/)
+% Layout follows "Report Format_midterm.docx" (Shiv Nadar University, Dept. of CSE):
+% A4, Times New Roman 12pt, 1in side/bottom margins, ~1.15 Word line spacing,
+% page numbers at the bottom centre, chapter-wise numbering of equations, figures
+% and tables, IEEE references in order of appearance.
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{newtxtext,newtxmath}          % Times New Roman (template body font); provides amssymb symbols
+\usepackage[a4paper,top=1in,bottom=1in,left=1in,right=1in,footskip=0.5in]{geometry}
+\usepackage{setspace}
+\setstretch{1.1}                          % ~ Word "Multiple 1.15" for Times 12pt
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+\graphicspath{{figures/}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+% Template: equations (2.1), figures and tables numbered per chapter (= section).
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+% Front-matter page heading: centred, bold, 14pt (template "Declaration" style).
+\newcommand{\frontheading}[1]{%
+  \begin{center}{\fontsize{14}{17}\selectfont\bfseries #1\par}\end{center}
+  \vspace{0.8em}}
+
+% Contents / lists: centred headings in the same style, single-spaced entries.
+\renewcommand{\cfttoctitlefont}{\hspace*{\fill}\fontsize{14}{17}\selectfont\bfseries}
+\renewcommand{\cftaftertoctitle}{\hspace*{\fill}}
+\renewcommand{\cftloftitlefont}{\hspace*{\fill}\fontsize{14}{17}\selectfont\bfseries}
+\renewcommand{\cftafterloftitle}{\hspace*{\fill}}
+\renewcommand{\cftlottitlefont}{\hspace*{\fill}\fontsize{14}{17}\selectfont\bfseries}
+\renewcommand{\cftafterlottitle}{\hspace*{\fill}}
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftbeforelottitleskip}{1.5em}
+\setlength{\cftfignumwidth}{2.8em}
+\setlength{\cfttabnumwidth}{2.8em}
+\setcounter{tocdepth}{2}
+
+\begin{document}
+
+% ---------------- front matter: title (unnumbered), then i, ii, ... ----------
+\input{00_front_matter/title_page}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{00_front_matter/declaration}
+\clearpage
+
+\frontheading{Abstract}
+\input{01_introduction/abstract}
+\clearpage
+
+{\singlespacing
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+\clearpage}
+
+% ---------------- main text: arabic, restarting at 1 ------------------------
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{01_introduction/introduction}
+\input{02_related_work/related_work}
+\input{03_methodology/methodology}
+\input{04_experimental_setup/experimental_setup}
+% Template item "Timeline, plan after mid-term" (work done / remaining / schedule).
+\IfFileExists{05_status_and_plan/status_and_plan.tex}{%
+  \input{05_status_and_plan/status_and_plan}}{}
+
+% Template: IEEE format, listed in order of appearance.
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{IEEEtranN}
+\bibliography{references}
+
+\input{00_front_matter/signoff}
+
+\end{document}

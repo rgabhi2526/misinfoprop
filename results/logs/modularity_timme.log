@@ -1,0 +1,13 @@
+[    0.0s] timme: 21014 users in /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all
+[    0.4s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all/timme_text.npy
+[    1.7s] timme: favorite_list.csv: 1794111 edges
+[    2.4s] timme: friend_list.csv: 915438 edges
+[    3.4s] timme: mention_list.csv: 1571937 edges
+[    3.8s] timme: reply_list.csv: 530598 edges
+[    4.9s] timme: retweet_list.csv: 1684023 edges
+[    5.1s] timme: 1209 users labeled R/D
+[    5.1s] make_data: 6496107 raw edges, 21014 nodes -> symmetrize + LCC
+[    8.0s] make_data: largest connected component 20811/21014 nodes kept, 8212892 directed edges
+timme[all]: 20811 nodes, 4106446 edges, mean degree 394.6
+  real          Q = 0.256 ± 0.010   communities 5   largest 38.3%   cross-community edges 49.3%
+  rewired null  Q = 0.035 ± 0.001   communities 8   largest 26.6%   cross-community edges 83.1%

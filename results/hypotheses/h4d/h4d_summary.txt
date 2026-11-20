@@ -1,0 +1,4 @@
+[infected] best misfit-based (selected) vs best structural: cells=120; CI>0: 25 (chance under null ~3.0 one-sided); CI<0: 54; Holm-surviving wins (alpha .05): 10
+[infected] fixed misfit_x_pr vs best structural: cells=120; CI>0: 0 (chance under null ~3.0 one-sided); CI<0: 120; Holm-surviving wins (alpha .05): 0
+[cross] best misfit-based (selected) vs best structural: cells=120; CI>0: 58 (chance under null ~3.0 one-sided); CI<0: 25; Holm-surviving wins (alpha .05): 36
+[cross] fixed misfit_x_pr vs best structural: cells=120; CI>0: 48 (chance under null ~3.0 one-sided); CI<0: 30; Holm-surviving wins (alpha .05): 38

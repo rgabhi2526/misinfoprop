@@ -1,0 +1,16 @@
+Misinformation spreads inside groups of people who are both connected and like-minded,
+and crosses into other groups through a small number of accounts and links. Most
+containment methods choose where to intervene from network structure alone. This
+project asks whether a second signal, the content a user posts, can identify
+intervention targets that structure misses. We define, for every user, a
+\emph{structural} community membership (from the social graph) and a \emph{content}
+membership (what a classifier that reads only the user's text predicts that community
+to be), and score the disagreement between the two. The classifier receives no edges
+or graph-derived features as input; the graph communities are used only as its
+training targets. The idea comes from
+the use of complementary clusterings to locate ambiguous regions in active
+learning~\citep{sani2026aas}. This mid-term report describes the motivation, related
+work, the methodology as currently built, and the experimental setup on two real
+social networks (TIMME political Twitter and the Pokec social network) and on
+controlled synthetic networks, together with the current status and the plan for the
+rest of the project. Results are not reported here.

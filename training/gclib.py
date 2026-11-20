@@ -73,9 +73,16 @@ class GCNEncoder(nn.Module):
             self.acts.append(nn.PReLU(o))
             d = o
 
-    def forward(self, x, adj):
-        for conv, act in zip(self.convs, self.acts):
-            x = act(conv(x, adj))
+    def forward(self, x, adj, feat_mask=None):
+        for i, (conv, act) in enumerate(zip(self.convs, self.acts)):
+            if i == 0 and feat_mask is not None:
+                # (x * mask) @ W^T == x @ (W * mask)^T: masks feature columns without
+                # an N x F masked copy of x (3.7 GB per view on full Pokec)
+                h = torch.func.functional_call(
+                    conv, {"lin.weight": conv.lin.weight * feat_mask}, (x, adj))
+            else:
+                h = conv(x, adj)
+            x = act(h)
         return x
 
 
@@ -92,18 +99,17 @@ def _adj(edge_index, n, edge_weight=None):
     return to_torch_csr_tensor(ei.flip(0), ew, size=(n, n))
 
 
-def _drop_feat(x, p):
+def _feat_mask(x, p):
     if p <= 0:
-        return x
-    mask = torch.empty(x.size(1), device=x.device).bernoulli_(1 - p)
-    return x * mask
+        return None
+    return torch.empty(x.size(1), device=x.device).bernoulli_(1 - p)
 
 
 def _augment(x, edge_index, cfg):
     # force_undirected: drop both directions of an edge together, so the
     # augmented view stays a symmetric graph like the input
     ei, _ = dropout_edge(edge_index, p=cfg.drop_edge, force_undirected=True)
-    return _drop_feat(x, cfg.drop_feat), _adj(ei, x.size(0))
+    return _feat_mask(x, cfg.drop_feat), _adj(ei, x.size(0))
 
 
 # --------------------------------------------------------------------------- #
@@ -215,13 +221,13 @@ def train_bgrl(data, cfg: Cfg, labels=None):
     m.train()
 
     def step():
-        x1, e1 = _augment(x, ei, cfg)
-        x2, e2 = _augment(x, ei, cfg)
-        q1 = m.predictor(m.online(x1, e1))
-        q2 = m.predictor(m.online(x2, e2))
+        f1, e1 = _augment(x, ei, cfg)
+        f2, e2 = _augment(x, ei, cfg)
+        q1 = m.predictor(m.online(x, e1, f1))
+        q2 = m.predictor(m.online(x, e2, f2))
         with torch.no_grad():
-            t1 = m.target(x1, e1)
-            t2 = m.target(x2, e2)
+            t1 = m.target(x, e1, f1)
+            t2 = m.target(x, e2, f2)
         # symmetric cosine loss (2 - 2cos)
         return 2 - (F.cosine_similarity(q1, t2.detach(), -1).mean()
                     + F.cosine_similarity(q2, t1.detach(), -1).mean())

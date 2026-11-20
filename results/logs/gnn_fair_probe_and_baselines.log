@@ -1,0 +1,16 @@
+[    0.0s] timme: 21014 users in /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all
+[    0.3s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all/timme_text.npy
+[    1.5s] timme: favorite_list.csv: 1794111 edges
+[    2.1s] timme: friend_list.csv: 915438 edges
+[    3.2s] timme: mention_list.csv: 1571937 edges
+[    3.6s] timme: reply_list.csv: 530598 edges
+[    4.7s] timme: retweet_list.csv: 1684023 edges
+[    4.8s] timme: 1209 users labeled R/D
+[    4.8s] make_data: 6496107 raw edges, 21014 nodes -> symmetrize + LCC
+[    7.6s] make_data: largest connected component 20811/21014 nodes kept, 8212892 directed edges
+x last col unique (first 5): [-7.053803    0.14176069]  x col0 mean/std -0.0 1.0
+neighbour-vote (graph, out-of-fold) 0.928
+text std-probe 0.699 | spectral64 std-probe 0.961
+bgrl: raw C=1 nostd 0.943 | L2 C=1 nostd (=report) 0.744 | std 0.951 | std emb+text 0.894
+dgi: raw C=1 nostd 0.934 | L2 C=1 nostd (=report) 0.802 | std 0.958 | std emb+text 0.914
+mvgrl: raw C=1 nostd 0.78 | L2 C=1 nostd (=report) 0.748 | std 0.774 | std emb+text 0.754

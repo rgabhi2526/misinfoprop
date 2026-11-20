@@ -1,0 +1,13 @@
+[    0.0s] timme: 21014 users in /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all
+[    0.4s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all/timme_text.npy
+[    1.9s] timme: favorite_list.csv: 1794111 edges
+[    2.6s] timme: friend_list.csv: 915438 edges
+[    3.9s] timme: mention_list.csv: 1571937 edges
+[    4.4s] timme: reply_list.csv: 530598 edges
+[    5.7s] timme: retweet_list.csv: 1684023 edges
+[    5.8s] timme: 1209 users labeled R/D
+[    5.8s] make_data: 6496107 raw edges, 21014 nodes -> symmetrize + LCC
+[    8.7s] make_data: largest connected component 20811/21014 nodes kept, 8212892 directed edges
+bgrl k=2 raw: Q=-0.028 NMI=0.002 | k=2 -deg: Q=-0.206 NMI=0.006 | k=6 raw: Q=-0.153 NMI=0.031 | k=6 -deg: Q=-0.066 NMI=0.012
+dgi k=2 raw: Q=-0.025 NMI=0.001 | k=2 -deg: Q=-0.173 NMI=0.000 | k=6 raw: Q=-0.148 NMI=0.028 | k=6 -deg: Q=-0.133 NMI=0.013
+mvgrl k=2 raw: Q=-0.041 NMI=0.003 | k=2 -deg: Q=-0.201 NMI=0.005 | k=6 raw: Q=-0.150 NMI=0.012 | k=6 -deg: Q=-0.136 NMI=0.018
