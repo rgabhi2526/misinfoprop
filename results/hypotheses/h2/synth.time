@@ -1,0 +1,1 @@
+/opt/anaconda3/bin/python h2_filter.py --seeds 8 --sims 60 --procs 6 >  2>&1  94.67s user 9.13s system 4% cpu 36:48.50 total

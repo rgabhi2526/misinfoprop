@@ -1,0 +1,4 @@
+largest connected component: 1632803/1632803 nodes kept
+pokec[all]: 1632803 nodes, 22301964 edges, mean degree 27.3
+  real          Q = 0.715 ± 0.000   communities 43   largest 16.8%   cross-community edges 21.8%
+  rewired null  Q = 0.124 ± 0.000   communities 437   largest 18.4%   cross-community edges 70.8%

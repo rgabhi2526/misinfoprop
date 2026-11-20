@@ -1,0 +1,15 @@
+[    8.9s] pokec: reading profiles (zilinsky kraj, kysucke nove mesto)
+[   50.8s] pokec: 6392 users; reading friendships (30.6M rows for full Pokec)
+[   59.8s] pokec: 66935 friendships kept; building interest texts
+[   59.9s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data/pokec_text_zilinsky_kraj_kysucke_nove_mesto.npy
+[   60.0s] make_data: 66935 raw edges, 6392 nodes -> symmetrize + LCC
+[   60.0s] make_data: largest connected component 5599/6392 nodes kept, 90086 directed edges
+[   60.8s] T view: Leiden x100 on social graph (45043 edges)
+T  Leiden (best of runs)               k= 17 (>=1%: 11) largest=0.25 Q=+0.505 eta2=0.06 stab=0.75
+[   89.1s] T view: regularized spectral embedding
+T  reg-spectral + k-means k=11         k= 11 (>=1%: 11) largest=0.27 Q=+0.341 eta2=0.05 stab=0.22
+[  109.7s] C view: text-only kNN graph + Leiden x100 (4252 nodes with text)
+C  text kNN Leiden (best of runs)      k=  9 (>=1%:  9) largest=0.24 Q=+0.024 eta2=0.14 stab=0.83
+C  text k-means k=11                   k= 11 (>=1%: 11) largest=0.24 Q=+0.021 eta2=0.14 stab=0.84
+
+T vs C: NMI=0.016 ARI=0.011  (low = the views genuinely differ)

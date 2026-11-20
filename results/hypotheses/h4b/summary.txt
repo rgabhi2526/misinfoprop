@@ -1,0 +1,174 @@
+PRIMARY follow-only T: k=4 sizes=[2620, 4576, 7083, 6518] n=20797
+spearman {'misfit~pagerank': -0.02306942174726074, 'misfit~btw': 0.005015861145918367, 'misfit~degree': -0.024018962967414754, 'misfit~participation': 0.2422885903131776, 'misfit~disagreement': 0.9243236800879269}
+
+== group spread (activity: {'mean_all_n_misfit_top': 172.56971153846155, 'mean_all_n_all': 267.1932490263019, 'mean_cross_share_all': 0.6186402676708609})
+misfit        cross_n         diff -1.5964 [-17.4993,+12.2845] ctrl 142.409 p1 0.5747 p2 0.8382
+misfit        cross_share     diff +0.2856 [+0.2730,+0.2989] ctrl 0.503 p1 0.0000 p2 0.0000
+misfit        in_cross_share  diff +0.3674 [+0.3536,+0.3819] ctrl 0.420 p1 0.0000 p2 0.0000
+misfit        cross_in        diff -33.2642 [-45.2566,-18.9805] ctrl 85.933 p1 1.0000 p2 0.0000
+disagreement  cross_n         diff -14.2243 [-20.4834,-8.0433] ctrl 93.486 p1 0.9996 p2 0.0018
+disagreement  cross_share     diff +0.3108 [+0.2972,+0.3253] ctrl 0.432 p1 0.0002 p2 0.0002
+disagreement  in_cross_share  diff +0.3626 [+0.3415,+0.3824] ctrl 0.380 p1 0.0002 p2 0.0002
+disagreement  cross_in        diff -27.5975 [-31.4414,-22.8351] ctrl 42.244 p1 1.0000 p2 0.0002
+pagerank      cross_n         diff -90.8684 [-98.8268,-83.5183] ctrl 102.868 p1 0.6719 p2 0.5107
+pagerank      cross_share     diff +0.1729 [+0.1594,+0.1874] ctrl 0.627 p1 0.3725 p2 0.7049
+pagerank      in_cross_share  diff +0.0000 [+0.0000,+0.0000] ctrl 0.000 p1 1.0000 p2 1.0000
+pagerank      cross_in        diff -29.6617 [-35.7088,-23.8890] ctrl 30.662 p1 0.3979 p2 0.7862
+btw           cross_n         diff +445.8920 [+404.1308,+493.8332] ctrl 60.844 p1 0.0002 p2 0.0414
+btw           cross_share     diff -0.1763 [-0.2540,-0.0868] ctrl 0.790 p1 0.9992 p2 0.0042
+btw           in_cross_share  diff +0.2267 [+0.2120,+0.2415] ctrl 0.358 p1 0.0500 p2 0.0854
+btw           cross_in        diff +392.7103 [+352.8781,+428.3568] ctrl 8.812 p1 0.0002 p2 0.0524
+participation cross_n         diff +204.1275 [+169.2052,+239.6171] ctrl 164.725 p1 0.0002 p2 0.0002
+participation cross_share     diff +0.2155 [+0.2044,+0.2279] ctrl 0.527 p1 0.0002 p2 0.0002
+participation in_cross_share  diff +0.2909 [+0.2778,+0.3029] ctrl 0.432 p1 0.0002 p2 0.0002
+participation cross_in        diff +145.9106 [+109.3085,+181.5477] ctrl 108.908 p1 0.0002 p2 0.0002
+  reg cross_n_poisson(misfit) [deg+pr+btw]: score -0.015[-0.047,+0.017]; logdeg +1.262[+1.134,+1.391]; logpr -1.425[-1.580,-1.269]; logbtw +0.769[+0.703,+0.836]
+  reg cross_n_poisson(misfit) [+participation]: score -0.091[-0.123,-0.060]; logdeg +0.835[+0.709,+0.961]; logpr -1.027[-1.192,-0.862]; logbtw +0.658[+0.583,+0.733]; part +0.410[+0.369,+0.450]
+  reg cross_share_ols(misfit) [deg+pr+btw]: score +0.138[+0.135,+0.142]; logdeg +0.050[+0.034,+0.066]; logpr +0.013[-0.010,+0.036]; logbtw -0.045[-0.055,-0.035]
+  reg cross_share_ols(misfit) [+participation]: score +0.128[+0.124,+0.131]; logdeg -0.014[-0.031,+0.003]; logpr +0.085[+0.061,+0.109]; logbtw -0.074[-0.084,-0.063]; part +0.047[+0.043,+0.052]
+  reg cross_share_ols(disagreement) [deg+pr+btw]: score +0.134[+0.130,+0.138]; logdeg +0.105[+0.089,+0.122]; logpr -0.005[-0.029,+0.018]; logbtw -0.042[-0.053,-0.032]
+  reg cross_share_ols(disagreement) [+participation]: score +0.126[+0.121,+0.130]; logdeg +0.009[-0.009,+0.027]; logpr +0.100[+0.075,+0.124]; logbtw -0.084[-0.094,-0.073]; part +0.069[+0.065,+0.073]
+
+== group retweet (activity: {'mean_all_n_misfit_top': 101.72644230769231, 'mean_all_n_all': 160.86483627446268, 'mean_cross_share_all': 0.5784802261609777})
+misfit        cross_n         diff +11.7246 [+2.4110,+20.2023] ctrl 73.314 p1 0.0080 p2 0.0102
+misfit        cross_share     diff +0.3704 [+0.3567,+0.3838] ctrl 0.438 p1 0.0002 p2 0.0002
+misfit        in_cross_share  diff +0.4106 [+0.3952,+0.4255] ctrl 0.381 p1 0.0002 p2 0.0002
+misfit        cross_in        diff -14.9057 [-22.0053,-6.4663] ctrl 45.835 p1 1.0000 p2 0.0010
+disagreement  cross_n         diff -2.0916 [-6.7457,+2.2396] ctrl 49.636 p1 0.7716 p2 0.4541
+disagreement  cross_share     diff +0.3854 [+0.3700,+0.4020] ctrl 0.374 p1 0.0002 p2 0.0002
+disagreement  in_cross_share  diff +0.3938 [+0.3703,+0.4143] ctrl 0.363 p1 0.0002 p2 0.0002
+disagreement  cross_in        diff -15.7257 [-18.3280,-13.1823] ctrl 24.156 p1 1.0000 p2 0.0002
+pagerank      cross_n         diff -54.1464 [-59.3728,-49.1163] ctrl 57.146 p1 0.6855 p2 0.4869
+pagerank      cross_share     diff +0.0000 [+0.0000,+0.0000] ctrl 0.000 p1 1.0000 p2 1.0000
+pagerank      in_cross_share  diff +0.0000 [+0.0000,+0.0000] ctrl 0.000 p1 1.0000 p2 1.0000
+pagerank      cross_in        diff -16.8403 [-21.4355,-13.0773] ctrl 17.840 p1 0.3275 p2 0.8438
+btw           cross_n         diff +234.5643 [+212.3405,+257.1600] ctrl 23.259 p1 0.0002 p2 0.0426
+btw           cross_share     diff -0.1188 [-0.2374,+0.0104] ctrl 0.695 p1 0.8970 p2 0.2070
+btw           in_cross_share  diff +0.2105 [+0.1949,+0.2260] ctrl 0.327 p1 0.1082 p2 0.2242
+btw           cross_in        diff +198.0176 [+177.4622,+218.3924] ctrl 5.167 p1 0.0002 p2 0.0670
+participation cross_n         diff +124.9875 [+105.8234,+144.7634] ctrl 79.010 p1 0.0002 p2 0.0002
+participation cross_share     diff +0.2747 [+0.2617,+0.2883] ctrl 0.459 p1 0.0002 p2 0.0002
+participation in_cross_share  diff +0.3377 [+0.3235,+0.3515] ctrl 0.371 p1 0.0002 p2 0.0002
+participation cross_in        diff +87.7103 [+71.2524,+107.3729] ctrl 51.614 p1 0.0002 p2 0.0002
+  reg cross_n_poisson(misfit) [deg+pr+btw]: score -0.003[-0.040,+0.034]; logdeg +1.275[+1.143,+1.407]; logpr -1.501[-1.656,-1.345]; logbtw +0.797[+0.731,+0.863]
+  reg cross_n_poisson(misfit) [+participation]: score -0.087[-0.123,-0.051]; logdeg +0.829[+0.701,+0.957]; logpr -1.085[-1.247,-0.923]; logbtw +0.678[+0.605,+0.752]; part +0.447[+0.402,+0.492]
+  reg cross_share_ols(misfit) [deg+pr+btw]: score +0.167[+0.163,+0.170]; logdeg +0.059[+0.041,+0.076]; logpr -0.017[-0.042,+0.008]; logbtw -0.025[-0.037,-0.014]
+  reg cross_share_ols(misfit) [+participation]: score +0.152[+0.148,+0.156]; logdeg -0.023[-0.041,-0.004]; logpr +0.074[+0.048,+0.100]; logbtw -0.060[-0.072,-0.048]; part +0.059[+0.054,+0.064]
+  reg cross_share_ols(disagreement) [deg+pr+btw]: score +0.166[+0.161,+0.171]; logdeg +0.127[+0.108,+0.145]; logpr -0.037[-0.063,-0.011]; logbtw -0.025[-0.037,-0.013]
+  reg cross_share_ols(disagreement) [+participation]: score +0.153[+0.149,+0.158]; logdeg +0.006[-0.013,+0.026]; logpr +0.093[+0.066,+0.120]; logbtw -0.074[-0.086,-0.062]; part +0.085[+0.080,+0.090]
+
+== group mention (activity: {'mean_all_n_misfit_top': 95.36538461538461, 'mean_all_n_all': 150.21099196999566, 'mean_cross_share_all': 0.6178121663389907})
+misfit        cross_n         diff -6.7652 [-15.2646,+2.0904] ctrl 83.586 p1 0.8950 p2 0.2188
+misfit        cross_share     diff +0.2999 [+0.2888,+0.3129] ctrl 0.501 p1 0.0002 p2 0.0002
+misfit        in_cross_share  diff +0.3600 [+0.3438,+0.3755] ctrl 0.409 p1 0.0002 p2 0.0002
+misfit        cross_in        diff -19.5940 [-27.0831,-10.6337] ctrl 48.849 p1 1.0000 p2 0.0006
+disagreement  cross_n         diff -11.2220 [-14.8465,-7.5031] ctrl 52.803 p1 1.0000 p2 0.0012
+disagreement  cross_share     diff +0.3277 [+0.3126,+0.3441] ctrl 0.425 p1 0.0002 p2 0.0002
+disagreement  in_cross_share  diff +0.3474 [+0.3192,+0.3721] ctrl 0.377 p1 0.0002 p2 0.0002
+disagreement  cross_in        diff -14.4162 [-17.0167,-11.6281] ctrl 21.721 p1 1.0000 p2 0.0002
+pagerank      cross_n         diff -48.2191 [-53.7569,-43.4615] ctrl 57.219 p1 0.5943 p2 0.5841
+pagerank      cross_share     diff +0.1220 [+0.1083,+0.1355] ctrl 0.628 p1 0.4457 p2 0.7962
+pagerank      in_cross_share  diff +0.0000 [+0.0000,+0.0000] ctrl 0.000 p1 1.0000 p2 1.0000
+pagerank      cross_in        diff -15.8076 [-20.2775,-12.1040] ctrl 15.808 p1 1.0000 p2 0.7810
+btw           cross_n         diff +282.5435 [+250.4369,+315.8668] ctrl 37.778 p1 0.0002 p2 0.0564
+btw           cross_share     diff -0.2226 [-0.2773,-0.1614] ctrl 0.839 p1 1.0000 p2 0.0002
+btw           in_cross_share  diff +0.1310 [+0.1144,+0.1461] ctrl 0.443 p1 0.2228 p2 0.4325
+btw           cross_in        diff +248.8434 [+225.2038,+274.3790] ctrl 4.107 p1 0.0002 p2 0.0746
+participation cross_n         diff +119.5279 [+95.3566,+143.8871] ctrl 103.103 p1 0.0002 p2 0.0002
+participation cross_share     diff +0.2128 [+0.1999,+0.2244] ctrl 0.526 p1 0.0002 p2 0.0002
+participation in_cross_share  diff +0.3065 [+0.2939,+0.3195] ctrl 0.407 p1 0.0002 p2 0.0002
+participation cross_in        diff +85.7082 [+60.9510,+111.9701] ctrl 69.090 p1 0.0002 p2 0.0002
+  reg cross_n_poisson(misfit) [deg+pr+btw]: score +0.006[-0.029,+0.040]; logdeg +1.324[+1.166,+1.483]; logpr -1.474[-1.663,-1.284]; logbtw +0.808[+0.728,+0.888]
+  reg cross_n_poisson(misfit) [+participation]: score -0.072[-0.106,-0.038]; logdeg +0.886[+0.734,+1.039]; logpr -1.071[-1.271,-0.871]; logbtw +0.700[+0.610,+0.791]; part +0.419[+0.370,+0.468]
+  reg cross_share_ols(misfit) [deg+pr+btw]: score +0.141[+0.138,+0.145]; logdeg +0.049[+0.033,+0.066]; logpr +0.010[-0.013,+0.033]; logbtw -0.041[-0.052,-0.031]
+  reg cross_share_ols(misfit) [+participation]: score +0.129[+0.126,+0.133]; logdeg -0.017[-0.034,-0.000]; logpr +0.085[+0.061,+0.109]; logbtw -0.070[-0.081,-0.060]; part +0.049[+0.044,+0.053]
+  reg cross_share_ols(disagreement) [deg+pr+btw]: score +0.140[+0.136,+0.144]; logdeg +0.107[+0.091,+0.124]; logpr -0.007[-0.031,+0.016]; logbtw -0.040[-0.051,-0.030]
+  reg cross_share_ols(disagreement) [+participation]: score +0.129[+0.125,+0.133]; logdeg +0.007[-0.010,+0.025]; logpr +0.100[+0.076,+0.125]; logbtw -0.081[-0.092,-0.070]; part +0.071[+0.066,+0.075]
+
+== group reply (activity: {'mean_all_n_misfit_top': 32.146153846153844, 'mean_all_n_all': 49.75554166466317, 'mean_cross_share_all': 0.6275498879143566})
+misfit        cross_n         diff -4.9655 [-8.5424,-1.2523] ctrl 30.322 p1 0.9900 p2 0.0352
+misfit        cross_share     diff +0.2703 [+0.2553,+0.2852] ctrl 0.527 p1 0.0002 p2 0.0002
+misfit        in_cross_share  diff +0.2944 [+0.2775,+0.3137] ctrl 0.500 p1 0.0002 p2 0.0002
+misfit        cross_in        diff -8.6696 [-11.9534,-5.2683] ctrl 18.580 p1 1.0000 p2 0.0006
+disagreement  cross_n         diff -4.9834 [-6.7799,-3.2161] ctrl 19.022 p1 1.0000 p2 0.0008
+disagreement  cross_share     diff +0.3117 [+0.2933,+0.3315] ctrl 0.447 p1 0.0002 p2 0.0002
+disagreement  in_cross_share  diff +0.3324 [+0.3036,+0.3608] ctrl 0.452 p1 0.0002 p2 0.0002
+disagreement  cross_in        diff -6.1723 [-7.1213,-5.2537] ctrl 8.513 p1 1.0000 p2 0.0002
+pagerank      cross_n         diff -21.4179 [-24.1791,-19.1627] ctrl 23.418 p1 0.5951 p2 0.6185
+pagerank      cross_share     diff +0.0000 [+0.0000,+0.0000] ctrl 0.000 p1 1.0000 p2 1.0000
+pagerank      in_cross_share  diff +0.0000 [+0.0000,+0.0000] ctrl 0.000 p1 1.0000 p2 1.0000
+pagerank      cross_in        diff -6.3398 [-8.5090,-4.5054] ctrl 6.340 p1 1.0000 p2 0.7960
+btw           cross_n         diff +84.8681 [+66.3410,+98.8161] ctrl 13.413 p1 0.0002 p2 0.0906
+btw           cross_share     diff -0.0482 [-0.1831,+0.1196] ctrl 0.692 p1 0.7554 p2 0.4841
+btw           in_cross_share  diff +0.2582 [+0.2418,+0.2756] ctrl 0.376 p1 0.0264 p2 0.0384
+btw           cross_in        diff +83.5536 [+72.9931,+94.9449] ctrl 1.591 p1 0.0002 p2 0.0878
+participation cross_n         diff +35.6797 [+26.0573,+45.8671] ctrl 36.358 p1 0.0002 p2 0.0002
+participation cross_share     diff +0.1791 [+0.1664,+0.1911] ctrl 0.563 p1 0.0002 p2 0.0002
+participation in_cross_share  diff +0.2022 [+0.1879,+0.2197] ctrl 0.524 p1 0.0002 p2 0.0002
+participation cross_in        diff +29.3817 [+20.0567,+39.6650] ctrl 25.439 p1 0.0002 p2 0.0002
+  reg cross_n_poisson(misfit) [deg+pr+btw]: score -0.032[-0.076,+0.012]; logdeg +1.616[+1.403,+1.829]; logpr -1.679[-1.918,-1.440]; logbtw +0.727[+0.630,+0.823]
+  reg cross_n_poisson(misfit) [+participation]: score -0.084[-0.127,-0.042]; logdeg +1.289[+1.085,+1.493]; logpr -1.377[-1.623,-1.132]; logbtw +0.644[+0.538,+0.750]; part +0.283[+0.228,+0.338]
+  reg cross_share_ols(misfit) [deg+pr+btw]: score +0.122[+0.118,+0.126]; logdeg +0.042[+0.023,+0.062]; logpr +0.016[-0.011,+0.042]; logbtw -0.032[-0.044,-0.021]
+  reg cross_share_ols(misfit) [+participation]: score +0.112[+0.108,+0.117]; logdeg -0.015[-0.036,+0.006]; logpr +0.078[+0.050,+0.106]; logbtw -0.055[-0.068,-0.043]; part +0.040[+0.035,+0.045]
+  reg cross_share_ols(disagreement) [deg+pr+btw]: score +0.129[+0.124,+0.134]; logdeg +0.095[+0.075,+0.114]; logpr +0.000[-0.027,+0.027]; logbtw -0.032[-0.044,-0.020]
+  reg cross_share_ols(disagreement) [+participation]: score +0.121[+0.115,+0.126]; logdeg +0.009[-0.012,+0.030]; logpr +0.091[+0.063,+0.119]; logbtw -0.065[-0.077,-0.053]; part +0.059[+0.054,+0.064]
+
+== group like (activity: {'mean_all_n_misfit_top': 111.24951923076924, 'mean_all_n_all': 171.40087512622011, 'mean_cross_share_all': 0.5901145328446297})
+misfit        cross_n         diff +10.5402 [+1.5123,+19.0912] ctrl 79.764 p1 0.0164 p2 0.0240
+misfit        cross_share     diff +0.3188 [+0.3040,+0.3333] ctrl 0.468 p1 0.0002 p2 0.0002
+misfit        in_cross_share  diff +0.4055 [+0.3924,+0.4185] ctrl 0.394 p1 0.0002 p2 0.0002
+misfit        cross_in        diff -17.6502 [-25.6711,-9.3528] ctrl 50.006 p1 1.0000 p2 0.0002
+disagreement  cross_n         diff -3.8465 [-7.9435,+0.4534] ctrl 54.162 p1 0.9144 p2 0.1844
+disagreement  cross_share     diff +0.3373 [+0.3216,+0.3534] ctrl 0.402 p1 0.0002 p2 0.0002
+disagreement  in_cross_share  diff +0.3967 [+0.3770,+0.4165] ctrl 0.362 p1 0.0002 p2 0.0002
+disagreement  cross_in        diff -18.4973 [-20.9535,-15.9645] ctrl 27.547 p1 1.0000 p2 0.0002
+pagerank      cross_n         diff -62.1202 [-67.6898,-57.4303] ctrl 66.120 p1 0.7257 p2 0.4481
+pagerank      cross_share     diff +0.1970 [+0.1824,+0.2135] ctrl 0.603 p1 0.3765 p2 0.6987
+pagerank      in_cross_share  diff +0.1514 [+0.1311,+0.1708] ctrl 0.515 p1 0.3693 p2 0.7077
+pagerank      cross_in        diff -18.5811 [-23.6544,-14.3075] ctrl 20.581 p1 0.3187 p2 0.8134
+btw           cross_n         diff +228.9870 [+192.9509,+258.0017] ctrl 33.821 p1 0.0002 p2 0.0474
+btw           cross_share     diff -0.1096 [-0.2100,+0.0107] ctrl 0.693 p1 0.9148 p2 0.1734
+btw           in_cross_share  diff +0.1950 [+0.1764,+0.2104] ctrl 0.361 p1 0.1128 p2 0.2416
+btw           cross_in        diff +205.3705 [+184.7123,+226.2763] ctrl 6.345 p1 0.0002 p2 0.0622
+participation cross_n         diff +114.4664 [+93.7150,+135.0403] ctrl 90.799 p1 0.0002 p2 0.0002
+participation cross_share     diff +0.2461 [+0.2336,+0.2598] ctrl 0.486 p1 0.0002 p2 0.0002
+participation in_cross_share  diff +0.3094 [+0.2944,+0.3227] ctrl 0.403 p1 0.0002 p2 0.0002
+participation cross_in        diff +78.0622 [+59.3994,+98.3664] ctrl 61.577 p1 0.0002 p2 0.0002
+  reg cross_n_poisson(misfit) [deg+pr+btw]: score +0.004[-0.031,+0.038]; logdeg +1.467[+1.335,+1.600]; logpr -1.649[-1.803,-1.495]; logbtw +0.781[+0.717,+0.845]
+  reg cross_n_poisson(misfit) [+participation]: score -0.063[-0.096,-0.030]; logdeg +1.096[+0.967,+1.226]; logpr -1.305[-1.465,-1.144]; logbtw +0.683[+0.613,+0.754]; part +0.355[+0.315,+0.396]
+  reg cross_share_ols(misfit) [deg+pr+btw]: score +0.146[+0.142,+0.150]; logdeg +0.066[+0.048,+0.084]; logpr -0.005[-0.031,+0.020]; logbtw -0.043[-0.055,-0.032]
+  reg cross_share_ols(misfit) [+participation]: score +0.133[+0.129,+0.137]; logdeg -0.007[-0.026,+0.012]; logpr +0.076[+0.050,+0.103]; logbtw -0.075[-0.087,-0.063]; part +0.054[+0.049,+0.059]
+  reg cross_share_ols(disagreement) [deg+pr+btw]: score +0.145[+0.141,+0.150]; logdeg +0.126[+0.108,+0.145]; logpr -0.026[-0.052,+0.000]; logbtw -0.040[-0.051,-0.028]
+  reg cross_share_ols(disagreement) [+participation]: score +0.135[+0.131,+0.140]; logdeg +0.020[+0.000,+0.039]; logpr +0.090[+0.063,+0.116]; logbtw -0.084[-0.096,-0.072]; part +0.076[+0.071,+0.081]
+
+CIRCULAR pooled: {"spread": {"cross_n": [32.8018, [23.5839, 44.2924], 0.0001999600079984003], "cross_share": [0.1779, [0.1653, 0.1885], 0.0001999600079984003]}, "retweet": {"cross_n": [17.4364, [11.6118, 25.3819], 0.0001999600079984003], "cross_share": [0.2468, [0.2321, 0.2607], 0.0001999600079984003]}}
+
+GRID 945 tests; nominal p2<0.05: 582, BH<0.05: 551, Holm<0.05: 0
+misfit          cross_n      (res>=1, n=30): CI>0 5, CI<0 19, median diff -25.6472, BH<.05 23
+misfit          cross_share  (res>=1, n=30): CI>0 30, CI<0 0, median diff +0.2494, BH<.05 30
+disagreement    cross_n      (res>=1, n=30): CI>0 0, CI<0 25, median diff -16.8305, BH<.05 24
+disagreement    cross_share  (res>=1, n=30): CI>0 30, CI<0 0, median diff +0.3056, BH<.05 30
+pagerank        cross_n      (res>=1, n=30): CI>0 0, CI<0 15, median diff -9.0509, BH<.05 0
+pagerank        cross_share  (res>=1, n=30): CI>0 9, CI<0 0, median diff +0.0000, BH<.05 0
+btw             cross_n      (res>=1, n=30): CI>0 30, CI<0 0, median diff +292.9878, BH<.05 9
+btw             cross_share  (res>=1, n=30): CI>0 0, CI<0 20, median diff -0.1188, BH<.05 14
+participation   cross_n      (res>=1, n=30): CI>0 15, CI<0 15, median diff -27.3661, BH<.05 30
+participation   cross_share  (res>=1, n=30): CI>0 30, CI<0 0, median diff +0.1687, BH<.05 30
+ambiguity_T     cross_n      (res>=1, n=30): CI>0 30, CI<0 0, median diff +219.4689, BH<.05 0
+ambiguity_T     cross_share  (res>=1, n=30): CI>0 30, CI<0 0, median diff +0.4888, BH<.05 30
+content_outlier cross_n      (res>=1, n=30): CI>0 0, CI<0 30, median diff -119.8460, BH<.05 30
+content_outlier cross_share  (res>=1, n=30): CI>0 30, CI<0 0, median diff +0.1034, BH<.05 30
+  top: r1.0 s0 spread misfit cross_share diff +0.2856 [0.27190793096155075, 0.2988259241684333] p2 0.0005 holm 0.472
+  top: r1.0 s0 spread disagreement cross_share diff +0.3108 [0.29571780015920196, 0.3238276786564714] p2 0.0005 holm 0.472
+  top: r1.0 s0 retweet misfit cross_share diff +0.3704 [0.3568985738383112, 0.38518682344609473] p2 0.0005 holm 0.472
+  top: r1.0 s0 retweet disagreement cross_share diff +0.3854 [0.3677538136732152, 0.40181379122980077] p2 0.0005 holm 0.472
+  top: r1.0 s0 mention misfit cross_share diff +0.2999 [0.2873045791419305, 0.31139431946493434] p2 0.0005 holm 0.472
+  top: r1.0 s0 mention disagreement cross_share diff +0.3277 [0.3122585426803784, 0.34098220522221284] p2 0.0005 holm 0.472
+  top: r1.0 s0 reply misfit cross_share diff +0.2703 [0.25703256677739156, 0.2823276506517355] p2 0.0005 holm 0.472
+  top: r1.0 s0 reply disagreement cross_share diff +0.3117 [0.2954561168505695, 0.336946269742309] p2 0.0005 holm 0.472
+  top: r1.0 s0 like misfit cross_share diff +0.3188 [0.3088490036846217, 0.3296314426938263] p2 0.0005 holm 0.472
+  top: r1.0 s0 like disagreement cross_share diff +0.3373 [0.32488784966321993, 0.35343601217960413] p2 0.0005 holm 0.472
+  top: r2.0 s0 spread misfit cross_n diff -132.2865 [-142.47178343729738, -119.51885480496979] p2 0.0005 holm 0.472
+  top: r2.0 s0 spread misfit cross_share diff +0.1887 [0.18027870351548522, 0.19934130014670062] p2 0.0005 holm 0.472
+
+GATING (cross-T agree_C log-OR; same-T for comparison; rec = receptivity p_C coef)

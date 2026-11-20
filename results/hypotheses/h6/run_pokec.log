@@ -1,0 +1,34 @@
+[   19.5s] pokec: n=5599 comms=11 edges=45043
+[   46.1s] pokec (0, 'kumari', 5): success=0.685 misfit_auc=0.557
+[   46.2s] pokec (0, 'safeness', 2): success=0.300 misfit_auc=0.511
+[   46.5s] pokec (0, 'kumari', 2): success=0.405 misfit_auc=0.532
+[   47.7s] pokec (0, 'safeness', 5): success=0.500 misfit_auc=0.571
+[   64.5s] pokec (0, 'random', 5): success=0.330 misfit_auc=0.524
+[   65.3s] pokec (0, 'noise', 2): success=0.120 misfit_auc=0.477
+[   65.7s] pokec (0, 'random', 2): success=0.145 misfit_auc=0.484
+[   66.6s] pokec (0, 'noise', 5): success=0.290 misfit_auc=0.462
+[   80.3s] pokec (1, 'kumari', 2): success=0.355 misfit_auc=0.483
+[   82.4s] pokec (1, 'safeness', 5): success=0.490 misfit_auc=0.575
+[   83.1s] pokec (1, 'kumari', 5): success=0.675 misfit_auc=0.554
+[   83.4s] pokec (1, 'safeness', 2): success=0.285 misfit_auc=0.515
+[  100.1s] pokec (1, 'random', 2): success=0.135 misfit_auc=0.444
+[  102.0s] pokec (1, 'noise', 2): success=0.185 misfit_auc=0.480
+[  103.0s] pokec (1, 'noise', 5): success=0.270 misfit_auc=0.434
+[  104.3s] pokec (1, 'random', 5): success=0.275 misfit_auc=0.490
+[  115.5s] pokec (2, 'kumari', 2): success=0.360 misfit_auc=0.484
+[  119.3s] pokec (2, 'kumari', 5): success=0.650 misfit_auc=0.552
+[  120.1s] pokec (2, 'safeness', 2): success=0.245 misfit_auc=0.506
+[  122.3s] pokec (2, 'safeness', 5): success=0.475 misfit_auc=0.551
+[  130.7s] pokec (2, 'random', 2): success=0.195 misfit_auc=0.480
+[  134.5s] pokec (2, 'random', 5): success=0.230 misfit_auc=0.475
+[  135.1s] pokec (2, 'noise', 2): success=0.125 misfit_auc=0.440
+[  135.3s] pokec (2, 'noise', 5): success=0.300 misfit_auc=0.450
+[  135.4s] pokec kumari|k2: succ=0.373 misfit=0.500 participation=0.598 consensus_entropy=0.478 persistence_low=0.662 degree=0.561
+[  135.4s] pokec kumari|k5: succ=0.670 misfit=0.554 participation=0.563 consensus_entropy=0.434 persistence_low=0.588 degree=0.562
+[  135.4s] pokec safeness|k2: succ=0.277 misfit=0.510 participation=0.702 consensus_entropy=0.529 persistence_low=0.650 degree=0.562
+[  135.4s] pokec safeness|k5: succ=0.488 misfit=0.565 participation=0.814 consensus_entropy=0.571 persistence_low=0.731 degree=0.561
+[  135.4s] pokec random|k2: succ=0.158 misfit=0.469 participation=0.641 consensus_entropy=0.499 persistence_low=0.614 degree=0.561
+[  135.4s] pokec random|k5: succ=0.278 misfit=0.497 participation=0.744 consensus_entropy=0.529 persistence_low=0.706 degree=0.562
+[  135.4s] pokec noise|k2: succ=0.143 misfit=0.466 participation=0.498 consensus_entropy=0.487 persistence_low=0.517 degree=0.508
+[  135.4s] pokec noise|k5: succ=0.287 misfit=0.449 participation=0.537 consensus_entropy=0.473 persistence_low=0.573 degree=0.431
+/opt/anaconda3/bin/python h6_deception.py pokec  391.04s user 14.95s system 289% cpu 2:20.47 total

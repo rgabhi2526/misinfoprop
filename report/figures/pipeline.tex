@@ -1,0 +1,34 @@
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners, align=center, minimum height=1.0cm,
+              text width=3.0cm, font=\small},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  node distance=0.7cm and 0.9cm]
+  \node[box] (graph) {Social graph $A$\\(symmetrised, LCC)};
+  \node[box, below=of graph] (text) {User text $x_i$\\(+ \texttt{has\_metadata})};
+
+  \node[box, right=of graph] (leiden) {Topology view\\Leiden $\times R$ $\to t$};
+  \node[box, right=of text] (clf) {Content view\\cross-fitted text\\classifier $\to p_C$};
+
+  \node[box, right=of leiden] (spread) {Label spreading\\$\to p_T$};
+  \node[box, below=of spread] (scores) {Scores: misfit,\\disagreement, baselines};
+
+  \node[box, below=1.0cm of clf] (detect) {Detection check\\synthetic + TIMME};
+  \node[box, right=of detect] (block) {Spread simulation\\node / link blocking,\\regime map};
+
+  \draw[arr] (graph) -- (leiden);
+  \draw[arr] (text) -- (clf);
+  \draw[arr] (leiden) -- (spread);
+  \draw[arr] (leiden) -- node[left, font=\scriptsize] {labels $t$} (clf);
+  \draw[arr] (spread) -- (scores);
+  \draw[arr] (clf) -- (scores);
+  \draw[arr] (scores) -- (block);
+  \draw[arr] (scores.south west) -- (detect.north east);
+\end{tikzpicture}
+\caption{Pipeline. The topology view uses edges only. The content view receives no
+edges or graph-derived features as input; the topology labels $t$ are used only as
+its training targets, with cross-fitting so that no node's own label informs its
+prediction.}
+\label{fig:pipeline}
+\end{figure}

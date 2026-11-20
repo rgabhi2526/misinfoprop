@@ -49,6 +49,18 @@ d = torch.cat([torch.randint(0, n, (2, E), device=dev), torch.arange(n, device=d
 check("directed weighted (diffusion-like)", x, d, torch.rand(d.size(1), device=dev) * 2 + 0.01)
 print(f"gclib self-check ok on {dev}")
 
+# feature-mask path == masking x itself (outputs + grads)
+enc = gclib.GCNEncoder(16, 64, 32, 2).to(dev)
+ref = gclib.GCNEncoder(16, 64, 32, 2).to(dev); ref.load_state_dict(enc.state_dict())
+a = gclib._adj(torch.cat([e, e.flip(0)], 1), n)
+mask = torch.empty(16, device=dev).bernoulli_(0.5)
+ym, yr = enc(x, a, mask), ref(x * mask, a)
+gm = torch.randn_like(ym); (ym * gm).sum().backward(); (yr * gm).sum().backward()
+assert torch.allclose(ym, yr, atol=tol), "feat mask: outputs differ"
+for pm, pr in zip(enc.parameters(), ref.parameters()):
+    assert torch.allclose(pm.grad, pr.grad, atol=tol), "feat mask: grads differ"
+print("feature mask ok")
+
 # checkpoint/resume: a run stopped at epoch 4 and rerun with epochs=6 must continue
 # from epoch 5 (not restart) and leave a checkpoint at epoch 6
 import tempfile

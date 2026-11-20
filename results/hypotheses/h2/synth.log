@@ -1,0 +1,144 @@
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    1.7s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.125)
+[    1.7s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.125)
+[    1.7s] ambiguity: text predicts graph community with acc 0.637 (majority-class baseline 0.125)
+[    1.7s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.125)
+[    1.8s] ambiguity: text predicts graph community with acc 0.649 (majority-class baseline 0.125)
+[    1.8s] ambiguity: text predicts graph community with acc 0.632 (majority-class baseline 0.125)
+mu=0.1 place=random seed=3 done 156s
+[  156.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  157.2s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.125)
+mu=0.1 place=random seed=0 done 159s
+[  159.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  159.7s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.125)
+mu=0.1 place=random seed=2 done 163s
+mu=0.1 place=random seed=5 done 163s
+[  163.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  163.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  163.7s] ambiguity: text predicts graph community with acc 0.641 (majority-class baseline 0.125)
+[  164.1s] ambiguity: text predicts graph community with acc 0.647 (majority-class baseline 0.125)
+mu=0.1 place=random seed=4 done 166s
+[  166.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  167.2s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.125)
+mu=0.1 place=random seed=1 done 167s
+[  167.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  168.4s] ambiguity: text predicts graph community with acc 0.641 (majority-class baseline 0.125)
+mu=0.1 place=random seed=7 done 155s
+[  314.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+mu=0.1 place=random seed=6 done 158s
+mu=0.1 place=hub seed=1 done 152s
+[  314.8s] ambiguity: text predicts graph community with acc 0.646 (majority-class baseline 0.125)
+[  315.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  315.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  315.7s] ambiguity: text predicts graph community with acc 0.632 (majority-class baseline 0.125)
+[  315.8s] ambiguity: text predicts graph community with acc 0.647 (majority-class baseline 0.125)
+mu=0.1 place=hub seed=2 done 153s
+[  319.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  320.1s] ambiguity: text predicts graph community with acc 0.641 (majority-class baseline 0.125)
+mu=0.1 place=hub seed=0 done 158s
+[  321.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+mu=0.1 place=hub seed=3 done 154s
+[  322.2s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.126)
+[  322.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  323.1s] ambiguity: text predicts graph community with acc 0.643 (majority-class baseline 0.126)
+mu=0.1 place=hub seed=4 done 161s
+[  475.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  476.7s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.127)
+mu=0.1 place=hub seed=5 done 168s
+[  483.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  483.7s] ambiguity: text predicts graph community with acc 0.638 (majority-class baseline 0.126)
+mu=0.1 place=hub seed=7 done 168s
+mu=0.1 place=hub seed=6 done 173s
+[  488.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  488.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  489.1s] ambiguity: text predicts graph community with acc 0.652 (majority-class baseline 0.126)
+mu=0.3 place=random seed=1 done 167s
+[  489.4s] ambiguity: text predicts graph community with acc 0.630 (majority-class baseline 0.126)
+mu=0.3 place=random seed=0 done 169s
+[  490.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  490.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  490.9s] ambiguity: text predicts graph community with acc 0.642 (majority-class baseline 0.127)
+[  491.5s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+mu=0.3 place=random seed=2 done 155s
+[  630.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  631.1s] ambiguity: text predicts graph community with acc 0.632 (majority-class baseline 0.126)
+mu=0.3 place=random seed=3 done 149s
+[  632.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  632.6s] ambiguity: text predicts graph community with acc 0.645 (majority-class baseline 0.126)
+mu=0.3 place=random seed=7 done 147s
+mu=0.3 place=random seed=6 done 148s
+mu=0.3 place=random seed=5 done 150s
+[  637.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  637.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  638.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  638.4s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.127)
+[  638.4s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+[  638.8s] ambiguity: text predicts graph community with acc 0.633 (majority-class baseline 0.126)
+mu=0.3 place=random seed=4 done 154s
+[  642.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  642.5s] ambiguity: text predicts graph community with acc 0.625 (majority-class baseline 0.126)
+mu=0.3 place=hub seed=0 done 138s
+[  768.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  769.2s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.127)
+mu=0.3 place=hub seed=1 done 143s
+[  775.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  775.5s] ambiguity: text predicts graph community with acc 0.640 (majority-class baseline 0.126)
+mu=0.3 place=hub seed=4 done 138s
+mu=0.3 place=hub seed=3 done 139s
+[  777.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  778.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  778.0s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.129)
+[  778.4s] ambiguity: text predicts graph community with acc 0.611 (majority-class baseline 0.131)
+mu=0.3 place=hub seed=2 done 142s
+[  781.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  781.8s] ambiguity: text predicts graph community with acc 0.614 (majority-class baseline 0.134)
+mu=0.3 place=hub seed=5 done 142s
+[  785.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  786.0s] ambiguity: text predicts graph community with acc 0.603 (majority-class baseline 0.136)
+mu=0.3 place=hub seed=6 done 139s
+[  908.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  908.9s] ambiguity: text predicts graph community with acc 0.613 (majority-class baseline 0.134)
+mu=0.5 place=random seed=1 done 140s
+mu=0.3 place=hub seed=7 done 142s
+[  917.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  917.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+mu=0.5 place=random seed=0 done 142s
+[  918.3s] ambiguity: text predicts graph community with acc 0.597 (majority-class baseline 0.132)
+[  918.3s] ambiguity: text predicts graph community with acc 0.603 (majority-class baseline 0.132)
+[  919.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  919.9s] ambiguity: text predicts graph community with acc 0.592 (majority-class baseline 0.129)
+mu=0.5 place=random seed=3 done 140s
+[  925.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  925.7s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.129)
+mu=0.5 place=random seed=2 done 147s
+[  927.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  928.1s] ambiguity: text predicts graph community with acc 0.609 (majority-class baseline 0.131)
+mu=0.5 place=random seed=4 done 151s
+[ 1059.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1059.9s] ambiguity: text predicts graph community with acc 0.602 (majority-class baseline 0.134)
+mu=0.5 place=hub seed=0 done 139s
+[ 1064.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+mu=0.5 place=hub seed=1 done 138s
+mu=0.5 place=random seed=7 done 146s
+[ 1064.6s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.136)
+[ 1065.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1065.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1066.1s] ambiguity: text predicts graph community with acc 0.607 (majority-class baseline 0.134)
+[ 1066.1s] ambiguity: text predicts graph community with acc 0.599 (majority-class baseline 0.132)
+mu=0.5 place=random seed=5 done 150s
+[ 1067.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+mu=0.5 place=random seed=6 done 152s
+[ 1068.5s] ambiguity: text predicts graph community with acc 0.600 (majority-class baseline 0.132)
+[ 1069.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1070.0s] ambiguity: text predicts graph community with acc 0.607 (majority-class baseline 0.129)
+mu=0.5 place=hub seed=2 done 127s
+mu=0.5 place=hub seed=7 done 123s
+mu=0.5 place=hub seed=4 done 127s
+mu=0.5 place=hub seed=5 done 128s
+mu=0.5 place=hub seed=3 done 130s
+mu=0.5 place=hub seed=6 done 128s

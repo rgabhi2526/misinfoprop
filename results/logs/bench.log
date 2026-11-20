@@ -1,0 +1,127 @@
+[    0.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    0.5s] ambiguity: text predicts graph community with acc 0.938 (majority-class baseline 0.125)
+[    0.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    1.2s] ambiguity: text predicts graph community with acc 0.938 (majority-class baseline 0.125)
+[    1.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    1.7s] ambiguity: text predicts graph community with acc 0.938 (majority-class baseline 0.125)
+nu=0.0 mu=0.1 sigma=0.5 T_ari=1.00 | AUC overall/within-degree: misfit=1.00/1.00 disagreement=1.00/1.00 consensus_entropy=0.50/0.50 participation=0.49/0.50 content_outlier=1.00/1.00 degree=0.49/0.49
+[    2.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    2.2s] ambiguity: text predicts graph community with acc 0.663 (majority-class baseline 0.125)
+[    2.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    2.7s] ambiguity: text predicts graph community with acc 0.657 (majority-class baseline 0.125)
+[    3.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    3.2s] ambiguity: text predicts graph community with acc 0.662 (majority-class baseline 0.125)
+nu=0.0 mu=0.1 sigma=1.0 T_ari=1.00 | AUC overall/within-degree: misfit=0.94/0.94 disagreement=0.93/0.93 consensus_entropy=0.50/0.50 participation=0.49/0.50 content_outlier=0.92/0.92 degree=0.49/0.49
+[    3.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    3.7s] ambiguity: text predicts graph community with acc 0.350 (majority-class baseline 0.125)
+[    4.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    4.2s] ambiguity: text predicts graph community with acc 0.363 (majority-class baseline 0.125)
+[    4.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    4.6s] ambiguity: text predicts graph community with acc 0.348 (majority-class baseline 0.125)
+nu=0.0 mu=0.1 sigma=2.0 T_ari=1.00 | AUC overall/within-degree: misfit=0.77/0.77 disagreement=0.75/0.76 consensus_entropy=0.50/0.50 participation=0.49/0.50 content_outlier=0.75/0.75 degree=0.49/0.49
+[    5.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    5.3s] ambiguity: text predicts graph community with acc 0.934 (majority-class baseline 0.126)
+[    5.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    6.0s] ambiguity: text predicts graph community with acc 0.937 (majority-class baseline 0.126)
+[    6.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    6.7s] ambiguity: text predicts graph community with acc 0.932 (majority-class baseline 0.127)
+nu=0.0 mu=0.3 sigma=0.5 T_ari=0.99 | AUC overall/within-degree: misfit=1.00/0.99 disagreement=1.00/0.99 consensus_entropy=0.50/0.50 participation=0.50/0.50 content_outlier=0.99/0.99 degree=0.48/0.49
+[    7.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    7.3s] ambiguity: text predicts graph community with acc 0.636 (majority-class baseline 0.126)
+[    7.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    8.0s] ambiguity: text predicts graph community with acc 0.649 (majority-class baseline 0.126)
+[    8.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[    9.3s] ambiguity: text predicts graph community with acc 0.651 (majority-class baseline 0.127)
+nu=0.0 mu=0.3 sigma=1.0 T_ari=0.99 | AUC overall/within-degree: misfit=0.93/0.92 disagreement=0.92/0.92 consensus_entropy=0.50/0.50 participation=0.50/0.50 content_outlier=0.88/0.88 degree=0.48/0.49
+[    9.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   10.3s] ambiguity: text predicts graph community with acc 0.323 (majority-class baseline 0.126)
+[   10.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   11.6s] ambiguity: text predicts graph community with acc 0.344 (majority-class baseline 0.126)
+[   12.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   12.4s] ambiguity: text predicts graph community with acc 0.329 (majority-class baseline 0.127)
+nu=0.0 mu=0.3 sigma=2.0 T_ari=0.99 | AUC overall/within-degree: misfit=0.73/0.72 disagreement=0.71/0.71 consensus_entropy=0.50/0.50 participation=0.50/0.50 content_outlier=0.70/0.69 degree=0.48/0.49
+[   13.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   14.6s] ambiguity: text predicts graph community with acc 0.892 (majority-class baseline 0.129)
+[   15.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   15.9s] ambiguity: text predicts graph community with acc 0.888 (majority-class baseline 0.131)
+[   16.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   17.3s] ambiguity: text predicts graph community with acc 0.884 (majority-class baseline 0.134)
+nu=0.0 mu=0.5 sigma=0.5 T_ari=0.88 | AUC overall/within-degree: misfit=0.96/0.96 disagreement=0.97/0.97 consensus_entropy=0.50/0.51 participation=0.51/0.50 content_outlier=0.96/0.95 degree=0.51/0.52
+[   18.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   18.6s] ambiguity: text predicts graph community with acc 0.639 (majority-class baseline 0.129)
+[   19.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   19.7s] ambiguity: text predicts graph community with acc 0.620 (majority-class baseline 0.131)
+[   20.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   63.7s] ambiguity: text predicts graph community with acc 0.621 (majority-class baseline 0.134)
+nu=0.0 mu=0.5 sigma=1.0 T_ari=0.88 | AUC overall/within-degree: misfit=0.91/0.91 disagreement=0.91/0.91 consensus_entropy=0.50/0.51 participation=0.51/0.50 content_outlier=0.89/0.88 degree=0.51/0.52
+[   65.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[   92.4s] ambiguity: text predicts graph community with acc 0.333 (majority-class baseline 0.129)
+[   94.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  124.0s] ambiguity: text predicts graph community with acc 0.331 (majority-class baseline 0.131)
+[  125.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  155.9s] ambiguity: text predicts graph community with acc 0.327 (majority-class baseline 0.134)
+nu=0.0 mu=0.5 sigma=2.0 T_ari=0.88 | AUC overall/within-degree: misfit=0.74/0.74 disagreement=0.72/0.73 consensus_entropy=0.50/0.51 participation=0.51/0.50 content_outlier=0.73/0.72 degree=0.51/0.52
+[  156.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  253.3s] ambiguity: text predicts graph community with acc 0.933 (majority-class baseline 0.125)
+[  253.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  353.5s] ambiguity: text predicts graph community with acc 0.931 (majority-class baseline 0.125)
+[  354.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  441.9s] ambiguity: text predicts graph community with acc 0.933 (majority-class baseline 0.125)
+nu=1.5 mu=0.1 sigma=0.5 T_ari=1.00 | AUC overall/within-degree: misfit=1.00/1.00 disagreement=1.00/1.00 consensus_entropy=0.50/0.50 participation=0.49/0.50 content_outlier=0.85/0.87 degree=0.49/0.49
+[  442.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  490.1s] ambiguity: text predicts graph community with acc 0.658 (majority-class baseline 0.125)
+[  490.6s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  493.7s] ambiguity: text predicts graph community with acc 0.650 (majority-class baseline 0.125)
+[  494.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  497.1s] ambiguity: text predicts graph community with acc 0.655 (majority-class baseline 0.125)
+nu=1.5 mu=0.1 sigma=1.0 T_ari=1.00 | AUC overall/within-degree: misfit=0.94/0.94 disagreement=0.93/0.93 consensus_entropy=0.50/0.50 participation=0.49/0.50 content_outlier=0.62/0.64 degree=0.49/0.49
+[  497.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  499.8s] ambiguity: text predicts graph community with acc 0.335 (majority-class baseline 0.125)
+[  500.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  501.9s] ambiguity: text predicts graph community with acc 0.349 (majority-class baseline 0.125)
+[  502.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  504.4s] ambiguity: text predicts graph community with acc 0.337 (majority-class baseline 0.125)
+nu=1.5 mu=0.1 sigma=2.0 T_ari=1.00 | AUC overall/within-degree: misfit=0.76/0.76 disagreement=0.75/0.75 consensus_entropy=0.50/0.50 participation=0.49/0.50 content_outlier=0.53/0.54 degree=0.49/0.49
+[  504.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  508.9s] ambiguity: text predicts graph community with acc 0.929 (majority-class baseline 0.126)
+[  509.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  514.8s] ambiguity: text predicts graph community with acc 0.932 (majority-class baseline 0.126)
+[  515.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  529.7s] ambiguity: text predicts graph community with acc 0.928 (majority-class baseline 0.127)
+nu=1.5 mu=0.3 sigma=0.5 T_ari=0.99 | AUC overall/within-degree: misfit=1.00/0.99 disagreement=1.00/0.99 consensus_entropy=0.50/0.50 participation=0.50/0.50 content_outlier=0.82/0.84 degree=0.48/0.49
+[  530.2s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  534.8s] ambiguity: text predicts graph community with acc 0.634 (majority-class baseline 0.126)
+[  535.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  545.6s] ambiguity: text predicts graph community with acc 0.646 (majority-class baseline 0.126)
+[  547.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  558.1s] ambiguity: text predicts graph community with acc 0.647 (majority-class baseline 0.127)
+nu=1.5 mu=0.3 sigma=1.0 T_ari=0.99 | AUC overall/within-degree: misfit=0.92/0.92 disagreement=0.91/0.91 consensus_entropy=0.50/0.50 participation=0.50/0.50 content_outlier=0.61/0.63 degree=0.48/0.49
+[  558.7s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  564.4s] ambiguity: text predicts graph community with acc 0.323 (majority-class baseline 0.126)
+[  564.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  640.3s] ambiguity: text predicts graph community with acc 0.334 (majority-class baseline 0.126)
+[  641.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  717.5s] ambiguity: text predicts graph community with acc 0.329 (majority-class baseline 0.127)
+nu=1.5 mu=0.3 sigma=2.0 T_ari=0.99 | AUC overall/within-degree: misfit=0.73/0.72 disagreement=0.71/0.71 consensus_entropy=0.50/0.50 participation=0.50/0.50 content_outlier=0.53/0.53 degree=0.48/0.49
+[  720.4s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  820.9s] ambiguity: text predicts graph community with acc 0.888 (majority-class baseline 0.129)
+[  823.3s] ambiguity: 8 communities, 0 nodes in tiny ones
+[  923.8s] ambiguity: text predicts graph community with acc 0.881 (majority-class baseline 0.131)
+[  925.9s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1050.6s] ambiguity: text predicts graph community with acc 0.881 (majority-class baseline 0.134)
+nu=1.5 mu=0.5 sigma=0.5 T_ari=0.88 | AUC overall/within-degree: misfit=0.96/0.96 disagreement=0.97/0.97 consensus_entropy=0.50/0.51 participation=0.51/0.50 content_outlier=0.80/0.82 degree=0.51/0.52
+[ 1052.5s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1184.3s] ambiguity: text predicts graph community with acc 0.630 (majority-class baseline 0.129)
+[ 1186.0s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1279.7s] ambiguity: text predicts graph community with acc 0.620 (majority-class baseline 0.131)
+[ 1281.8s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1392.2s] ambiguity: text predicts graph community with acc 0.611 (majority-class baseline 0.134)
+nu=1.5 mu=0.5 sigma=1.0 T_ari=0.88 | AUC overall/within-degree: misfit=0.90/0.90 disagreement=0.90/0.90 consensus_entropy=0.50/0.51 participation=0.51/0.50 content_outlier=0.61/0.62 degree=0.51/0.52
+[ 1394.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1505.4s] ambiguity: text predicts graph community with acc 0.322 (majority-class baseline 0.129)
+[ 1507.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1626.3s] ambiguity: text predicts graph community with acc 0.325 (majority-class baseline 0.131)
+[ 1628.1s] ambiguity: 8 communities, 0 nodes in tiny ones
+[ 1727.6s] ambiguity: text predicts graph community with acc 0.321 (majority-class baseline 0.134)
+nu=1.5 mu=0.5 sigma=2.0 T_ari=0.88 | AUC overall/within-degree: misfit=0.74/0.74 disagreement=0.72/0.72 consensus_entropy=0.50/0.51 participation=0.51/0.50 content_outlier=0.53/0.54 degree=0.51/0.52
+[ 1727.9s] benchmark: saved /Users/abhyudayavasisht/Desktop/college/Major project /training/out/benchmark.json

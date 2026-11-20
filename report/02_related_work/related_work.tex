@@ -1,0 +1,106 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Community structure in social networks}
+Community detection partitions a graph into groups that are densely connected inside
+and sparsely connected to each other. The usual quality measure is
+modularity~\citep{newman2006modularity}, which compares the share of edges inside
+communities with the share expected in a random graph that has the same degrees. The
+Louvain method~\citep{blondel2008louvain} optimises modularity greedily. Leiden
+\citep{traag2019leiden} refines it and guarantees that every community is connected;
+we use Leiden. Detection algorithms always return a partition, even on random graphs,
+so it is standard to compare against a degree-preserving randomised
+graph~\citep{maslov2002specificity}. Separate runs of the same stochastic algorithm
+also disagree, and \citet{riolo2020consistency} use that run-to-run variation to
+measure how consistently each node is assigned. We use it as a structure-only
+baseline.
+
+\subsection{Node metadata versus network structure}
+Users carry metadata (biographies, posts, declared interests) alongside their edges.
+\citet{newman2016annotated} show that metadata and structural communities can agree
+or disagree, and that how well the metadata predicts the community is itself
+informative. This is the closest precedent for our content view, which asks what
+community a node's text predicts. Community outlier detection~\citep{gao2010outliers}
+flags nodes whose attributes are far from the rest of their community. We use a simple
+version of that idea (distance from the community's text centroid) as a baseline.
+
+\subsection{Bridges and ambiguous membership}
+Several lines of work suggest that nodes between communities matter more for spreading
+than their degree implies. The participation coefficient of
+\citet{guimera2005functional} measures how evenly a node's links are spread across
+communities. \citet{nepusz2008fuzzy} define \emph{bridgeness} from fuzzy (soft)
+community memberships, so a node with ambiguous membership is a bridge. In epidemic
+models on community-structured networks, \citet{salathe2010dynamics} found that
+immunising community bridges can beat immunising high-degree nodes when community
+structure is strong. On Telegram, \citet{shah2024telegram} identified channels that
+connect misinformation communities and proposed them as intervention targets. All of
+these define bridges or ambiguity from structure alone.
+
+\subsection{Spread models and influence blocking}
+The Independent Cascade (IC) model~\citep{kempe2003maximizing} spreads a message along
+each edge independently with some probability. Its \emph{weighted cascade} variant
+sets that probability to $1/\deg(v)$ for the receiving node $v$. Influence Blocking
+Maximization (IBM) chooses nodes or links to block so that a harmful cascade
+reaches as few users as possible~\citep{budak2011limiting}. The problem is NP-hard, and
+unlike influence maximisation its objective is not supermodular, so greedy algorithms
+come with no general approximation guarantee~\citep{xie2025blocking}. Community-aware
+variants choose blockers using the community partition~\citep{ghoshal2021community}.
+Most IBM work assumes the source of the misinformation is known; \citet{chen2021uncertain}
+treat the source as uncertain, which is the setting we adopt. Strong structural
+baselines include PageRank, betweenness, adaptive degree and Collective
+Influence~\citep{morone2015influence}. Which of these wins depends on how easily the
+message is transmitted~\citep{hebert2013global}, so we sweep the transmission
+probability rather than fix one value.
+
+Spread on real platforms also depends on content. \citet{delvicario2016spreading}
+document selective exposure: users mostly share content that agrees with their
+group's views. This motivates our content-aware spread model, in which the chance of
+passing a message on depends on how closely the receiver's content matches the
+community the message came from.
+
+\subsection{Self-supervised graph embeddings}
+The original plan was to embed every node from text and topology together using
+self-supervised graph neural networks, then cluster the embedding. We trained three
+objective families on a shared encoder: BGRL (bootstrapping, no
+negatives)~\citep{thakoor2022bgrl}, Deep Graph Infomax (mutual
+information)~\citep{velickovic2019dgi} and MVGRL (adjacency view against diffusion
+view)~\citep{hassani2020mvgrl}. \Cref{sec:method-evolution} explains why this design
+was replaced.
+
+\subsection{Active learning with clustering ambiguity}
+In graph active learning, AGE~\citep{cai2017age} picks nodes to label by combining
+prediction entropy, centrality and distance to cluster centres. So ``uncertainty plus
+centrality'' is already an established design, though its uncertainty is about a
+node's \emph{class label}. AAS~\citep{sani2026aas}, built for animal
+re-identification, takes a different route. It runs two complementary clusterings
+(density-based and nearest-neighbour) on the same embedding, builds an overlap graph
+between their clusters, and treats connected regions of partial overlap as
+\emph{ambiguous regions}. It then samples must-link and cannot-link pair queries from
+those regions and refines the clustering with the oracle's answers. AAS is the
+starting point of this project.
+
+\subsection{From related work to the current idea}
+\label{sec:related-gap}
+Three observations shaped the current design.
+\begin{enumerate}
+  \item \textbf{Both halves of the original idea already exist.} Community-aware
+        blocking~\citep{ghoshal2021community} and uncertainty combined with
+        centrality~\citep{cai2017age} are both published. A defensible contribution has
+        to be narrower.
+  \item \textbf{Existing ambiguity is structural.} Bridgeness, participation and
+        consensus ambiguity~\citep{nepusz2008fuzzy,guimera2005functional,riolo2020consistency}
+        are all computed from the graph. None of them can see a node whose edges place
+        it in one community and whose content places it in another.
+  \item \textbf{AAS-style disagreement needs separate views.} Two clusterings of
+        one embedding disagree partly because of the algorithms themselves. If one
+        view is derived from the other (for example, a content clustering built from a
+        graph embedding), their disagreement cannot be read as a property of the node.
+\end{enumerate}
+We therefore keep the AAS principle (look where complementary views disagree) and
+keep the inputs of the two views separate: topology from edges only, content from text
+only. The separation is in the inputs, not complete: the content classifier is trained
+to predict the topology communities, so its targets come from the graph. It never
+receives edges or graph-derived features, and cross-fitting ensures that no node's own
+label informs its prediction. The working claim is that \emph{metadata-aware membership ambiguity}
+identifies containment targets that purely structural bridge and centrality scores
+miss, and the experiments are designed to find out when, if ever, that claim holds.

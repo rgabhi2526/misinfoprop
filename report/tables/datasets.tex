@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\caption{Datasets after preprocessing (largest connected component). Edge counts are
+undirected unless marked $^{\dagger}$. Counts come from the project's loader logs.}
+\label{tab:datasets}
+\small
+\begin{tabularx}{\linewidth}{@{}l r r r >{\raggedright\arraybackslash}X@{}}
+\toprule
+Dataset & Nodes & Edges & Mean deg. & Node text \\
+\midrule
+TIMME \texttt{P\_all}          & 20,811    & 4,106,446  & 394.6 & bio + latest tweet (20,401 with text); GloVe tweet average \\
+Pokec slice (Kysuck\'e Nov\'e Mesto) & 5,599 & 45,043 & 16.1 & free-text interest fields (4,252 with text) \\
+Pokec full                    & 1,632,803 & 30,622,564$^{\dagger}$ & --- & free-text interest fields \\
+\bottomrule
+\end{tabularx}
+
+\smallskip
+\raggedright\footnotesize
+$^{\dagger}$Directed friendship rows as distributed (54.3\% reciprocated). The full
+Pokec graph is currently used only to characterise community structure. All Pokec
+experiments in \cref{sec:setup} use the district slice.
+\end{table}

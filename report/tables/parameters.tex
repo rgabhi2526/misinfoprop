@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\caption{Pipeline parameters. They were fixed before any blocking experiment was
+run.}
+\label{tab:params}
+\small
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+Component & Setting \\
+\midrule
+Text encoder & \texttt{paraphrase-\allowbreak multilingual-\allowbreak MiniLM-\allowbreak L12-\allowbreak v2}, 384-d, text capped at 1000 characters \\
+Topology view & Leiden, modularity objective, resolution 1.0, $R=100$ seeds (real data), 10 (synthetic) \\
+Small communities & $<1\%$ of nodes $\to$ outside the label space ($t_i=-1$) \\
+Content classifier & logistic regression, standardised inputs, $C=0.1$, 5 stratified folds \\
+Label spreading & $\alpha = 0.5$, 40 iterations \\
+Betweenness & sampled from 500 random source nodes \\
+Spread models & weighted cascade; uniform $p = c\,p_c$, $c \in \{0.5, 1, 2, 4\}$ \\
+Seeds per cascade & 10, drawn from nodes no strategy blocks \\
+Node budgets (real data) & $k \in \{20, 50, 100, 200\}$ \\
+Simulations & 100 (TIMME), 200 (Pokec slice) per spread model \\
+Link budgets & TIMME $\{2000, 10000, 40000\}$; synthetic $\{100, 400, 1600\}$; 60 simulations, $c=2$ \\
+\bottomrule
+\end{tabularx}
+\end{table}

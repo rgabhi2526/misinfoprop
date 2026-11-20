@@ -1,0 +1,13 @@
+party cores: 595 labeled nodes, 11 party misfits
+[   11.0s] ambiguity: 5 communities, 0 nodes in tiny ones
+[   74.9s] ambiguity: text predicts graph community with acc 0.275 (majority-class baseline 0.318)
+  misfit                       AUC 0.682   within-degree 0.744   one-sided p 0.019
+  disagreement                 AUC 0.666   within-degree 0.710   one-sided p 0.029
+  participation                AUC 0.622   within-degree 0.769   one-sided p 0.083
+  consensus_entropy            AUC 0.616   within-degree 0.696   one-sided p 0.015
+  disagreement_SHUFFLED_TEXT   AUC 0.559   within-degree 0.446   one-sided p 0.250
+  content_outlier              AUC 0.541   within-degree 0.689   one-sided p 0.322
+  misfit_SHUFFLED_TEXT         AUC 0.541   within-degree 0.539   one-sided p 0.323
+  ambiguity_T                  AUC 0.464   within-degree 0.568   one-sided p 0.660
+  degree                       AUC 0.361   within-degree 0.315   one-sided p 0.943
+  pagerank                     AUC 0.360   within-degree 0.325   one-sided p 0.945

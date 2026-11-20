@@ -1,0 +1,3 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+sample 300000 len>1000: 77216
+changed after cap: 1  max chars needed for 128 tokens: 986

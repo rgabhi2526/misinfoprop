@@ -1,0 +1,269 @@
+\section{Methodology}
+\label{sec:method}
+
+\Cref{fig:pipeline} shows the pipeline. It has two separate views of the same
+users (\cref{sec:method-views}), per-node membership vectors and disagreement scores
+(\cref{sec:method-scores}), a detection check (\cref{sec:method-detect}) and a spread
+simulation that tests interventions (\cref{sec:method-block}).
+
+\input{figures/pipeline}
+
+\subsection{Problem formulation}
+\label{sec:method-problem}
+Let $G=(V,E)$ be a social graph with $n=|V|$ users and adjacency matrix $A$. Every
+user $i$ has a text vector $x_i$ (\cref{sec:setup-features}), which is zero if the
+user has no text. We treat ties as undirected (requirement R5,
+\cref{sec:setup-requirements}). The aim is to:
+\begin{enumerate}
+  \item assign every user a structural community $t_i \in \{1,\dots,K\}$ from $A$ alone;
+  \item estimate two soft memberships over those $K$ communities, a structural one
+        $p_T(i)$ and a content one $p_C(i)$, where $p_C(i)$ depends only on text;
+  \item score how far apart they are; and
+  \item decide whether blocking high-scoring nodes or links reduces spread from an
+        \emph{unknown} source more than structural targeting does, for a fixed budget.
+\end{enumerate}
+
+\subsection{Design evolution}
+\label{sec:method-evolution}
+The first design followed AAS closely. Each node would be embedded from text and
+topology together with a self-supervised GNN (BGRL, DGI or MVGRL on a shared two-layer
+GCN encoder), and the embedding would be clustered by a density method (HDBSCAN) and a
+first-neighbour method (FINCH). Ambiguous regions would come from where those two
+clusterings partly overlap. Diagnostics during development showed that the clusters of
+these embeddings mainly sorted nodes by degree rather than by community
+(\cref{tab:gnn-diag}). On TIMME, for all three objectives, the two-way $k$-means split
+of the embedding and its first principal component were both strongly correlated with
+log-degree, while the six-way $k$-means partition had negative modularity on the
+social graph and almost no mutual information with party. Party information was not
+missing from the embeddings: a linear probe predicted party well above the majority
+baseline. It was present, but the cluster structure followed degree, not communities.
+These numbers are a development diagnostic of the discarded design, shown only because
+they motivated the redesign. There was also a design flaw: a content view derived from
+an embedding that has already seen the graph cannot disagree with the graph in a
+meaningful way. The GNN stage was therefore replaced by the two separate views below. The AAS principle of looking where
+complementary views disagree is kept.
+
+\input{tables/gnn_diagnostic}
+
+\subsection{Preprocessing}
+\label{sec:method-pre}
+For every dataset we remove self-loops, make every edge two-way and keep the
+\emph{largest connected component} (a node with no path to the rest of the network
+cannot pass a message on). Users without text are \emph{kept}, because removing them
+would also remove their edges, and some of those edges may be bridges. Such users get
+a zero text vector and a binary \texttt{has\_metadata} flag.
+
+\subsection{Two separate views}
+\label{sec:method-views}
+
+\paragraph{Topology view.}
+Leiden~\citep{traag2019leiden} with the modularity objective is run on $G$ with $R$
+different random seeds. The run with the highest modularity is the reference partition
+$t$. Communities containing fewer than 1\% of the nodes are set aside ($t_i=-1$): they
+are never used as training targets or as seeds for spreading. The remaining $K$
+communities form the label space. All $R$ runs are kept for the consensus baseline.
+
+\paragraph{Content view.}
+Content membership is estimated with \emph{cross-fitting}. The users with $t_i \ge 0$
+are divided into $F$ stratified folds. For each fold, a multinomial logistic
+regression (with standardised inputs and $L_2$ regularisation) is trained on the other
+folds to predict $t$ from the text vector $x$, and is then applied to the held-out
+fold. The result is
+\begin{equation}
+  p_C(i) = \Pr\bigl(t_i = \cdot \mid x_i\bigr) \in \Delta^{K-1},
+\end{equation}
+where every $p_C(i)$ comes from a model that never saw user $i$'s own label. Users with
+$t_i=-1$ are scored by every fold model and the predictions are averaged. The
+classifier receives no edges or graph-derived features as input; the topology labels
+$t$ are used only as training targets, with cross-fitting so that no node's own label
+informs its prediction. The two views are therefore separate in their inputs, but not
+fully independent: the content view learns which text goes with which graph
+community.
+
+\paragraph{Structural soft membership.}
+The hard partition $t$ is turned into soft memberships by label
+spreading~\citep{zhou2004learning}. With $Y$ the one-hot matrix of $t$ (zero rows for
+$t_i=-1$) and $S = D^{-1/2} A D^{-1/2}$,
+\begin{equation}
+  F^{(m+1)} = \alpha\, S F^{(m)} + (1-\alpha)\, Y, \qquad F^{(0)} = Y,
+\end{equation}
+iterated a fixed number of times. Each row is then normalised to give $p_T(i)$. Users
+deep inside a community end up with an almost one-hot $p_T(i)$; users on a boundary
+end up with mixed rows.
+
+\subsection{Per-node scores}
+\label{sec:method-scores}
+Three scores use the two views:
+\begin{align}
+  \text{misfit}_i &= 1 - p_C(i)_{t_i}, \\
+  \text{disagreement}_i &= \mathrm{JS}_2\bigl(p_T(i)\,\Vert\,p_C(i)\bigr), \\
+  \text{ambiguity}^T_i &= H\bigl(p_T(i)\bigr) / \log K.
+\end{align}
+Misfit measures how little the text supports the node's own community.
+Disagreement is the base-2 Jensen--Shannon divergence~\citep{lin1991divergence}
+between the two memberships, which lies in $[0,1]$. Structural ambiguity is the
+normalised entropy of the structural membership and uses no text.
+For $t_i=-1$, misfit is defined as $1-\max_k p_C(i)_k$.
+
+\paragraph{Baselines.}
+These are the scores the proposed ones have to beat. Each captures one alternative
+explanation of what disagreement might be measuring:
+\begin{itemize}
+  \item \textbf{Consensus entropy} (structure only): every Leiden run is aligned to $t$
+        with the Hungarian algorithm, and the score is the normalised entropy of each
+        node's label across runs~\citep{riolo2020consistency}.
+  \item \textbf{Participation coefficient}~\citep{guimera2005functional}:
+        $P_i = 1-\sum_c (h_{ic}/d_i)^2$, where $h_{ic}$ is the number of $i$'s
+        neighbours in community $c$ and $d_i$ is $i$'s degree.
+  \item \textbf{Content outlier}, following \citet{gao2010outliers}:
+        $1-\cos(x_i, \bar{x}_{t_i})$, the cosine distance from the centroid of the
+        node's community's text.
+  \item \textbf{Degree} and \textbf{PageRank}, to check that a score is not simply
+        degree in disguise.
+\end{itemize}
+
+\subsection{Checking that the scores detect real conflicts}
+\label{sec:method-detect}
+
+\paragraph{Synthetic benchmark with planted conflicts.}
+Synthetic networks have a known answer. The generator is a degree-corrected block
+model in the style of LFR~\citep{lancichinetti2008benchmark,karrer2011stochastic}.
+Degrees follow a power law. A share $\mu$ of each node's edge stubs is matched across
+communities (the mixing parameter), and the rest is matched inside the node's own
+community. Each node's text is its community's centroid plus Gaussian noise of scale
+$\sigma$, normalised to unit length. A small share of nodes is \emph{planted}: they
+get the text centroid of a different community, and these are the true conflicts.
+Real text also varies for reasons that have nothing to do with community, so an
+optional \emph{nuisance} block adds random topics and a writing-style direction
+proportional to log-degree. The full pipeline (Leiden, cross-fitted classifier,
+scores) is run on each network. Every score is evaluated by ROC AUC for recovering
+the planted nodes, both overall and within degree terciles (so a score cannot win
+just by tracking degree).
+
+\paragraph{Real-data check on TIMME.}
+TIMME has party labels for part of the users (\cref{sec:setup-data}). A labelled user
+counts as a \emph{party misfit} when their party differs from the majority party of
+their topology community. Only communities with at least 20 labelled users and at
+least 80\% one party are used, because a mixed community has no ``wrong'' side. Each
+score is evaluated by AUC for predicting party misfits, overall and within degree
+terciles, with a one-sided Mann--Whitney test. As a null, the text rows are shuffled
+across users and all scores are recomputed. A real score has to beat its own
+shuffled-text version.
+
+\subsection{Testing interventions with spread simulation}
+\label{sec:method-block}
+
+\paragraph{Spread model.}
+We use live-edge Independent Cascade~\citep{kempe2003maximizing}. An edge $u\to v$
+transmits with probability $p_{uv}$ under one of two schemes:
+\begin{itemize}
+  \item \emph{weighted cascade}, $p_{uv}=1/\deg(v)$;
+  \item \emph{uniform}, $p_{uv}=c\cdot p_c$, where
+        $p_c = \langle k\rangle / (\langle k^2\rangle - \langle k\rangle)$ is the
+        epidemic threshold of a network with this degree
+        sequence~\citep{newman2002spread}, and $c$ is swept over several multiples.
+\end{itemize}
+
+\paragraph{Unknown source and common random numbers.}
+In every simulation the seeds are drawn uniformly from nodes that \emph{no} strategy
+blocks at the largest budget, so no strategy can win by deleting the source. Every
+strategy and budget sees the same live-edge samples and the same seeds (common random
+numbers), so differences between strategies are not Monte Carlo noise.
+
+\paragraph{Outcomes.}
+For each run we record the \emph{infected share} (seeds excluded) and the
+\emph{cross-community share}, i.e.\ infected users outside every seed's community.
+Each strategy is reported as the percentage of spread it removes compared with no
+blocking.
+
+\paragraph{Content-aware spread.}
+Under selective exposure~\citep{delvicario2016spreading} a message is accepted more
+readily by users whose content matches the community it came from. Each cascade
+starts in one community $A$ (seeds drawn inside $A$), and every edge probability is
+reweighted:
+\begin{equation}
+  p'_{uv} = \min\bigl(1,\; p_{uv}\cdot K\cdot a_v(A)\bigr),
+\end{equation}
+where $a_v \in \Delta^{K-1}$ is node $v$'s affinity to each community's content. The
+multiplier $K\,a_v(A)$ averages approximately 1 over receivers, so the overall
+transmission rate stays roughly the same. This is only approximate: the affinities
+average exactly $1/K$ across receivers only when the communities are of equal size,
+and the $\min(1,\cdot)$ clipping lowers the effective rate further. On
+TIMME, $a_v$ comes from a separate cross-fitted classifier trained on a \emph{different}
+text source (GloVe tweet averages) from the one used for scoring (MiniLM). This keeps
+the spread model from reusing the scorer's own predictions.
+
+\paragraph{Node-blocking strategies.}
+Given a budget $k$, each strategy removes its top-$k$ nodes. Structural strategies:
+random, degree, adaptive degree (recomputed after each removal), PageRank, sampled
+betweenness, Collective Influence at radius 1~\citep{morone2015influence},
+participation coefficient, and participation, consensus entropy and structural
+ambiguity each multiplied by PageRank. Content-based strategies: misfit,
+disagreement, content outlier (alone and multiplied by PageRank), and a
+\emph{gateway} score
+\begin{equation}
+  g_i = \sum_{A} h_{iA}\; a_i(A)\; \bigl(d_i - h_{iA}\bigr),
+\end{equation}
+which estimates how much of community $A$'s content node $i$ can carry out of $A$.
+In words: for each community $A$, the number of $i$'s neighbours in $A$, weighted by
+how well $i$'s content matches $A$, is multiplied by the number of $i$'s neighbours
+outside $A$, and these products are summed over communities. The
+same formula with $a_i(A)=1/K$ (``structural gateway'') removes the text, so comparing
+the two isolates what the content adds.
+
+\paragraph{Link-level intervention.}
+Instead of removing accounts, we can add friction to individual links (both directions
+of an undirected link are cut together). Link scores: random, degree product, PageRank
+product, a structural bridge score (cross-community links ranked by
+$\mathrm{PR}_u\mathrm{PR}_v$), and two content-aware variants. The first ranks
+cross-community links by
+$\max\bigl(\mathrm{PR}_u\, p_C(v)_{t_u},\ \mathrm{PR}_v\, p_C(u)_{t_v}\bigr)$, i.e.\ an
+influential sender times a receptive receiver. The second multiplies the structural
+bridge score by that receptivity.
+
+\paragraph{Regime map.}
+Real networks fix the community strength and the size of the content effect, so a
+single dataset cannot show when content-aware targeting helps. We therefore sweep
+these factors on synthetic networks:
+\begin{itemize}
+  \item the mixing $\mu$;
+  \item the agreement effect $\beta$, which sets the affinity
+        $a_v(A) \propto \exp\bigl(\beta\,[c_v = A]\bigr)$ for node $v$'s \emph{true}
+        content community $c_v$ ($\beta=0$ is content-blind spread);
+  \item the share of mismatched nodes; and
+  \item where the mismatched nodes are placed: uniformly at random, or in proportion
+        to degree (``hub'').
+\end{itemize}
+Scores are computed from \emph{observed}, noisy text through the full pipeline, while
+spread uses the true content. For each setting we report the paired gain, in
+cross-community spread removed, of each content-aware strategy over the better of
+PageRank and betweenness, with a 95\% confidence interval.
+
+\subsection{Planned extension: active learning}
+\label{sec:method-al}
+AAS uses disagreement to choose must-link and cannot-link pair queries for an oracle
+and then refines the clustering under those constraints. A version of that loop, with
+queries drawn from high-disagreement nodes and a simulated oracle built from TIMME
+party labels, is planned as an extension and depends on discussion with the
+supervisor. It is not part of the work described in this report.
+
+\subsection{Limitations}
+\label{sec:method-limits}
+Three limitations of the design are known in advance.
+\begin{itemize}
+  \item \textbf{Content-aware spread may favour content scores by construction.} The
+        receiver affinity $a_v$ is itself a text-to-community classifier trained on
+        the same topology labels $t$. Strategies that use $p_C$ may therefore look
+        better under content-aware spread partly because the spread model and the
+        scores were built the same way. Using GloVe for the spread model and MiniLM
+        for the scores reduces this overlap, but both come from the same users'
+        tweets, so it does not remove it.
+  \item \textbf{Sampling of the TIMME crawl.} TIMME was crawled around seed accounts
+        (politicians), so some apparent bridges may be artefacts of how the data was
+        collected rather than real crossing points (\cref{sec:setup-data}).
+  \item \textbf{Simulated spread on a static graph.} All interventions are evaluated
+        by simulation on a static, historical snapshot of each network, with assumed
+        Independent Cascade probabilities rather than probabilities estimated from
+        observed cascades. This limits how strongly any finding can be claimed to hold
+        for real-world spread.
+\end{itemize}

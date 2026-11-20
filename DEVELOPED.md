@@ -4,7 +4,7 @@ The point of truth for **what has been built** and **how it behaves**. Scope and
 live in `TASKS.md` (T-ids), options and decisions in `SUGGESTIONS.md` (S-ids),
 cross-session disputes in `DISCUSSION.md`, dataset facts in `data_final/DATASETS.md`.
 **Update this file whenever something major changes** (rule in `CLAUDE.md`).
-Last updated: 2026-10-03
+Last updated: 2026-11-18
 
 ---
 
@@ -151,6 +151,22 @@ with the random seed, "disagreement" between two clusterings is partly noise (S-
 - **T8 active learning (only if T7 shows a gain):** AAS pair sampling + oracle + NP3.
 
 ## 5. Evidence so far (read with care)
+**2026-11-18 (H2 correction, H6, final_results).** *H2* (`results/hypotheses/h2/README.md`) verdict is now "mixed": infected share 0/6900 filter configs CI>0 (unchanged); synthetic cross-community share 764/6900 CI>0, almost all beta>=6, median +4.4 pts, random-from-shortlist control 0/2250; real data still noise (TIMME 7/1840, Pokec 1/920). *H6* community-deception detection (`results/hypotheses/h6/README.md`, commits 3ea4736, fdfb58f): NOT SUPPORTED. Misfit is a weak, mostly non-specific signal: +0.04..+0.10 AUC over the unattacked same-population baseline under kumari/safeness, +0.01..+0.03 under matched random rewire. The earlier "misfit detects successful kumari hiding" was circular (success = label flip; a matched random control gives the same succ AUC). participation / persistence_low detect rewired targets better but also fire on random rewiring. *final_results/* (commits 99306e6, f81c104, ef14696) is the single-script ground truth for all numbers: `build_results.py` -> `results_long.csv` (14063 rows), `results_summary.csv` (22 experiments E01-E22), `metrics_glossary.csv` (273), `FINAL_RESULTS.md`, `_gaps.md`. Regenerate with `cd final_results && /opt/anaconda3/bin/python build_results.py`. `h5_probe.py` now saves `results/hypotheses/h5/h5_probe.json`. Dashboard: https://claude.ai/artifact/5iP76RnE7TAZZuSEfMQHcz. H5 caveat: random_rewire's gain over none is +0.4..+3.5 pp for model wc at beta>=3 only; for ic:2 it is about 0 (r2.0 k5 b6 -0.34 pp).
+
+**2026-11-11 (T11 re-homing, `results/hypotheses/h5/README.md`).** Misfits under-served by follow graph (supported); community-level text target wins (k=4: 0.54 vs 0.14 struct vs 0.41 Kumari). Account-level text recommender NOT robust over 27 settings (P@10 vs AA: misfit CI>0 12/27, <0 9/27; R@100 CI>0 24/27). Rewiring simulation (correction reach): TIMME weakly supported (targeting residual over random rewire CI>0 in 4/7 beta>=3 cells, null at real beta 0.3); Pokec supported at beta>=3 (+4.0..+8.7 pp over random, CI>0 in 8/8 cells; beta is swept, not measured). Re-homing helps only under selective exposure.
+
+**2026-10-04 (S-23, T10) supersedes the GNN-based plan.** Pipeline now: `views.py` (Leiden
+topology view, text-only content view) → `ambiguity.py` (label-spread p_T, cross-fitted text
+classifier p_C, misfit/disagreement + baselines) → `benchmark.py` (planted mismatches) /
+`validate.py` (TIMME party check) → `blocking.py` (IC, content-blind and content-aware) →
+`regime.py` (synthetic regime map). Key numbers: GNN clusters Q ≤ 0; Leiden TIMME Q 0.264;
+text→community acc TIMME 0.62 (chance 0.32), Pokec slice 0.28 (0.25); planted detection AUC
+0.73–1.00 vs 0.53–0.85 baseline under nuisance; TIMME blocking: betweenness/PageRank beat every
+content-aware strategy (content-weighted gateway +1–2 points, inside noise). Regime map (`regime.py`): node-level
+content targeting beats centrality only at strong agreement effect + hub-placed mismatches; link
+friction (`edges.py`, structural bridge score × receptivity) +14.9 ± 1.9 points on synthetic,
+tie on TIMME (outside the regime: agreement effect ≈ 1.4). Full log in the plan tracker.
+
 All pre-2026-09-27 numbers came from broken loaders or selection — **superseded**.
 - PureP smoke run (50 epochs, fixed pipeline): NMI 0.72 / 0.76 / 0.72
   (BGRL/DGI/MVGRL). Tiny, easy dataset — can't rank models.
@@ -181,6 +197,26 @@ All pre-2026-09-27 numbers came from broken loaders or selection — **supersede
 - GPU: rented, ₹2k budget (~23 h A100). Path has a trailing space — quote it.
 
 ## 7. Change log (major changes only)
+- **2026-11-18** H2 verdict corrected to "mixed" (synthetic cross-community share 764/6900 CI>0, beta>=6; infected share 0/6900); H6 deception-detection experiment recorded, NOT SUPPORTED (circular success result retracted); `final_results/` ground-truth tables added (`build_results.py`, E01-E22); `h5_probe.py` writes `h5_probe.json`; H5 random_rewire range qualified to model wc. TASKS T11.4/T11.5; dashboard artifact linked.
+- **2026-11-11** T11.1b/T11.2: `training/h5_rec.py --robust` (27-setting account-level robustness, `h5_robust.json`) and `training/h5_rewire.py` (degree-preserving rewiring + content-aware IC on TIMME and Pokec; `h5_rewire_timme.json`, `h5_rewire_pokec.json`). Results in `results/hypotheses/h5/README.md`.
+- **2026-11-11** Direction change to misfit re-homing (TASKS T11, advisor). `training/h5_probe.py`:
+  misfits follow one community but engage with their text-predicted one (retweet hit 0.60-0.66 vs
+  0.40 chance, k=4); survives bio-only text. Bio embeddings cached at `training/out/timme_bio.npy`.
+- **2026-11-01** Hypothesis testing H1-H4 (see TASKS T10.13, `results/hypotheses/`): misfit-guided
+  blocking not supported in radicalisation funnels, as a filter over centrality, or on real TIMME
+  interactions (real agreement beta ~0.3 vs >=6 needed); detection of non-structural infiltrators
+  and campaigns works on synthetic data; rumor-detection feature untested/weak (PHEME). New files:
+  `training/h1_funnel.py, h2_*.py, h3_*.py, h4a_*.py, h4b_*.py, h4c_pheme.py, h4d_*.py`.
+  Downloads: `data_final/rumor_ext/` (PHEME, Twitter15/16). Thesis framing: detector/screening
+  tool + regime boundary; blocking is a negative-with-conditions extension.
+- **2026-10-04** GNN backbone dropped (S-23): two clean views + cross-fitted misfit score;
+  synthetic benchmark, TIMME validation, content-aware blocking, regime map added
+  (`training/views.py, ambiguity.py, benchmark.py, validate.py, blocking.py, regime.py`).
+  `metrics._labeled` probe now standardizes inputs (was underfitting by 15–20 points);
+  `degree_eta2` added. Blocking gate failed on TIMME; thesis reframed (detector + regime map).
+- **2026-10-03** BGRL CUDA OOM on full Pokec (A30, 24 GB): feature dropout now masks the
+  first layer's weight columns instead of copying `x` per view (identical outputs/grads,
+  checked in `test_gclib.py`; saves ~7 GB).
 - **2026-10-03** Colab RAM crash on full Pokec (during text encoding): `encode_texts`
   now encodes in 100k-row chunks saved as `<cache>.partNNN.npy` (resumes after a crash);
   Pokec loader frees the edge frames + 23 interest string columns before encoding. Resumable training: `Cfg.ckpt_dir` saves model+optimizer+best emb

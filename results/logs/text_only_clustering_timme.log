@@ -1,0 +1,14 @@
+[    9.9s] timme: 21014 users in /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all
+[   10.2s] encode_texts: loaded cache /Users/abhyudayavasisht/Desktop/college/Major project /training/../data_final/timme/repo/data/P_all/timme_text.npy
+[   11.6s] timme: favorite_list.csv: 1794111 edges
+[   12.7s] timme: friend_list.csv: 915438 edges
+[   14.1s] timme: mention_list.csv: 1571937 edges
+[   14.5s] timme: reply_list.csv: 530598 edges
+[   15.7s] timme: retweet_list.csv: 1684023 edges
+[   15.8s] timme: 1209 users labeled R/D
+[   15.8s] make_data: 6496107 raw edges, 21014 nodes -> symmetrize + LCC
+[   18.7s] make_data: largest connected component 20811/21014 nodes kept, 8212892 directed edges
+GloVe all-zero rows: 0.067; MiniLM empty: 0.020
+MiniLM bio+latest tweet | probe 0.700  k= 19 (>=1%: 16) largest=0.16 Q=+0.005 NMI=0.010 ARI=0.001 eta2=0.17 stab=0.60
+GloVe avg of tweets | probe 0.841      k= 17 (>=1%: 15) largest=0.13 Q=+0.012 NMI=0.035 ARI=0.029 eta2=0.27 stab=0.62
+both concatenated | probe 0.828        k= 19 (>=1%: 17) largest=0.15 Q=+0.006 NMI=0.013 ARI=0.001 eta2=0.28 stab=0.57

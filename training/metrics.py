@@ -26,7 +26,8 @@ from sklearn.metrics import (adjusted_rand_score, davies_bouldin_score, f1_score
                              silhouette_score)
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 from sklearn.neighbors import NearestNeighbors
-from sklearn.preprocessing import normalize
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler, normalize
 
 SAMPLE = 10_000     # cap for O(n^2)-ish metrics (silhouette, kNN, eff. rank)
 # ponytail: graph metrics (igraph Louvain + 500-pivot betweenness) are skipped above
@@ -92,15 +93,28 @@ def _health(emb, z, deg, pred, rng):
         "corr_norm_logdeg": float(np.corrcoef(np.linalg.norm(emb, axis=1),
                                               np.log1p(deg))[0, 1]),
         "cluster_sizes": np.bincount(pred).tolist(),
+        "degree_eta2": degree_eta2(pred, deg),
     }
 
 
-def _labeled(z, y, pred, seed, rng):
+def degree_eta2(pred, deg):
+    """Share of log-degree variance explained by cluster membership (0..1).
+    High = the clustering is sorting nodes by degree, not by community
+    (Sep 28 TIMME GNN runs: k=2 split correlated 0.6 with log-degree)."""
+    ld = np.log1p(np.asarray(deg, dtype=np.float64))
+    mu = np.bincount(pred, ld) / np.maximum(np.bincount(pred), 1)
+    return float(((mu[pred] - ld.mean()) ** 2).sum() / max(((ld - ld.mean()) ** 2).sum(), 1e-12))
+
+
+def _labeled(emb, z, y, pred, seed, rng):
     m = y >= 0
     zl, yl = z[m], y[m]
     idx = _sample(len(yl), 20_000, rng)
     cv = StratifiedKFold(5, shuffle=True, random_state=seed)
-    yp = cross_val_predict(LogisticRegression(max_iter=2000), zl[idx], yl[idx], cv=cv)
+    # probe on standardized raw embeddings: C=1 on L2-normalized vectors underfit
+    # by 15-20 points on TIMME (0.74 vs 0.95 for BGRL)
+    probe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=5000))
+    yp = cross_val_predict(probe, emb[m][idx], yl[idx], cv=cv)
     kn = 10
     q = _sample(len(yl), SAMPLE, rng)
     nbr = NearestNeighbors(n_neighbors=kn + 1, metric="cosine").fit(zl)
@@ -217,7 +231,7 @@ def report(emb, edge_index, k, labels=None, seed=0, n_seeds=5, graph=None):
     }
     if y is not None and (y >= 0).any():
         log(f"report: label metrics on {int((y >= 0).sum())} labeled nodes")
-        rep["labeled"] = _labeled(z, y, pred, seed, rng)
+        rep["labeled"] = _labeled(emb, z, y, pred, seed, rng)
     if n > GRAPH_MAX:
         rep["task"] = {"skipped": f"n={n} > GRAPH_MAX={GRAPH_MAX}"}
     else:
