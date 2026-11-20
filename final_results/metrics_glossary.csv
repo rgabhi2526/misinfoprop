@@ -238,6 +238,7 @@ pr_product,baseline,Link score: product of endpoint PageRanks.
 precision_at_k,metric,Share of the top-k ranked items that are true positives.
 probe_acc,metric,Accuracy of a linear probe predicting party (or a label) from the representation.
 probe_f1_macro,metric,Macro-averaged F1 of the linear probe.
+radar,baseline,"Radar residual-analysis anomaly score (Li et al., IJCAI 2017): row norm of the residual after reconstructing attributes from other nodes with graph smoothing."
 random,control,Uniformly random nodes or edges.
 random attack,control,Matched random rewiring control.
 random-from-shortlist,control,Random pick from the centrality shortlist.

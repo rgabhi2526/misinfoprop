@@ -157,6 +157,8 @@ E05, synthetic AUC overall at nu 1.5, mu 0.5, sigma 2 (mean of 3 seeds, no sprea
 | participation | 0.505 |
 | consensus_entropy | 0.503 |
 
+E05 baseline added: Radar (Li et al., IJCAI 2017, residual analysis on text attributes plus graph Laplacian), same planted graphs and seeds. Paper-style defaults (alpha=beta=gamma=1) collapse the residual to about 1e-9 on this data (n 4000, d 64 or 128, so attributes are fully reconstructable) and give AUC 0.494 in the cell above. With parameters picked using the planted labels on that cell (alpha 10, beta 0.001, gamma 100, so favourable to Radar), Radar AUC is 0.488 to 0.541 in all 18 cells and 0.512 at nu 1.5, mu 0.5, sigma 2, against misfit 0.74. Radar does not beat misfit in any cell (misfit 0.73 to 0.999). Source: results/detection/synthetic_benchmark_radar.json.
+
 E06, TIMME party misfits (11 positives among 595 labelled nodes):
 
 | Method | AUC | One-sided p |

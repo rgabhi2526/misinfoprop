@@ -238,6 +238,12 @@ def e05_bench():
         for sc, (a, b) in r['auc'].items():
             x.add(s, sc, 'auc_overall', a, f, f'[{i}].auc.{sc}[0]', n=3)
             x.add(s, sc, 'auc_within_degree_terciles', b, f, f'[{i}].auc.{sc}[1]', n=3)
+    fr = 'results/detection/synthetic_benchmark_radar.json'
+    dr = jl(fr)['rows']
+    for i, r in enumerate(dr):
+        s = f"nuisance={r['nuisance']} mu={r['mu']} sigma={r['sigma']} (mean of 3 seeds)"
+        x.add(s, 'radar', 'auc_overall', r['auc'][0], fr, f'rows[{i}].auc[0]', n=3, role_='baseline')
+        x.add(s, 'radar', 'auc_within_degree_terciles', r['auc'][1], fr, f'rows[{i}].auc[1]', n=3, role_='baseline')
 
 
 # ================================================================= E06
@@ -995,6 +1001,7 @@ GLOSS = {
  'gateway': ('method', 'Node score of cross-community links weighted by the receiver text membership.'), 'gateway_struct': ('control', 'Gateway without text: isolates what text adds.'),
  'misfit_rerank': ('method', 'PageRank shortlist reordered by misfit.'), 'misfit_nonhub': ('method', 'Misfit restricted to non-hub accounts.'), 'misfit_x_lowdeg': ('method', 'Misfit multiplied by an inverse-degree term.'),
  'consensus_entropy': ('baseline', 'Instability of a node community across Leiden runs.'), 'consensus_entropy_x_pr': ('baseline', 'Consensus entropy multiplied by PageRank.'),
+ 'radar': ('baseline', 'Radar residual-analysis anomaly score (Li et al., IJCAI 2017): row norm of the residual after reconstructing attributes from other nodes with graph smoothing.'),
  'participation': ('baseline', 'How spread a node edges are across communities.'), 'participation_x_pr': ('baseline', 'Participation multiplied by PageRank.'), 'topo_participation': ('baseline', 'Participation coefficient used as a detector.'),
  'content_outlier': ('baseline', 'Text far from the own-community text centroid.'), 'content_outlier_x_pr': ('baseline', 'Content outlier multiplied by PageRank.'),
  'ambiguity_T': ('baseline', 'Normalised entropy of the structural membership p_T.'), 'ambiguity_T_x_pr': ('baseline', 'Structural ambiguity multiplied by PageRank.'), 'topo_ambT': ('baseline', 'Structural ambiguity used as a detector.'),
